@@ -1,24 +1,20 @@
-import { Footer } from '@/components/common/Footer'
-import { Header } from '@/components/common/Header'
-import { Button } from '@/components/common/Button'
-import { Container } from '@/components/common/Container'
+import { Footer } from "@/components/common/Footer";
+import { Header } from "@/components/common/Header";
+import { Button } from "@/components/common/Button";
+import { Container } from "@/components/common/Container";
 
 export default function Home() {
   const bullets: any = [
-    ['Cost', 'free.99'],
-    ['Download & share', 'word/PDF'],
-    ['Customization', 'unlimited'],
-    ['Stand out', 'with stylee'],
-  ]
+    ["Cost", "free.99"],
+    ["Download & share", "word/PDF"],
+    ["Customization", "unlimited"],
+    ["Stand out", "with stylee"],
+  ];
   return (
-    <main className='bg-white'>
+    <main className="bg-white min-h-screen flex flex-col justify-between">
       <Header />
-      <div className="relative pt-10 pb-20 sm:py-24">
-        <div className="absolute inset-x-0 -top-48 -bottom-14 overflow-hidden bg-indigo-50">
-          <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-white" />
-          <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-white" />
-        </div>
-        <Container className="relative">
+      <div className="relative py-10 bg-white">
+        <Container className="relative bg-indigo-50 p-8 rounded py-32 my-auto">
           <div className="mx-auto max-w-2xl lg:max-w-4xl lg:px-12">
             <h1 className="font-display text-5xl font-bold tracking-tighter text-blue-600 sm:text-7xl">
               <span className="sr-only">Craft CV - </span>
@@ -27,10 +23,13 @@ export default function Home() {
             </h1>
             <div className="mt-6 space-y-6 font-display text-2xl tracking-tight text-blue-900">
               <p>
-                Break free from the ordinary, Unlock boundless opportunities with personalized CV templates tailored just for you.
+                Break free from the ordinary, Unlock boundless opportunities
+                with personalized CV templates tailored just for you.
               </p>
               <p>
-                Tailor your story to captivate employers, Stand out from the crowd with unique, visually stunning CVs, and elevate your career to new heights.
+                Tailor your story to captivate employers, Stand out from the
+                crowd with unique, visually stunning CVs, and elevate your
+                career to new heights.
               </p>
               <p>Your Journey, Your CV, Your Triumph.</p>
             </div>
@@ -52,5 +51,5 @@ export default function Home() {
       </div>
       <Footer />
     </main>
-  )
+  );
 }
