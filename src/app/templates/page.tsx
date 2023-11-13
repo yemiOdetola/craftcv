@@ -5,7 +5,7 @@ import { Tab } from "@headlessui/react";
 import { Footer } from "@/components/common/Footer";
 import { Container } from "@/components/common";
 import placeholder from '@/images/placeholder/generator.png'
-import { Template } from "@/components/templates";
+import { BottomNavigation, Template } from "@/components/templates";
 
 
 const templates: any = [
@@ -144,7 +144,8 @@ export default function Templates() {
             ))}
           </Tab.Panels>
         </Tab.Group>
-      </Container >
+      </Container>
+      <BottomNavigation />
       <Footer />
     </main >
   );

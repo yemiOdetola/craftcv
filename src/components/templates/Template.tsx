@@ -24,7 +24,7 @@ export default function Template({ template, templateIndex, select, selected }: 
           />
         </div>
       </div>
-      <span className="mt-4 font-display text-sm tracking-tight text-gray-500">
+      <span className="block mt-2 font-display text-sm tracking-tight text-gray-500">
         {template.name}
       </span>
     </div>
