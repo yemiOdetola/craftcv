@@ -1,12 +1,12 @@
 'use client'
-import { Footer } from "@/components/common/Footer";
-import { Container, Navbar } from "@/components/common";
-import Image from 'next/image';
-
-
-import placeholder from '@/images/placeholder/generator.png'
 import { useEffect, useId, useState } from "react";
+import Image from 'next/image';
 import { Tab } from "@headlessui/react";
+import { Footer } from "@/components/common/Footer";
+import { Container } from "@/components/common";
+import placeholder from '@/images/placeholder/generator.png'
+import { Template } from "@/components/templates";
+
 
 const templates: any = [
   {
@@ -66,9 +66,8 @@ const templates: any = [
 ]
 
 export default function Templates() {
-  let id = useId();
   let [tabOrientation, setTabOrientation] = useState('horizontal')
-
+  const [selectedTemplate, selectTemplate] = useState<null | number>(null)
   useEffect(() => {
     let lgMediaQuery = window.matchMedia('(min-width: 1024px)')
 
@@ -119,7 +118,10 @@ export default function Templates() {
                           {template.hits}
                         </Tab>
                       </div>
-                      <span className="mt-1.5 block text-2xl font-semibold tracking-tight text-blue-900">
+                      <span className={`mt-1.5 block text-2xl font-semibold tracking-tight 
+                      ${dayIndex === selectedIndex
+                          ? 'text-blue-800'
+                          : 'text-slate-600'}`}>
                         {template.name}
                       </span>
                     </div>
@@ -132,47 +134,19 @@ export default function Templates() {
             {templates.map((template: any) => (
               <Tab.Panel
                 key={template.name}
-                className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 sm:gap-y-16 md:grid-cols-3 [&:not(:focus-visible)]:focus:outline-none"
+                className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 sm:gap-y-16 md:grid-cols-3 outline-none"
                 unmount={false}
               >
                 {template.templates.map((template: any, templateIndex: number) => (
-                  <div key={templateIndex}>
-                    <div className="group relative h-[17.5rem] transform overflow-hidden rounded-4xl">
-                      <div
-                        className={
-                          `absolute top-0 left-0 right-4 bottom-6 rounded-4xl border transition duration-300 group-hover:scale-95 xl:right-6
-                          ${[
-                            'border-blue-300',
-                            'border-indigo-300',
-                            'border-sky-300',
-                          ][templateIndex % 3]}`
-                        }
-                      />
-                      <div
-                        className="absolute inset-0 bg-indigo-50"
-                        style={{ clipPath: `url(#${id}-${templateIndex % 3})` }}
-                      >
-                        <Image
-                          className="absolute inset-0 h-full w-full object-cover transition duration-300 group-hover:scale-110"
-                          src={template.image}
-                          alt=""
-                          priority
-                          sizes="(min-width: 1280px) 17.5rem, (min-width: 1024px) 25vw, (min-width: 768px) 33vw, (min-width: 640px) 50vw, 100vw"
-                        />
-                      </div>
-                    </div>
-                    <h3 className="mt-4 font-display text-xl font-bold tracking-tight text-slate-900">
-                      {template.name}
-                    </h3>
-                  </div>
+                  <Template selected={selectedTemplate == templateIndex} select={() => selectTemplate(templateIndex)} key={templateIndex} {...{ template, templateIndex }} />
                 ))}
               </Tab.Panel>
             ))}
           </Tab.Panels>
         </Tab.Group>
-      </Container>
+      </Container >
       <Footer />
-    </main>
+    </main >
   );
 }
 
