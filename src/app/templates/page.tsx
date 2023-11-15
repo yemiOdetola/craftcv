@@ -145,7 +145,7 @@ export default function Templates() {
           </Tab.Panels>
         </Tab.Group>
       </Container>
-      <BottomNavigation />
+      <BottomNavigation from="/" to="craft" />
       <Footer />
     </main >
   );

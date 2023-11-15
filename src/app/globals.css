@@ -25,3 +25,16 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+.text-green {
+  /* color: #29f3c3; */
+  color: #3e8272;
+}
+
+.border-green {
+  border-color: #29f3c3;
+}
+
+.bg-green {
+  background-color: #29f3c3;
+}
