@@ -112,7 +112,6 @@ export default function Craft() {
                     Building this, in my free time. Making modern design systems and kits possible with TailwindCSS
                   </p>
                 </div>
-
                 <div className="mt-8">
                   <h4 className="font-medium text-xl"><a href="https://remoteworkjar.com" className="hover:underline">RemoteWorkJar</a></h4>
                   <p className=" mt-2">Remote Job Board, where the main focus is to manually screen every job posted and help candidates get high-quality remote-only job postings.</p>
