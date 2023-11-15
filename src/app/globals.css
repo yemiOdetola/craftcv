@@ -39,7 +39,11 @@ body {
   background-color: #29f3c3;
 }
 
-
+.editor-container {
+  max-width: 1182px;
+  min-height: 1200px;
+  height: auto;
+}
 /* width: 1182px!important
 height: auto;
 widtj: 65% - transform: scale(0.65)
