@@ -13,8 +13,8 @@ export default function Menu() {
             <span className="text-xl font-bold">Resume Editor</span>
             <div className="flex items-center gap-x-4 ml-4">
               <EditorFontMenu />
-              <EditorSpacingMenu />
               <EditorThemeMenu />
+              <EditorSpacingMenu />
             </div>
           </div>
         </div>
