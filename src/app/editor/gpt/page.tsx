@@ -1,6 +1,13 @@
 'use client'
 
+import { MdEmail, MdFiberSmartRecord } from "react-icons/md";
+
 const Resume = () => {
+
+  const getIcon = (title: string) => {
+
+  }
+
 
   const dummyData = {
     name: 'John Doe',

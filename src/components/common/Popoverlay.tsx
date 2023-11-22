@@ -1,7 +1,7 @@
 'use client'
 import { Fragment, ReactNode } from 'react'
 import { Popover, Transition } from '@headlessui/react'
-import { ChevronDownIcon } from '@heroicons/react/24/outline'
+import { MdExpandMore } from "react-icons/md";
 
 interface PopoverlayProps {
   title: string;
@@ -20,7 +20,7 @@ export function Popoverlay({ children, title }: PopoverlayProps) {
                 group inline-flex items-center px-3 py-2 text-base rounded font-medium hover:text-gray-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600`}
             >
               <span>{title}</span>
-              <ChevronDownIcon
+              <MdExpandMore
                 className={`${open ? 'text-blue-600' : 'text-gray-400'}
                   ml-2 h-5 w-5 transition duration-150 ease-in-out group-hover:text-blue-600/80`}
                 aria-hidden="true"

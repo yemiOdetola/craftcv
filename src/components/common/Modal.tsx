@@ -11,16 +11,6 @@ export function Modal({ isOpen, toggleModal }: ModalProps) {
 
   return (
     <>
-      <div className="fixed inset-0 flex items-center justify-center">
-        <button
-          type="button"
-          onClick={toggleModal}
-          className="rounded-md bg-black/20 px-4 py-2 text-sm font-medium text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75"
-        >
-          Open dialog
-        </button>
-      </div>
-
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={toggleModal}>
           <Transition.Child
@@ -55,7 +45,7 @@ export function Modal({ isOpen, toggleModal }: ModalProps) {
                   </Dialog.Title>
                   <div className="mt-2">
                     <p className="text-sm text-gray-500">
-                      Your payment has been successfully submitted. We’ve sent
+                      Your payment has been successfully submitted. We've sent
                       you an email with all of the details of your order.
                     </p>
                   </div>
