@@ -1,4 +1,8 @@
 import React from 'react'
+import { Popoverlay } from '../common'
+import { EditorFontMenu } from './EditorFontMenu'
+import { EditorSpacingMenu } from './EditorSpacingMenu'
+import { EditorThemeMenu } from './EditorThemeMenu'
 
 export default function Menu() {
   return (
@@ -7,16 +11,10 @@ export default function Menu() {
         <div className="flex justify-between items-center">
           <div className="flex items-center">
             <span className="text-xl font-bold">Resume Editor</span>
-            <div className="ml-4">
-              <select className="rounded-md px-3 py-1">
-                <option value="font-sans">Sans-serif</option>
-                <option value="font-serif">Serif</option>
-                <option value="font-cursive">Cursive</option>
-              </select>
-              <select className="rounded-md px-3 py-1 ml-2">
-                <option value="theme-light">Light Theme</option>
-                <option value="theme-dark">Dark Theme</option>
-              </select>
+            <div className="flex items-center gap-x-4 ml-4">
+              <EditorFontMenu />
+              <EditorSpacingMenu />
+              <EditorThemeMenu />
             </div>
           </div>
         </div>
