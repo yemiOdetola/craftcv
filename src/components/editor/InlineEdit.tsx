@@ -2,14 +2,15 @@ import React, { useState } from 'react';
 
 interface InlineEditProps {
   text: string;
-  onSave: () => void;
+  onSave: (val: string) => void;
+  className: string;
 }
 
-const InlineEdit = ({ text, onSave }: InlineEditProps) => {
+const InlineEdit = ({ className, text, onSave }: InlineEditProps) => {
   const [isEditing, setEditing] = useState(false);
   const [editedText, setEditedText] = useState(text);
 
-  const handleDoubleClick = () => {
+  const handleClick = () => {
     setEditing(true);
   };
 
@@ -24,7 +25,9 @@ const InlineEdit = ({ text, onSave }: InlineEditProps) => {
 
   return (
     <div
-      onDoubleClick={handleDoubleClick}
+      {...{ className }}
+      onClick={handleClick}
+      onDoubleClick={handleClick}
       onBlur={handleBlur}
       contentEditable={isEditing}
       suppressContentEditableWarning={true}

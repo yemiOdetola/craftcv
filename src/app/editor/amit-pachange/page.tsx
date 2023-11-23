@@ -1,7 +1,7 @@
 'use client'
 import React, { useState } from 'react'
 import Image from 'next/image'
-import { Menu, EditorCover } from '@/components/editor'
+import { EditorCover, InlineEdit } from '@/components/editor'
 import { Modal } from '@/components/common'
 import placeholder from '@/images/placeholder/neil-sims.png'
 import { getIconByType } from '../Icons'
@@ -107,10 +107,8 @@ export default function AmitPachange() {
           <div className="h-40 w-40 overflow-hidden sm:rounded-full sm:relative sm:p-0 top-10 left-5 p-3">
             <Image src={placeholder} alt="Profile" className="h-32 w-32 rounded-full mx-auto" width={220} height={220} />
           </div>
-          <div className="w-2/3 sm:text-center pl-5 mt-10 text-start" onClick={toggleModal}>
-            <p className="font-poppins font-bold text-heading sm:text-4xl text-2xl">
-              {resume.fullname}
-            </p>
+          <div className="w-2/3 sm:text-center pl-5 mt-10 text-start">
+            <InlineEdit text={resume?.fullname} onSave={(e) => console.log('CHANGE: ', e)} className="font-poppins font-bold text-heading sm:text-4xl text-2xl" />
             <p className="text-heading">{resume.title}</p>
           </div>
         </div>
@@ -203,7 +201,7 @@ export default function AmitPachange() {
             </div>
           </div>
         </div>
-      </EditorCover>
+      </EditorCover >
       <Modal {...{ isOpen, toggleModal }} />
     </>
   )
