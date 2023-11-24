@@ -2,12 +2,15 @@ import React, { useState, useEffect, useRef, MutableRefObject } from 'react';
 
 interface InlineEditProps {
   text: string;
-  onSave: (val: string) => void;
   className: string;
+  onSave: (val: string) => void;
+  onParentClick?: () => void;
+  editable?: boolean;
+  blurEv?: () => void;
 }
 
 
-const InlineEdit = ({ className, text, onSave }: InlineEditProps) => {
+const InlineEdit = ({ className, text, editable, onSave, blurEv, onParentClick }: InlineEditProps) => {
   const [isEditing, setEditing] = useState(false);
   const [editedText, setEditedText] = useState(text);
   const inputRef: MutableRefObject<any> = useRef(null);
@@ -21,30 +24,31 @@ const InlineEdit = ({ className, text, onSave }: InlineEditProps) => {
 
   const handleClick = () => {
     setEditing(true);
+    onParentClick && onParentClick();
   };
 
   const handleBlur = () => {
     setEditing(false);
+    blurEv && blurEv();
     onSave(editedText);
   };
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: React.ChangeEvent<HTMLSpanElement>) => {
     setEditedText(e.target.innerText);
   };
 
   return (
-    <div
-      className={`outline-none ${className} ${isEditing && 'underline underline-offset-4 decoration-dashed decoration-1'}`}
+    <span
+      className={`outline-none ${className} ${editable && 'underline underline-offset-4 decoration-dashed decoration-1'}`}
       ref={inputRef}
       onClick={handleClick}
-      // onDoubleClick={handleClick}
       onBlur={handleBlur}
-      contentEditable={isEditing}
+      contentEditable={editable}
       suppressContentEditableWarning={true}
       onChange={handleChange}
     >
       {text}
-    </div>
+    </span>
   );
 };
 

@@ -6,14 +6,25 @@ import { Modal } from '@/components/common'
 import placeholder from '@/images/placeholder/neil-sims.png'
 import { getIconByType } from '../Icons'
 
+interface Experience {
+  id: string;
+  title: string;
+  achievements: string;
+  duration: string;
+}
 
+interface Resume {
+  experiences: Experience[];
+}
 
 export default function AmitPachange() {
   const [isOpen, setIsOpen] = useState(false);
+  const [editableSection, setEditableSection] = useState<string | null>(null);
   const [resume, setResume] = useState<any>({
     fullname: 'John \'Junior\' Doe',
     title: 'Web Developer',
     contact: {
+      id: 'contact',
       email: 'john.doe@example.com',
       phone: '+123 456 7890',
       website: 'www.johndoe.com',
@@ -23,6 +34,7 @@ export default function AmitPachange() {
     summary: 'Passionate and detail-oriented Web Developer with hands-on experience in designing and implementing web applications. Adept at collaborating with cross-functional teams to drive project success.',
     education: [
       {
+        id: 'education-1',
         degree: 'Computer Science',
         award: 'Bachelor of Science',
         school: 'University XYZ',
@@ -30,6 +42,7 @@ export default function AmitPachange() {
         gp: 4.33,
       },
       {
+        id: 'education-2',
         degree: 'Computer Science',
         award: 'Bachelor of Science',
         school: 'University XYZ',
@@ -37,6 +50,7 @@ export default function AmitPachange() {
         gp: 4.33,
       },
       {
+        id: 'education-3',
         degree: 'Computer Science',
         award: 'Bachelor of Science',
         school: 'University XYZ',
@@ -96,8 +110,27 @@ export default function AmitPachange() {
     skills: ['React', 'HTML, CSS, Javascript', 'Tailwind CSS', 'Git'],
   })
 
+  console.log('parent');
   const toggleModal = () => {
     setIsOpen(!isOpen);
+  };
+
+  const handleSectionClick = (sectionId: string) => {
+    setEditableSection(sectionId);
+  };
+
+  const handleSaveField = (section: any, fieldId: string, updatedValue: string | number) => {
+    setResume((prevResume: any) => ({
+      ...prevResume,
+      [section]: prevResume[section].map((field: any) => {
+        // if (field.id === fieldId) {
+        //   field = { ...field, value: updatedValue }
+        // } else {
+        //   return
+        // }
+        field.id === fieldId ? { ...field, value: updatedValue } : field
+      }),
+    }));
   };
 
   return (
@@ -108,7 +141,12 @@ export default function AmitPachange() {
             <Image src={placeholder} alt="Profile" className="h-32 w-32 rounded-full mx-auto" width={220} height={220} />
           </div>
           <div className="w-2/3 sm:text-center pl-5 mt-10 text-start">
-            <InlineEdit text={resume?.fullname} onSave={(e) => console.log('CHANGE: ', e)} className="font-poppins font-bold text-heading sm:text-4xl text-2xl" />
+            <InlineEdit
+              text={resume?.fullname}
+              onSave={(e) => console.log('CHANGE: ', e)}
+              onParentClick={() => console.log('parent click')}
+              className="font-poppins font-bold text-heading sm:text-4xl text-2xl"
+            />
             <p className="text-heading">{resume.title}</p>
           </div>
         </div>
@@ -148,12 +186,24 @@ export default function AmitPachange() {
                 <div className="border-2 w-20 border-top-color my-3"></div>
                 <div className="flex flex-col space-y-1">
                   {resume.education && resume.education.map((education: any, index: number) => (
-                    <div className="flex flex-col" key={index}>
-                      <p className="font-semibold text-xs text-gray-700">{education?.graduationYear}</p>
+                    <div className="flex flex-col" key={index} onBlur={() => setEditableSection(null)} onClick={() => setEditableSection(education.id)}>
+                      <InlineEdit
+                        className="font-semibold text-xs text-gray-700"
+                        text={education?.graduationYear}
+                        editable={education.id == editableSection}
+                        onSave={(e) => console.log('CHANGE: ', e)} />
                       <p className="text-sm font-medium">
-                        <span className="text-green-700">{education?.award} ({education.degree})</span>, {education?.school}
+                        <InlineEdit
+                          className="text-green-700"
+                          editable={education.id == editableSection}
+                          text={`${education?.award}(${education.degree}), ${education?.school}`}
+                          onSave={(e) => console.log('CHANGE: ', e)} />
                       </p>
-                      <p className="font-bold text-xs text-gray-700 mb-2">Percentage: {education.gp}</p>
+                      <InlineEdit
+                        className="font-bold text-xs text-gray-700 mb-2"
+                        text={`Percentage: ${education.gp}`}
+                        editable={education.id == editableSection}
+                        onSave={(e) => console.log('CHANGE: ', e)} />
                     </div>
                   ))}
                 </div>
