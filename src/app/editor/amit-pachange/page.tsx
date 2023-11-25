@@ -19,7 +19,7 @@ interface Resume {
 
 export default function AmitPachange() {
   const [isOpen, setIsOpen] = useState(false);
-  const [editableSection, setEditableSection] = useState<string | null>(null);
+  const [editableSection, setEditableSectionId] = useState<string | null>(null);
   const [resume, setResume] = useState<any>({
     fullname: 'John \'Junior\' Doe',
     title: 'Web Developer',
@@ -116,7 +116,7 @@ export default function AmitPachange() {
   };
 
   const handleSectionClick = (sectionId: string) => {
-    setEditableSection(sectionId);
+    setEditableSectionId(sectionId);
   };
 
   const handleSaveField = (section: any, fieldId: string, updatedValue: string | number) => {
@@ -186,19 +186,27 @@ export default function AmitPachange() {
                 <div className="border-2 w-20 border-top-color my-3"></div>
                 <div className="flex flex-col space-y-1">
                   {resume.education && resume.education.map((education: any, index: number) => (
-                    <div className="flex flex-col" key={index} onBlur={() => setEditableSection(null)} onClick={() => setEditableSection(education.id)}>
+                    <div className="flex flex-col" key={index}
+                      onClick={() => setEditableSectionId(education.id)}
+                      // onBlur={() => setEditableSectionId(null)}
+                      onBlur={(e) => {
+                        console.log('relatedTarget:', e.relatedTarget);
+                        console.log('currentTarget:', e.currentTarget);
+                        // Check if the related target is the same as the container
+                        if (e.relatedTarget === null) {
+                          setEditableSectionId(null);
+                        }
+                      }}>
                       <InlineEdit
                         className="font-semibold text-xs text-gray-700"
                         text={education?.graduationYear}
                         editable={education.id == editableSection}
                         onSave={(e) => console.log('CHANGE: ', e)} />
-                      <p className="text-sm font-medium">
-                        <InlineEdit
-                          className="text-green-700"
-                          editable={education.id == editableSection}
-                          text={`${education?.award}(${education.degree}), ${education?.school}`}
-                          onSave={(e) => console.log('CHANGE: ', e)} />
-                      </p>
+                      <InlineEdit
+                        className="text-sm font-medium text-green-700"
+                        editable={education.id == editableSection}
+                        text={`${education?.award}(${education.degree}), ${education?.school}`}
+                        onSave={(e) => console.log('CHANGE: ', e)} />
                       <InlineEdit
                         className="font-bold text-xs text-gray-700 mb-2"
                         text={`Percentage: ${education.gp}`}

@@ -6,11 +6,11 @@ interface InlineEditProps {
   onSave: (val: string) => void;
   onParentClick?: () => void;
   editable?: boolean;
-  blurEv?: () => void;
+  onBlurEv?: () => void;
 }
 
 
-const InlineEdit = ({ className, text, editable, onSave, blurEv, onParentClick }: InlineEditProps) => {
+const InlineEdit = ({ className, text, editable, onSave, onBlurEv, onParentClick }: InlineEditProps) => {
   const [isEditing, setEditing] = useState(false);
   const [editedText, setEditedText] = useState(text);
   const inputRef: MutableRefObject<any> = useRef(null);
@@ -28,18 +28,27 @@ const InlineEdit = ({ className, text, editable, onSave, blurEv, onParentClick }
   };
 
   const handleBlur = () => {
+    // Check if the next active element is still within the same InlineEdit
+    const nextActiveElement = document.activeElement;
+    if (nextActiveElement && inputRef.current.contains(nextActiveElement)) {
+      // The next active element is within the same InlineEdit, do not close
+      return;
+    }
+
     setEditing(false);
-    blurEv && blurEv();
+    onBlurEv && onBlurEv();
     onSave(editedText);
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLSpanElement>) => {
+
+  const handleChange = (e: React.ChangeEvent<HTMLDivElement>) => {
     setEditedText(e.target.innerText);
   };
 
   return (
-    <span
-      className={`outline-none ${className} ${editable && 'underline underline-offset-4 decoration-dashed decoration-1'}`}
+    <div
+      className={`outline-none p-1 ${className} 
+      ${editable && 'underline underline-offset-4 py-4 decoration-dashed decoration-2'}`}
       ref={inputRef}
       onClick={handleClick}
       onBlur={handleBlur}
@@ -48,7 +57,7 @@ const InlineEdit = ({ className, text, editable, onSave, blurEv, onParentClick }
       onChange={handleChange}
     >
       {text}
-    </span>
+    </div>
   );
 };
 
