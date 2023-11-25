@@ -125,13 +125,130 @@ export default function AmitPachange() {
     },
   })
 
-  console.log('parent');
   const toggleModal = () => {
     setIsOpen(!isOpen);
   };
 
-  const handleSectionClick = (sectionId: string) => {
-    setEditableSectionId(sectionId);
+  const renderInlineEdit = (text: string, className: string, editable: boolean) => {
+    return (
+      <InlineEdit
+        text={text}
+        editable={editable}
+        onSave={(e) => console.log('CHANGE: ', e)}
+        className={className}
+      />
+    );
+  }
+
+  const renderContactInfo = () => {
+    return (
+      <div className="my-1"
+        onClick={() => setEditableSectionId(resume?.contact?.id)}
+        onBlur={(e) => editBlurEvent(e)}>
+        {resume.contact && Object.keys(resume.contact).map((key, index) => {
+          if (resume.contact[key] !== 'contact') {
+            return (
+              <div className="flex items-center mb-1" key={`resume-contact-${index}`}>
+                <span className="w-6 text-gray-700 font-sm">{getIconByType(key)}</span>
+                {renderInlineEdit(resume.contact[key], 'ml-2 truncate', resume?.contact?.id == editableSection)}
+              </div>
+            );
+          }
+        })}
+      </div>
+    );
+  };
+
+  const renderSkills = () => {
+    return (
+      <div className="my-1"
+        onClick={() => setEditableSectionId(resume?.skills?.id)}
+        onBlur={(e) => editBlurEvent(e)}>
+        {resume?.skills?.set.map((skill: string, index: number) => {
+          if (skill !== 'skills') {
+            return (
+              <div className="flex items-center mb-1" key={`resume-skills-${index}`}>
+                <a className="w-6 text-gray-700 font-sm">{getIconByType(skill)}</a>
+                {renderInlineEdit(skill, 'ml-2 truncate', resume?.skills?.id == editableSection)}
+              </div>
+            );
+          }
+        })}
+      </div>
+    );
+  };
+
+  const renderEducation = () => {
+    return (
+      <div className="flex flex-col space-y-1">
+        {resume.education && resume.education.map((education: any, index: number) => (
+          <div className="flex flex-col" key={`education-${index}`}
+            onClick={() => setEditableSectionId(education.id)}
+            onBlur={(e) => editBlurEvent(e)}>
+            {renderInlineEdit(education?.graduationYear, 'font-semibold text-xs text-gray-700',
+              education.id == editableSection)}
+            {renderInlineEdit(`${education?.award}(${education.degree}), ${education?.school}`, 'text-sm font-medium text-green-700',
+              education.id == editableSection)}
+            {renderInlineEdit(`Percentage: ${education.gp}`, 'font-bold text-xs text-gray-700 mb-2',
+              education.id == editableSection)}
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+
+  const renderSummary = () => {
+    return (
+      <div className="py-3"
+        onClick={() => setEditableSectionId(resume?.about?.id)}
+        onBlur={(e) => editBlurEvent(e)}>
+        <h2 className="text-lg font-poppins font-bold text-top-color">About Me</h2>
+        <div className="border-2 w-20 border-top-color my-3"></div>
+        {renderInlineEdit(resume?.about?.summary, '', resume?.about?.id == editableSection)}
+      </div>
+    );
+  };
+
+  const renderExperiences = () => {
+    return (
+      <div className="flex flex-col">
+        {resume?.experiences.map((experience: any, index: number) => (
+          <div className="flex flex-col mb-6" key={`experience-${index}`}
+            onClick={() => setEditableSectionId(experience?.id)}
+            onBlur={(e) => editBlurEvent(e)}>
+            {renderInlineEdit(`${experience.company} | ${experience.position}`, 'text-lg font-bold text-gray-700',
+              experience?.id == editableSection)}
+            {renderInlineEdit(`${experience.startDate} - ${experience.endDate}`, 'font-semibold text-sm text-green-700 font-mono my-1',
+              experience?.id == editableSection)}
+            <span className="font-semibold text-sm text-gray-700 mt-2 mb-1">Key Responsibilities</span>
+            <ul className="text-sm list-disc pl-4 space-y-1">
+              {experience?.responsibilities.map((responsibility: string, index: number) => (
+                <li key={`proj-responsibility-${index}`}> {renderInlineEdit(responsibility, '', experience?.id == editableSection)}</li>
+              ))}
+              <li>Deliverying highly efficient solutions</li>
+              <li>Solving critical bugs</li>
+            </ul>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+  const renderProject = () => {
+    return (
+      <div className="flex flex-col">
+        {resume?.projects.map((project: any, index: number) => (
+          <div className="flex flex-col mb-4" key={`project-${index}`}
+            onClick={() => setEditableSectionId(project?.id)}
+            onBlur={(e) => editBlurEvent(e)}>
+            {renderInlineEdit(project.title, 'text-lg font-semibold text-gray-700', project?.id == editableSection)}
+            {renderInlineEdit(project?.tech.join(', '), 'text-sm my-2 font-semibold text-green-700 font-mono', project?.id == editableSection)}
+            {renderInlineEdit(project.description, 'font-normal text-sm text-gray-700 mb-1 pl-2', project?.id == editableSection)}
+          </div>
+        ))}
+      </div>
+    );
   };
 
   const handleSaveField = (section: any, fieldId: string, updatedValue: string | number) => {
@@ -149,8 +266,6 @@ export default function AmitPachange() {
   };
 
   const editBlurEvent = (e: React.FocusEvent<HTMLDivElement, Element>) => {
-    console.log('relatedTarget:', e.relatedTarget);
-    console.log('currentTarget:', e.currentTarget);
     // Check if the related target is null
     if (e.relatedTarget === null) {
       setEditableSectionId(null);
@@ -182,147 +297,30 @@ export default function AmitPachange() {
               <div className="py-3 sm:order-none order-3">
                 <h2 className="text-lg font-poppins font-bold text-top-color">My Contact</h2>
                 <div className="border-2 w-20 border-top-color my-3" />
-                <div className="my-1"
-                  onClick={() => setEditableSectionId(resume?.contact?.id)}
-                  onBlur={(e) => editBlurEvent(e)}>
-                  {resume.contact && Object.keys(resume.contact).map((key, index) => {
-                    if (resume.contact[key] !== 'contact') {
-                      return (
-                        <div className="flex items-center mb-1" key={`resume-contact-${index}`}>
-                          <span className="w-6 text-gray-700 font-sm"> {getIconByType(key)}</span>
-                          <InlineEdit
-                            text={resume.contact[key]}
-                            editable={resume?.contact?.id == editableSection}
-                            onSave={(e) => console.log('CHANGE: ', e)}
-                            className="ml-2 truncate" />
-                        </div>
-                      )
-                    }
-                  })}
-                </div>
+                {renderContactInfo()}
               </div>
               <div className="py-3 sm:order-none order-2">
                 <h2 className="text-lg font-poppins font-bold text-top-color">Skills</h2>
                 <div className="border-2 w-20 border-top-color my-3"></div>
-                <div className="my-1"
-                  onClick={() => setEditableSectionId(resume?.skills?.id)}
-                  onBlur={(e) => editBlurEvent(e)}>
-                  {resume?.skills?.set.map((skill: string, index: number) => {
-                    if (skill !== 'skills') {
-                      return (
-                        <div className="flex items-center mb-1" key={`resume-contact-${index}`}>
-                          <a className="w-6 text-gray-700 font-sm">
-                            {getIconByType(skill)}
-                          </a>
-                          <InlineEdit
-                            className="ml-2 truncate"
-                            text={skill}
-                            editable={resume?.skills?.id == editableSection}
-                            onSave={(e) => console.log('CHANGE: ', e)}
-                          />
-                        </div>
-                      )
-                    }
-                  })}
-                </div>
+                {renderSkills()}
               </div>
               <div className="py-3 sm:order-none order-1">
                 <h2 className="text-lg font-poppins font-bold text-top-color">Education Background</h2>
                 <div className="border-2 w-20 border-top-color my-3"></div>
-                <div className="flex flex-col space-y-1">
-                  {resume.education && resume.education.map((education: any, index: number) => (
-                    <div className="flex flex-col" key={index}
-                      onClick={() => setEditableSectionId(education.id)}
-                      onBlur={(e) => editBlurEvent(e)}>
-                      <InlineEdit
-                        className="font-semibold text-xs text-gray-700"
-                        text={education?.graduationYear}
-                        editable={education.id == editableSection}
-                        onSave={(e) => console.log('CHANGE: ', e)} />
-                      <InlineEdit
-                        className="text-sm font-medium text-green-700"
-                        editable={education.id == editableSection}
-                        text={`${education?.award}(${education.degree}), ${education?.school}`}
-                        onSave={(e) => console.log('CHANGE: ', e)} />
-                      <InlineEdit
-                        className="font-bold text-xs text-gray-700 mb-2"
-                        text={`Percentage: ${education.gp}`}
-                        editable={education.id == editableSection}
-                        onSave={(e) => console.log('CHANGE: ', e)} />
-                    </div>
-                  ))}
-                </div>
+                {renderEducation()}
               </div>
             </div>
             <div className="flex flex-col sm:w-2/3 order-first sm:order-none sm:-mt-10">
-              <div className="py-3"
-                onClick={() => setEditableSectionId(resume?.about?.id)}
-                onBlur={(e) => editBlurEvent(e)}>
-                <h2 className="text-lg font-poppins font-bold text-top-color">About Me</h2>
-                <div className="border-2 w-20 border-top-color my-3"></div>
-                <InlineEdit
-                  text={resume?.about?.summary}
-                  editable={resume?.about?.id == editableSection}
-                  onSave={(e) => console.log('CHANGE: ', e)}
-                />
-              </div>
+              {renderSummary()}
               <div className="py-3">
                 <h2 className="text-lg font-poppins font-bold text-top-color">Professional Experience</h2>
                 <div className="border-2 w-20 border-top-color my-3"></div>
-                <div className="flex flex-col">
-                  {resume?.experiences.map((experience: any, index: number) => (
-                    <div className="flex flex-col mb-6" key={`experience-${index}`}
-                      onClick={() => setEditableSectionId(experience?.id)}
-                      onBlur={(e) => editBlurEvent(e)}>
-                      <InlineEdit className="text-lg font-bold text-gray-700"
-                        text={`${experience.company} | ${experience.position}`}
-                        editable={experience?.id == editableSection}
-                        onSave={(e) => console.log('CHANGE: ', e)}
-                      />
-                      <InlineEdit className="font-semibold text-sm text-green-700 font-mono my-1"
-                        text={`${experience.startDate} - ${experience.endDate}`}
-                        editable={experience?.id == editableSection}
-                        onSave={(e) => console.log('CHANGE: ', e)}
-                      />
-                      <span className="font-semibold text-sm text-gray-700 mt-2 mb-1">Key Responsibilities</span>
-                      <ul className="text-sm list-disc pl-4 space-y-1">
-                        {experience?.responsibilities.map((responsibility: string, index: number) => (
-                          <InlineEdit key={`responsibility-${index}`}
-                            text={responsibility}
-                            editable={experience?.id == editableSection}
-                            onSave={(e) => console.log('CHANGE: ', e)}
-                          />
-                        ))}
-                        <li>Deliverying highly efficient solutions</li>
-                        <li>Solving critical bugs</li>
-                      </ul>
-                    </div>
-                  ))}
-                </div>
+                {renderExperiences()}
               </div>
               <div className="py-3">
                 <h2 className="text-lg font-poppins font-bold text-top-color">Projects</h2>
                 <div className="border-2 w-20 border-top-color my-3"></div>
-                <div className="flex flex-col">
-                  {resume?.projects.map((project: any, index: number) => (
-                    <div className="flex flex-col mb-4" key={`project-${index}`}
-                      onClick={() => setEditableSectionId(project?.id)}
-                      onBlur={(e) => editBlurEvent(e)}>
-                      <InlineEdit text={project.title}
-                        editable={project?.id == editableSection}
-                        onSave={(e) => console.log('CHANGE: ', e)}
-                        className="text-lg font-semibold text-gray-700" />
-                      <InlineEdit text={project?.tech.join(', ')}
-                        editable={project?.id == editableSection}
-                        onSave={(e) => console.log('CHANGE: ', e)}
-                        className="text-sm my-2 font-semibold text-green-700 font-mono" />
-                      <InlineEdit text={project.description}
-                        editable={project?.id == editableSection}
-                        onSave={(e) => console.log('CHANGE: ', e)}
-                        className="font-normal text-sm text-gray-700 mb-1 pl-2" />
-                    </div>
-                  ))}
-                </div>
+                {renderProject()}
               </div>
             </div>
           </div>
