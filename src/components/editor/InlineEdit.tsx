@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, MutableRefObject } from 'react';
 
 interface InlineEditProps {
   text: string;
-  className: string;
+  className?: string;
   onSave: (val: string) => void;
   onParentClick?: () => void;
   editable?: boolean;
@@ -28,10 +28,10 @@ const InlineEdit = ({ className, text, editable, onSave, onBlurEv, onParentClick
   };
 
   const handleBlur = () => {
-    // Check if the next active element is still within the same InlineEdit
+    console.log('document.activeElement: ', document.activeElement);
+    console.log('inputRef.current: ', inputRef.current);
     const nextActiveElement = document.activeElement;
     if (nextActiveElement && inputRef.current.contains(nextActiveElement)) {
-      // The next active element is within the same InlineEdit, do not close
       return;
     }
 
@@ -48,7 +48,7 @@ const InlineEdit = ({ className, text, editable, onSave, onBlurEv, onParentClick
   return (
     <div
       className={`outline-none p-1 ${className} 
-      ${editable && 'underline underline-offset-4 py-4 decoration-dashed decoration-2'}`}
+      ${editable && 'underline underline-offset-4 py-2 decoration-dashed decoration-2'}`}
       ref={inputRef}
       onClick={handleClick}
       onBlur={handleBlur}
