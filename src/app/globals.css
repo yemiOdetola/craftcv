@@ -44,6 +44,31 @@ body {
   min-height: 1200px;
   height: auto;
 }
+
+.text-ubuntu {
+  font-family: var(--font-ubuntu);
+}
+
+.text-cfspaceship {
+  font-family: var(--font-cfspaceship);
+}
+
+.text-swansea {
+  font-family: var(--font-swansea);
+}
+
+.text-clearsans {
+  font-family: var(--font-clearsans);
+}
+
+.text-hack {
+  font-family: var(--font-hack);
+}
+
+.text-cabin {
+  font-family: var(--font-cabin);
+}
+
 /* width: 1182px!important
 height: auto;
 widtj: 65% - transform: scale(0.65)

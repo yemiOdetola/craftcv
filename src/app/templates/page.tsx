@@ -1,10 +1,9 @@
 'use client'
 import { useEffect, useId, useState } from "react";
-import Image from 'next/image';
 import { Tab } from "@headlessui/react";
 import { Footer } from "@/components/common/Footer";
 import { Container } from "@/components/common";
-import placeholder from '@/images/placeholder/generator.png'
+import placeholder from '@/assets/images/placeholder/generator.png'
 import { BottomNavigation, Template } from "@/components/templates";
 
 

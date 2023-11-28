@@ -28,5 +28,3 @@ export const getIconByType = (type: string) => {
       return <PiRecordBold size={22} />;
   }
 }
-
-

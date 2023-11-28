@@ -3,9 +3,10 @@ import React, { useState } from 'react'
 import Image from 'next/image'
 import { EditorCover, InlineEdit } from '@/components/editor'
 import { Modal } from '@/components/common'
-import placeholder from '@/images/placeholder/neil-sims.png'
+import placeholder from '@/assets/images/placeholder/generator.png'
 import { getIconByType } from '../Icons'
-
+import { useFontFamily } from '@/store'
+import { getFontFamilyStyle } from '@/utils/helper'
 interface Experience {
   id: string;
   title: string;
@@ -18,6 +19,7 @@ interface Resume {
 }
 
 export default function AmitPachange() {
+  const fontFamily = useFontFamily();
   const [isOpen, setIsOpen] = useState(false);
   const [editableSection, setEditableSectionId] = useState<string | null>(null);
   const [resume, setResume] = useState<any>({
@@ -132,10 +134,8 @@ export default function AmitPachange() {
   const renderInlineEdit = (text: string, className: string, editable: boolean) => {
     return (
       <InlineEdit
-        text={text}
-        editable={editable}
+        {...{ text, editable, className }}
         onSave={(e) => console.log('CHANGE: ', e)}
-        className={className}
       />
     );
   }
@@ -182,7 +182,7 @@ export default function AmitPachange() {
     return (
       <div className="flex flex-col space-y-1">
         {resume.education && resume.education.map((education: any, index: number) => (
-          <div className="flex flex-col" key={`education-${index}`}
+          <div className="flex flex-col" key={`resume-education-${index}`}
             onClick={() => setEditableSectionId(education.id)}
             onBlur={(e) => editBlurEvent(e)}>
             {renderInlineEdit(education?.graduationYear, 'font-semibold text-xs text-gray-700',
@@ -196,7 +196,6 @@ export default function AmitPachange() {
       </div>
     );
   };
-
 
   const renderSummary = () => {
     return (
@@ -214,7 +213,7 @@ export default function AmitPachange() {
     return (
       <div className="flex flex-col">
         {resume?.experiences.map((experience: any, index: number) => (
-          <div className="flex flex-col mb-6" key={`experience-${index}`}
+          <div className="flex flex-col mb-6" key={`resume-experience-${index}`}
             onClick={() => setEditableSectionId(experience?.id)}
             onBlur={(e) => editBlurEvent(e)}>
             {renderInlineEdit(`${experience.company} | ${experience.position}`, 'text-lg font-bold text-gray-700',
@@ -239,7 +238,7 @@ export default function AmitPachange() {
     return (
       <div className="flex flex-col">
         {resume?.projects.map((project: any, index: number) => (
-          <div className="flex flex-col mb-4" key={`project-${index}`}
+          <div className="flex flex-col mb-4" key={`resume-project-${index}`}
             onClick={() => setEditableSectionId(project?.id)}
             onBlur={(e) => editBlurEvent(e)}>
             {renderInlineEdit(project.title, 'text-lg font-semibold text-gray-700', project?.id == editableSection)}
@@ -274,7 +273,7 @@ export default function AmitPachange() {
 
   return (
     <>
-      <EditorCover>
+      <EditorCover className={`${getFontFamilyStyle(fontFamily)}`}>
         <div className="flex rounded-t-lg bg-top-color sm:px-2 w-full">
           <div className="h-40 w-40 overflow-hidden sm:rounded-full sm:relative sm:p-0 top-10 left-5 p-3">
             <Image src={placeholder} alt="Profile" className="h-32 w-32 rounded-full mx-auto" width={280} height={280} />
