@@ -11,8 +11,6 @@ export default function Menu() {
   const fontFamily = useFontFamily();
 
   const changeFontStyle = (fontFamily: string) => setFontFamily(fontFamily);
-
-
   return (
     <div className="bg-white fixed top-0 left-0 right-0 p-2 shadow-md z-10 flex items-center">
       <div className="w-1/2 mx-auto p-4 rounded">
