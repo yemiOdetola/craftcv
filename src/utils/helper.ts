@@ -1,58 +1,58 @@
 export const getFontFamilyStyle = (fontFamily: string) => {
   switch (true) {
-    case fontFamily.includes("ubuntu"):
-      return "text-ubuntu";
+    case fontFamily.includes('ubuntu'):
+      return 'text-ubuntu';
 
-    case fontFamily.includes("cabin"):
-      return "text-cabin";
+    case fontFamily.includes('cabin'):
+      return 'text-cabin';
 
-    case fontFamily.includes("cfspaceship"):
-      return "text-spaceship";
+    case fontFamily.includes('cfspaceship'):
+      return 'text-spaceship';
 
-    case fontFamily.includes("swansea"):
-      return "text-swansea";
+    case fontFamily.includes('swansea'):
+      return 'text-swansea';
 
-    case fontFamily.includes("clear"):
-      return "text-clearsans";
+    case fontFamily.includes('clear'):
+      return 'text-clearsans';
 
-    case fontFamily.includes("charger"):
-      return "text-charger";
+    case fontFamily.includes('charger'):
+      return 'text-charger';
   }
 };
 
 const colors = [
-  "E57263",
-  "42BDBD",
-  "D66D93",
-  "7D4B82",
-  "EACB5F",
-  "FFE88A",
-  "132729",
-  "00DFD6",
-  "FF581F",
-  "F46B63",
-  "BE6263",
-  "F7BD80",
-  "ED767A",
-  "B54A71",
-  "565656",
-  "050505",
-  "d6d6d6",
-  "f0f0f0",
-  "00e7b4",
-  "EAE7E2",
-  "CF2B58",
-  "B22A50",
-  "332520",
-  "42342F",
-  "16C4C7",
-  "9ADBD9",
-  "B5CEB9",
-  "E0E9D0",
-  "D641C7",
-  "F2F4F5",
-  "40505B",
-  "00BFFF",
+  'E57263',
+  '42BDBD',
+  'D66D93',
+  '7D4B82',
+  'EACB5F',
+  'FFE88A',
+  '132729',
+  '00DFD6',
+  'FF581F',
+  'F46B63',
+  'BE6263',
+  'F7BD80',
+  'ED767A',
+  'B54A71',
+  '565656',
+  '050505',
+  'd6d6d6',
+  'f0f0f0',
+  '00e7b4',
+  'EAE7E2',
+  'CF2B58',
+  'B22A50',
+  '332520',
+  '42342F',
+  '16C4C7',
+  '9ADBD9',
+  'B5CEB9',
+  'E0E9D0',
+  'D641C7',
+  'F2F4F5',
+  '40505B',
+  '00BFFF',
   // "203340",
   // "5A5133",
   // "8BA987",

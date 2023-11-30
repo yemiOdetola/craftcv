@@ -1,12 +1,12 @@
-'use client'
-import React, { useState } from 'react'
-import Image from 'next/image'
-import { EditorCover, InlineEdit } from '@/components/editor'
-import { Modal } from '@/components/common'
-import placeholder from '@/assets/images/placeholder/generator.png'
-import { getIconByType } from '../Icons'
-import { useEditorTheme, useFontFamily } from '@/store'
-import { getFontFamilyStyle } from '@/utils/helper'
+'use client';
+import React, { useState } from 'react';
+import Image from 'next/image';
+import { EditorCover, InlineEdit } from '@/components/editor';
+import { Modal } from '@/components/common';
+import placeholder from '@/assets/images/placeholder/generator.png';
+import { getIconByType } from '../Icons';
+import { useEditorTheme, useFontFamily } from '@/store';
+import { getFontFamilyStyle } from '@/utils/helper';
 interface Experience {
   id: string;
   title: string;
@@ -27,13 +27,14 @@ export default function AmitPachange() {
   const [resume, setResume] = useState<any>({
     user: {
       id: 'user',
-      fullname: 'John \'Junior\' Doe',
+      fullname: "John 'Junior' Doe",
       title: 'Web Developer',
     },
     about: {
       id: 'about',
       title: 'About me',
-      summary: 'Passionate and detail-oriented Web Developer with hands-on experience in designing and implementing web applications. Adept at collaborating with cross-functional teams to drive project success.',
+      summary:
+        'Passionate and detail-oriented Web Developer with hands-on experience in designing and implementing web applications. Adept at collaborating with cross-functional teams to drive project success.',
     },
     contact: {
       id: 'contact',
@@ -111,67 +112,97 @@ export default function AmitPachange() {
       {
         id: 'project-1',
         title: 'Used Books mobile app',
-        description: 'A platform to sell as well as to buy used books only for PCCoE College due to this reuse of books will be there beneficial for environment also indirectly helps increase communication between juniors and seniors',
+        description:
+          'A platform to sell as well as to buy used books only for PCCoE College due to this reuse of books will be there beneficial for environment also indirectly helps increase communication between juniors and seniors',
         url: 'https://google.com',
-        tech: ['Javascript', 'HTML', 'SCSS', 'Browsify']
+        tech: ['Javascript', 'HTML', 'SCSS', 'Browsify'],
       },
       {
         id: 'project-2',
         title: 'Parking Automation System',
-        description: 'A web application which helps you to book your slot for your car just like booking a movie ticket from home.',
+        description:
+          'A web application which helps you to book your slot for your car just like booking a movie ticket from home.',
         url: 'https://google.com',
-        tech: ['Javascript', 'HTML', 'SCSS', 'Browsify']
+        tech: ['Javascript', 'HTML', 'SCSS', 'Browsify'],
       },
     ],
     skills: {
       id: 'skills',
-      set: ['React', 'HTML, CSS, Javascript', 'Tailwind CSS', 'Git']
+      set: ['React', 'HTML, CSS, Javascript', 'Tailwind CSS', 'Git'],
     },
-  })
+  });
 
   const toggleModal = () => {
     setIsOpen(!isOpen);
   };
 
-  const renderInlineEdit = (text: string, className: string, editable: boolean, style?: any) => {
+  const renderInlineEdit = (
+    text: string,
+    className: string,
+    editable: boolean,
+    style?: any
+  ) => {
     return (
       <InlineEdit
         {...{ text, editable, className, style }}
         onSave={(e) => console.log('CHANGE: ', e)}
       />
     );
-  }
+  };
 
   const renderContactInfo = () => {
     return (
-      <div className="my-1"
+      <div
+        className='my-1'
         onClick={() => setEditableSectionId(resume?.contact?.id)}
-        onBlur={(e) => editBlurEvent(e)}>
-        {resume.contact && Object.keys(resume.contact).map((key, index) => {
-          if (resume.contact[key] !== 'contact') {
-            return (
-              <div className="flex items-center mb-1" key={`resume-contact-${index}`}>
-                <span className="w-6 text-gray-700 font-sm">{getIconByType(key)}</span>
-                {renderInlineEdit(resume.contact[key], 'ml-2 truncate', resume?.contact?.id == editableSection)}
-              </div>
-            );
-          }
-        })}
+        onBlur={(e) => editBlurEvent(e)}
+      >
+        {resume.contact &&
+          Object.keys(resume.contact).map((key, index) => {
+            if (resume.contact[key] !== 'contact') {
+              return (
+                <div
+                  className='mb-1 flex items-center'
+                  key={`resume-contact-${index}`}
+                >
+                  <span className='font-sm w-6 text-gray-700'>
+                    {getIconByType(key)}
+                  </span>
+                  {renderInlineEdit(
+                    resume.contact[key],
+                    'ml-2 truncate',
+                    resume?.contact?.id == editableSection
+                  )}
+                </div>
+              );
+            }
+          })}
       </div>
     );
   };
 
   const renderSkills = () => {
     return (
-      <div className="my-1"
+      <div
+        className='my-1'
         onClick={() => setEditableSectionId(resume?.skills?.id)}
-        onBlur={(e) => editBlurEvent(e)}>
+        onBlur={(e) => editBlurEvent(e)}
+      >
         {resume?.skills?.set.map((skill: string, index: number) => {
           if (skill !== 'skills') {
             return (
-              <div className="flex items-center mb-1" key={`resume-skills-${index}`}>
-                <a className="w-6 text-gray-700 font-sm">{getIconByType(skill)}</a>
-                {renderInlineEdit(skill, 'ml-2 truncate', resume?.skills?.id == editableSection)}
+              <div
+                className='mb-1 flex items-center'
+                key={`resume-skills-${index}`}
+              >
+                <a className='font-sm w-6 text-gray-700'>
+                  {getIconByType(skill)}
+                </a>
+                {renderInlineEdit(
+                  skill,
+                  'ml-2 truncate',
+                  resume?.skills?.id == editableSection
+                )}
               </div>
             );
           }
@@ -182,48 +213,89 @@ export default function AmitPachange() {
 
   const renderEducation = () => {
     return (
-      <div className="flex flex-col space-y-1">
-        {resume.education && resume.education.map((education: any, index: number) => (
-          <div className="flex flex-col" key={`resume-education-${index}`}
-            onClick={() => setEditableSectionId(education.id)}
-            onBlur={(e) => editBlurEvent(e)}>
-            {renderInlineEdit(education?.graduationYear, 'font-semibold text-xs text-gray-700',
-              education.id == editableSection)}
-            {renderInlineEdit(`${education?.award}(${education.degree}), ${education?.school}`, 'text-sm font-medium text-green-700',
-              education.id == editableSection, { color: `#${color1}` })}
-            {renderInlineEdit(`Percentage: ${education.gp}`, 'font-bold text-xs text-gray-700 mb-2',
-              education.id == editableSection)}
-          </div>
-        ))}
+      <div className='flex flex-col space-y-1'>
+        {resume.education &&
+          resume.education.map((education: any, index: number) => (
+            <div
+              className='flex flex-col'
+              key={`resume-education-${index}`}
+              onClick={() => setEditableSectionId(education.id)}
+              onBlur={(e) => editBlurEvent(e)}
+            >
+              {renderInlineEdit(
+                education?.graduationYear,
+                'font-semibold text-xs text-gray-700',
+                education.id == editableSection
+              )}
+              {renderInlineEdit(
+                `${education?.award}(${education.degree}), ${education?.school}`,
+                'text-sm font-medium text-green-700',
+                education.id == editableSection,
+                { color: `#${color1}` }
+              )}
+              {renderInlineEdit(
+                `Percentage: ${education.gp}`,
+                'font-bold text-xs text-gray-700 mb-2',
+                education.id == editableSection
+              )}
+            </div>
+          ))}
       </div>
     );
   };
 
   const renderSummary = () => {
     return (
-      <div onClick={() => setEditableSectionId(resume?.about?.id)}
-        onBlur={(e) => editBlurEvent(e)}>
-        {renderInlineEdit(resume?.about?.summary, '', resume?.about?.id == editableSection)}
+      <div
+        onClick={() => setEditableSectionId(resume?.about?.id)}
+        onBlur={(e) => editBlurEvent(e)}
+      >
+        {renderInlineEdit(
+          resume?.about?.summary,
+          '',
+          resume?.about?.id == editableSection
+        )}
       </div>
     );
   };
 
   const renderExperiences = () => {
     return (
-      <div className="flex flex-col">
+      <div className='flex flex-col'>
         {resume?.experiences.map((experience: any, index: number) => (
-          <div className="flex flex-col mb-6" key={`resume-experience-${index}`}
+          <div
+            className='mb-6 flex flex-col'
+            key={`resume-experience-${index}`}
             onClick={() => setEditableSectionId(experience?.id)}
-            onBlur={(e) => editBlurEvent(e)}>
-            {renderInlineEdit(`${experience.company} | ${experience.position}`, 'text-lg font-bold text-gray-700',
-              experience?.id == editableSection)}
-            {renderInlineEdit(`${experience.startDate} - ${experience.endDate}`, 'font-semibold text-sm text-green-700 font-mono my-1',
-              experience?.id == editableSection, { color: `#${color1}` })}
-            <span className="font-semibold text-sm text-gray-700 mt-2 mb-1">Key Responsibilities</span>
-            <ul className="text-sm list-disc pl-4 space-y-1">
-              {experience?.responsibilities.map((responsibility: string, index: number) => (
-                <li key={`proj-responsibility-${index}`}> {renderInlineEdit(responsibility, '', experience?.id == editableSection)}</li>
-              ))}
+            onBlur={(e) => editBlurEvent(e)}
+          >
+            {renderInlineEdit(
+              `${experience.company} | ${experience.position}`,
+              'text-lg font-bold text-gray-700',
+              experience?.id == editableSection
+            )}
+            {renderInlineEdit(
+              `${experience.startDate} - ${experience.endDate}`,
+              'font-semibold text-sm text-green-700 font-mono my-1',
+              experience?.id == editableSection,
+              { color: `#${color1}` }
+            )}
+            <span className='mb-1 mt-2 text-sm font-semibold text-gray-700'>
+              Key Responsibilities
+            </span>
+            <ul className='list-disc space-y-1 pl-4 text-sm'>
+              {experience?.responsibilities.map(
+                (responsibility: string, index: number) => (
+                  <li key={`proj-responsibility-${index}`}>
+                    {' '}
+                    {renderInlineEdit(
+                      responsibility,
+                      '',
+                      experience?.id == editableSection
+                    )}
+                  </li>
+                )
+              )}
               <li>Deliverying highly efficient solutions</li>
               <li>Solving critical bugs</li>
             </ul>
@@ -235,22 +307,48 @@ export default function AmitPachange() {
 
   const renderProject = () => {
     return (
-      <div className="flex flex-col">
+      <div className='flex flex-col'>
         {resume?.projects.map((project: any, index: number) => (
-          <div className="flex flex-col mb-4" key={`resume-project-${index}`}
+          <div
+            className='mb-4 flex flex-col'
+            key={`resume-project-${index}`}
             onClick={() => setEditableSectionId(project?.id)}
-            onBlur={(e) => editBlurEvent(e)}>
-            {renderInlineEdit(project.title, 'text-lg font-semibold text-gray-700', project?.id == editableSection)}
-            {renderInlineEdit(project?.tech.join(', '), 'text-sm my-2 font-semibold text-green-700 font-mono',
-              project?.id == editableSection, { color: `#${color1}` })}
-            {renderInlineEdit(project.description, 'font-normal text-sm text-gray-700 mb-1 pl-2', project?.id == editableSection)}
+            onBlur={(e) => editBlurEvent(e)}
+          >
+            {renderInlineEdit(
+              project.title,
+              'text-lg font-semibold text-gray-700',
+              project?.id == editableSection
+            )}
+            {renderInlineEdit(
+              project?.tech.join(', '),
+              'text-sm my-2 font-semibold text-green-700 font-mono',
+              project?.id == editableSection,
+              { color: `#${color1}` }
+            )}
+            {renderInlineEdit(
+              project.description,
+              'font-normal text-sm text-gray-700 mb-1 pl-2',
+              project?.id == editableSection
+            )}
           </div>
         ))}
       </div>
     );
   };
 
-  const handleSaveField = (section: any, fieldId: string, updatedValue: string | number) => {
+  const renderUnderline = () => (
+    <div
+      className='my-2 h-1 w-20 rounded'
+      style={{ backgroundColor: `#${color2}` }}
+    />
+  );
+
+  const handleSaveField = (
+    section: any,
+    fieldId: string,
+    updatedValue: string | number
+  ) => {
     setResume((prevResume: any) => ({
       ...prevResume,
       [section]: prevResume[section].map((field: any) => {
@@ -259,7 +357,7 @@ export default function AmitPachange() {
         // } else {
         //   return
         // }
-        field.id === fieldId ? { ...field, value: updatedValue } : field
+        field.id === fieldId ? { ...field, value: updatedValue } : field;
       }),
     }));
   };
@@ -269,68 +367,96 @@ export default function AmitPachange() {
     if (e.relatedTarget === null) {
       setEditableSectionId(null);
     }
-  }
+  };
 
   return (
     <>
       <EditorCover className={`${getFontFamilyStyle(fontFamily)}`}>
-        <div className="flex rounded-t-lg bg-top-color sm:px-2 w-full">
-          <div className={`overflow-hidden sm:rounded-full sm:relative sm:p-0 top-10 left-5 p-3`} style={{ border: `3px solid #${color1}` }}>
-            <Image src={placeholder} alt="Profile" className="h-32 w-32 rounded-full mx-auto" width={280} height={280} />
+        <div className='bg-top-color flex w-full rounded-t-lg sm:px-2'>
+          <div
+            className={`left-5 top-10 overflow-hidden p-3 sm:relative sm:rounded-full sm:p-0`}
+            style={{ border: `3px solid #${color1}` }}
+          >
+            <Image
+              src={placeholder}
+              alt='Profile'
+              className='mx-auto h-32 w-32 rounded-full'
+              width={280}
+              height={280}
+            />
           </div>
-          <div className="w-2/3 sm:text-center pl-5 mt-10 text-start"
+          <div
+            className='mt-10 w-2/3 pl-5 text-start sm:text-center'
             onClick={() => setEditableSectionId(resume?.user?.id)}
-            onBlur={(e) => editBlurEvent(e)}>
+            onBlur={(e) => editBlurEvent(e)}
+          >
             <InlineEdit
               text={resume?.user?.fullname}
               editable={resume?.user?.id == editableSection}
               onSave={(e) => console.log('CHANGE: ', e)}
-              className="font-poppins font-bold text-heading sm:text-4xl text-2xl"
+              className='font-poppins text-heading text-2xl font-bold sm:text-4xl'
+              style={{ color: `#${color2}` }}
             />
-            <InlineEdit className="text-heading" editable={resume?.user?.id == editableSection} text={resume?.user?.title} onSave={(e) => console.log('CHANGE: ', e)} />
+            <InlineEdit
+              className='text-heading'
+              editable={resume?.user?.id == editableSection}
+              text={resume?.user?.title}
+              onSave={(e) => console.log('CHANGE: ', e)}
+            />
           </div>
         </div>
-        <div className="p-5">
-          <div className="flex flex-col sm:flex-row sm:mt-10">
-            <div className="flex flex-col sm:w-1/3">
-              <div className="py-3 sm:order-none order-3">
-                <h2 className="text-lg font-poppins font-bold text-top-color">My Contact</h2>
-                <div className="h-1 w-20 my-2 rounded" style={{ backgroundColor: `#${color2}` }} />
+        <div className='p-5'>
+          <div className='flex flex-col sm:mt-10 sm:flex-row'>
+            <div className='flex flex-col sm:w-1/3'>
+              <div className='order-3 py-3 sm:order-none'>
+                <h2 className='font-poppins text-top-color text-lg font-bold'>
+                  My Contact
+                </h2>
+                {renderUnderline()}
                 {renderContactInfo()}
               </div>
-              <div className="py-3 sm:order-none order-2">
-                <h2 className="text-lg font-poppins font-bold text-top-color">Skills</h2>
-                <div className="h-1 w-20 my-2 rounded" style={{ backgroundColor: `#${color2}` }} />
+              <div className='order-2 py-3 sm:order-none'>
+                <h2 className='font-poppins text-top-color text-lg font-bold'>
+                  Skills
+                </h2>
+                {renderUnderline()}
                 {renderSkills()}
               </div>
-              <div className="py-3 sm:order-none order-1">
-                <h2 className="text-lg font-poppins font-bold text-top-color">Education Background</h2>
-                <div className="h-1 w-20 my-2 rounded" style={{ backgroundColor: `#${color2}` }} />
+              <div className='order-1 py-3 sm:order-none'>
+                <h2 className='font-poppins text-top-color text-lg font-bold'>
+                  Education Background
+                </h2>
+                {renderUnderline()}
                 {renderEducation()}
               </div>
             </div>
-            <div className="flex flex-col sm:w-2/3 order-first sm:order-none sm:-mt-10">
-
-              <div className="py-3">
-                <h2 className="text-lg font-poppins font-bold text-top-color">About Me</h2>
-                <div className="h-1 w-20 my-2 rounded" style={{ backgroundColor: `#${color2}` }} />
+            <div className='order-first flex flex-col sm:order-none sm:-mt-10 sm:w-2/3'>
+              <div className='py-3'>
+                <h2 className='font-poppins text-top-color text-lg font-bold'>
+                  About Me
+                </h2>
+                {renderUnderline()}
                 {renderSummary()}
               </div>
-              <div className="py-3">
-                <h2 className="text-lg font-poppins font-bold text-top-color">Professional Experience</h2>
-                <div className="h-1 w-20 my-2 rounded" style={{ backgroundColor: `#${color2}` }} />
+              <div className='py-3'>
+                <h2 className='font-poppins text-top-color text-lg font-bold'>
+                  Professional Experience
+                </h2>
+                {renderUnderline()}
                 {renderExperiences()}
               </div>
-              <div className="py-3">
-                <h2 className="text-lg font-poppins font-bold text-top-color">Projects</h2>
-                <div className="h-1 w-20 my-2 rounded" style={{ backgroundColor: `#${color2}` }} />
+              <div className='py-3'>
+                <h2 className='font-poppins text-top-color text-lg font-bold'>
+                  Projects
+                </h2>
+                {renderUnderline()}
                 {renderProject()}
               </div>
             </div>
           </div>
         </div>
-      </EditorCover >
+      </EditorCover>
       <Modal {...{ isOpen, toggleModal }} />
     </>
-  )
+  );
 }

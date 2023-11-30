@@ -1,13 +1,9 @@
-'use client'
+'use client';
 
-import { MdEmail, MdFiberSmartRecord } from "react-icons/md";
+import { MdEmail, MdFiberSmartRecord } from 'react-icons/md';
 
 const Resume = () => {
-
-  const getIcon = (title: string) => {
-
-  }
-
+  const getIcon = (title: string) => {};
 
   const dummyData = {
     name: 'John Doe',
@@ -19,7 +15,8 @@ const Resume = () => {
       linkedin: 'linkedin.com/in/johndoe',
       github: 'github.com/johndoe',
     },
-    summary: 'Passionate and detail-oriented Web Developer with hands-on experience in designing and implementing web applications. Adept at collaborating with cross-functional teams to drive project success.',
+    summary:
+      'Passionate and detail-oriented Web Developer with hands-on experience in designing and implementing web applications. Adept at collaborating with cross-functional teams to drive project success.',
     education: [
       {
         degree: 'Bachelor of Science in Computer Science',
@@ -51,22 +48,30 @@ const Resume = () => {
         ],
       },
     ],
-    skills: ['JavaScript', 'React', 'HTML', 'CSS', 'Tailwind CSS', 'Git', 'Responsive Design'],
+    skills: [
+      'JavaScript',
+      'React',
+      'HTML',
+      'CSS',
+      'Tailwind CSS',
+      'Git',
+      'Responsive Design',
+    ],
   };
 
   return (
-    <div className="bg-gray-100 p-8">
-      <div className="max-w-3xl mx-auto bg-white p-8 rounded shadow-md">
+    <div className='bg-gray-100 p-8'>
+      <div className='mx-auto max-w-3xl rounded bg-white p-8 shadow-md'>
         {/* Header */}
-        <div className="text-center">
-          <h1 className="text-3xl font-bold mb-2">{dummyData.name}</h1>
-          <p className="text-gray-600">{dummyData.title}</p>
+        <div className='text-center'>
+          <h1 className='mb-2 text-3xl font-bold'>{dummyData.name}</h1>
+          <p className='text-gray-600'>{dummyData.title}</p>
         </div>
 
         {/* Contact Information */}
-        <div className="mt-6">
-          <h2 className="text-xl font-semibold mb-2">Contact</h2>
-          <ul className="list-none">
+        <div className='mt-6'>
+          <h2 className='mb-2 text-xl font-semibold'>Contact</h2>
+          <ul className='list-none'>
             <li>Email: {dummyData.contact.email}</li>
             <li>Phone: {dummyData.contact.phone}</li>
             <li>Website: {dummyData.contact.website}</li>
@@ -76,30 +81,34 @@ const Resume = () => {
         </div>
 
         {/* Summary */}
-        <div className="mt-6">
-          <h2 className="text-xl font-semibold mb-2">Summary</h2>
+        <div className='mt-6'>
+          <h2 className='mb-2 text-xl font-semibold'>Summary</h2>
           <p>{dummyData.summary}</p>
         </div>
 
         {/* Education */}
-        <div className="mt-6">
-          <h2 className="text-xl font-semibold mb-2">Education</h2>
+        <div className='mt-6'>
+          <h2 className='mb-2 text-xl font-semibold'>Education</h2>
           {dummyData.education.map((edu, index) => (
             <div key={index}>
-              <p className="font-semibold">{edu.degree}</p>
-              <p>{edu.school} - {edu.graduationYear}</p>
+              <p className='font-semibold'>{edu.degree}</p>
+              <p>
+                {edu.school} - {edu.graduationYear}
+              </p>
             </div>
           ))}
         </div>
 
         {/* Work Experience */}
-        <div className="mt-6">
-          <h2 className="text-xl font-semibold mb-2">Work Experience</h2>
+        <div className='mt-6'>
+          <h2 className='mb-2 text-xl font-semibold'>Work Experience</h2>
           {dummyData.experience.map((exp, index) => (
-            <div key={index} className="mb-4">
-              <p className="font-semibold">{exp.position}</p>
-              <p className="text-gray-600">{exp.company} - {exp.startDate} to {exp.endDate}</p>
-              <ul className="list-disc list-inside">
+            <div key={index} className='mb-4'>
+              <p className='font-semibold'>{exp.position}</p>
+              <p className='text-gray-600'>
+                {exp.company} - {exp.startDate} to {exp.endDate}
+              </p>
+              <ul className='list-inside list-disc'>
                 {exp.responsibilities.map((res, i) => (
                   <li key={i}>{res}</li>
                 ))}
@@ -109,11 +118,16 @@ const Resume = () => {
         </div>
 
         {/* Skills */}
-        <div className="mt-6">
-          <h2 className="text-xl font-semibold mb-2">Skills</h2>
-          <ul className="flex flex-wrap">
+        <div className='mt-6'>
+          <h2 className='mb-2 text-xl font-semibold'>Skills</h2>
+          <ul className='flex flex-wrap'>
             {dummyData.skills.map((skill, index) => (
-              <li key={index} className="bg-gray-300 rounded-full px-3 py-1 mr-2 mb-2">{skill}</li>
+              <li
+                key={index}
+                className='mb-2 mr-2 rounded-full bg-gray-300 px-3 py-1'
+              >
+                {skill}
+              </li>
             ))}
           </ul>
         </div>

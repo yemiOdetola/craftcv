@@ -1,6 +1,5 @@
-import { Popoverlay } from '../common'
-import { PiCheckCircleDuotone } from "react-icons/pi";
-
+import { Popoverlay } from '../common';
+import { PiCheckCircleDuotone } from 'react-icons/pi';
 
 const fonts = [
   {
@@ -27,7 +26,7 @@ const fonts = [
     title: 'Cabin',
     key: 'cabin',
   },
-]
+];
 interface EditorFontMenuProps {
   fontFamily: string;
   onChange: (e: string) => void;
@@ -35,23 +34,28 @@ interface EditorFontMenuProps {
 
 export function EditorFontMenu({ fontFamily, onChange }: EditorFontMenuProps) {
   return (
-    <Popoverlay title="Edit Font" className="lg:max-w-sm">
-      <div className="relative gap-y-3 bg-white p-4">
+    <Popoverlay title='Edit Font' className='lg:max-w-sm'>
+      <div className='relative gap-y-3 bg-white p-4'>
         {fonts.map((font, index) => {
           const selected: boolean = font.key == fontFamily;
           return (
             <button
               key={`font-${index}`}
               onClick={() => onChange(font.key)}
-              className={`pl-3 flex item w-full border-b py-3 cursor-pointer ${selected ? 'font-semibold' : ''}`}>
-              {selected ?
-                <PiCheckCircleDuotone className={`animate-pulse mr-2 text-indigo-600 ring-indigo-500 h-6 w-6`} />
-                : null}
+              className={`item flex w-full cursor-pointer border-b py-3 pl-3 ${
+                selected ? 'font-semibold' : ''
+              }`}
+            >
+              {selected ? (
+                <PiCheckCircleDuotone
+                  className={`mr-2 h-6 w-6 animate-pulse text-indigo-600 ring-indigo-500`}
+                />
+              ) : null}
               {font.title}
             </button>
-          )
+          );
         })}
       </div>
     </Popoverlay>
-  )
+  );
 }

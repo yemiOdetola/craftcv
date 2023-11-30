@@ -1,5 +1,4 @@
-import { create } from "zustand";
-import { shallow } from "zustand/shallow";
+import { create } from 'zustand';
 
 type EditorConfig = {
   fontFamily: string;
@@ -17,9 +16,9 @@ type State = {
 };
 
 const useMainStore = create<State>()((set: any) => ({
-  fontFamily: "ubuntu",
-  fontSize: "font-sm",
-  editorTheme: ["7D4B82", "B54A71"],
+  fontFamily: 'ubuntu',
+  fontSize: 'font-sm',
+  editorTheme: ['7D4B82', 'B54A71'],
   actions: {
     setFontFamily: (fontFamily: string) => set(() => ({ fontFamily })),
     setEditorTheme: (theme: string[]) => set(() => ({ editorTheme: theme })),

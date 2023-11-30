@@ -1,4 +1,13 @@
-import { PiLinkedinLogoBold, PiChatCenteredTextDuotone, PiPhoneCallDuotone, PiGithubLogoDuotone, PiGlobeSimple, PiRecordBold, PiFileHtmlDuotone, PiAtomDuotone } from "react-icons/pi";
+import {
+  PiLinkedinLogoBold,
+  PiChatCenteredTextDuotone,
+  PiPhoneCallDuotone,
+  PiGithubLogoDuotone,
+  PiGlobeSimple,
+  PiRecordBold,
+  PiFileHtmlDuotone,
+  PiAtomDuotone,
+} from 'react-icons/pi';
 
 export const getIconByType = (type: string) => {
   const lctype: any = type.toLowerCase();
@@ -27,4 +36,4 @@ export const getIconByType = (type: string) => {
     default:
       return <PiRecordBold size={22} />;
   }
-}
+};

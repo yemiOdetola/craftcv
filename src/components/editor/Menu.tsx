@@ -1,10 +1,9 @@
-import React from 'react'
-import { Popoverlay } from '../common'
-import { EditorFontMenu } from './EditorFontMenu'
-import { EditorSpacingMenu } from './EditorSpacingMenu'
-import { EditorThemeMenu } from './EditorThemeMenu'
-import { useStoreActions, useFontFamily, useEditorTheme } from '@/store'
-
+import React from 'react';
+import { Popoverlay } from '../common';
+import { EditorFontMenu } from './EditorFontMenu';
+import { EditorSpacingMenu } from './EditorSpacingMenu';
+import { EditorThemeMenu } from './EditorThemeMenu';
+import { useStoreActions, useFontFamily, useEditorTheme } from '@/store';
 
 export default function Menu() {
   const { setFontFamily, setEditorTheme } = useStoreActions();
@@ -15,23 +14,33 @@ export default function Menu() {
   const changeEditorTheme = (theme: string[]) => setEditorTheme(theme);
 
   return (
-    <div className="bg-white fixed top-0 left-0 right-0 p-2 shadow-md z-10 flex items-center">
-      <div className="w-1/2 mx-auto p-4 rounded">
-        <div className="flex justify-between items-center">
-          <div className="flex items-center">
-            <span className="text-xl font-bold">Resume Editor</span>
-            <div className="flex items-center gap-x-4 ml-4">
-              <EditorFontMenu onChange={changeFontFamily} fontFamily={fontFamily} />
-              <EditorThemeMenu changeTheme={changeEditorTheme} editorTheme={editorTheme} />
+    <div className='fixed left-0 right-0 top-0 z-10 flex items-center bg-white p-2 shadow-md'>
+      <div className='mx-auto w-1/2 rounded p-4'>
+        <div className='flex items-center justify-between'>
+          <div className='flex items-center'>
+            <span className='text-xl font-bold'>Resume Editor</span>
+            <div className='ml-4 flex items-center gap-x-4'>
+              <EditorFontMenu
+                onChange={changeFontFamily}
+                fontFamily={fontFamily}
+              />
+              <EditorThemeMenu
+                changeTheme={changeEditorTheme}
+                editorTheme={editorTheme}
+              />
               <EditorSpacingMenu />
             </div>
           </div>
         </div>
       </div>
-      <div className="flex items-center gap-4 mr-4">
-        <button className="bg-gray-400 hover:bg-gray-600 text-white px-4 py-2 rounded">Preview</button>
-        <button className="bg-blue-600 hover:bg-blue-600 text-white px-4 py-2 rounded">Save</button>
+      <div className='mr-4 flex items-center gap-4'>
+        <button className='rounded bg-gray-400 px-4 py-2 text-white hover:bg-gray-600'>
+          Preview
+        </button>
+        <button className='rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-600'>
+          Save
+        </button>
       </div>
     </div>
-  )
+  );
 }

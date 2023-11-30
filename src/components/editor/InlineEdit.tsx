@@ -10,12 +10,18 @@ interface InlineEditProps {
   style?: any;
 }
 
-
-const InlineEdit = ({ className, text, editable, style, onSave, onBlurEv, onParentClick }: InlineEditProps) => {
+const InlineEdit = ({
+  className,
+  text,
+  editable,
+  style,
+  onSave,
+  onBlurEv,
+  onParentClick,
+}: InlineEditProps) => {
   const [isEditing, setEditing] = useState(false);
   const [editedText, setEditedText] = useState(text);
   const inputRef: MutableRefObject<any> = useRef(null);
-
 
   useEffect(() => {
     if (isEditing && inputRef.current) {
@@ -41,15 +47,17 @@ const InlineEdit = ({ className, text, editable, style, onSave, onBlurEv, onPare
     onSave(editedText);
   };
 
-
   const handleChange = (e: React.ChangeEvent<HTMLDivElement>) => {
     setEditedText(e.target.innerText);
   };
 
   return (
     <div
-      className={`outline-none p-1 ${className} 
-      ${editable && 'underline underline-offset-4 py-2 decoration-dashed decoration-2'}`}
+      className={`p-1 outline-none ${className} 
+      ${
+        editable &&
+        'py-2 underline decoration-dashed decoration-2 underline-offset-4'
+      }`}
       style={style}
       ref={inputRef}
       onClick={handleClick}
