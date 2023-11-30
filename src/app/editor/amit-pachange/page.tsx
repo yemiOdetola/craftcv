@@ -5,7 +5,7 @@ import { EditorCover, InlineEdit } from '@/components/editor'
 import { Modal } from '@/components/common'
 import placeholder from '@/assets/images/placeholder/generator.png'
 import { getIconByType } from '../Icons'
-import { useFontFamily } from '@/store'
+import { useEditorTheme, useFontFamily } from '@/store'
 import { getFontFamilyStyle } from '@/utils/helper'
 interface Experience {
   id: string;
@@ -20,6 +20,8 @@ interface Resume {
 
 export default function AmitPachange() {
   const fontFamily = useFontFamily();
+  const editorTheme = useEditorTheme();
+  const [color1, color2] = editorTheme;
   const [isOpen, setIsOpen] = useState(false);
   const [editableSection, setEditableSectionId] = useState<string | null>(null);
   const [resume, setResume] = useState<any>({
@@ -131,10 +133,10 @@ export default function AmitPachange() {
     setIsOpen(!isOpen);
   };
 
-  const renderInlineEdit = (text: string, className: string, editable: boolean) => {
+  const renderInlineEdit = (text: string, className: string, editable: boolean, style?: any) => {
     return (
       <InlineEdit
-        {...{ text, editable, className }}
+        {...{ text, editable, className, style }}
         onSave={(e) => console.log('CHANGE: ', e)}
       />
     );
@@ -188,7 +190,7 @@ export default function AmitPachange() {
             {renderInlineEdit(education?.graduationYear, 'font-semibold text-xs text-gray-700',
               education.id == editableSection)}
             {renderInlineEdit(`${education?.award}(${education.degree}), ${education?.school}`, 'text-sm font-medium text-green-700',
-              education.id == editableSection)}
+              education.id == editableSection, { color: `#${color1}` })}
             {renderInlineEdit(`Percentage: ${education.gp}`, 'font-bold text-xs text-gray-700 mb-2',
               education.id == editableSection)}
           </div>
@@ -199,11 +201,8 @@ export default function AmitPachange() {
 
   const renderSummary = () => {
     return (
-      <div className="py-3"
-        onClick={() => setEditableSectionId(resume?.about?.id)}
+      <div onClick={() => setEditableSectionId(resume?.about?.id)}
         onBlur={(e) => editBlurEvent(e)}>
-        <h2 className="text-lg font-poppins font-bold text-top-color">About Me</h2>
-        <div className="border-2 w-20 border-top-color my-3"></div>
         {renderInlineEdit(resume?.about?.summary, '', resume?.about?.id == editableSection)}
       </div>
     );
@@ -219,7 +218,7 @@ export default function AmitPachange() {
             {renderInlineEdit(`${experience.company} | ${experience.position}`, 'text-lg font-bold text-gray-700',
               experience?.id == editableSection)}
             {renderInlineEdit(`${experience.startDate} - ${experience.endDate}`, 'font-semibold text-sm text-green-700 font-mono my-1',
-              experience?.id == editableSection)}
+              experience?.id == editableSection, { color: `#${color1}` })}
             <span className="font-semibold text-sm text-gray-700 mt-2 mb-1">Key Responsibilities</span>
             <ul className="text-sm list-disc pl-4 space-y-1">
               {experience?.responsibilities.map((responsibility: string, index: number) => (
@@ -242,7 +241,8 @@ export default function AmitPachange() {
             onClick={() => setEditableSectionId(project?.id)}
             onBlur={(e) => editBlurEvent(e)}>
             {renderInlineEdit(project.title, 'text-lg font-semibold text-gray-700', project?.id == editableSection)}
-            {renderInlineEdit(project?.tech.join(', '), 'text-sm my-2 font-semibold text-green-700 font-mono', project?.id == editableSection)}
+            {renderInlineEdit(project?.tech.join(', '), 'text-sm my-2 font-semibold text-green-700 font-mono',
+              project?.id == editableSection, { color: `#${color1}` })}
             {renderInlineEdit(project.description, 'font-normal text-sm text-gray-700 mb-1 pl-2', project?.id == editableSection)}
           </div>
         ))}
@@ -275,7 +275,7 @@ export default function AmitPachange() {
     <>
       <EditorCover className={`${getFontFamilyStyle(fontFamily)}`}>
         <div className="flex rounded-t-lg bg-top-color sm:px-2 w-full">
-          <div className="h-40 w-40 overflow-hidden sm:rounded-full sm:relative sm:p-0 top-10 left-5 p-3">
+          <div className={`overflow-hidden sm:rounded-full sm:relative sm:p-0 top-10 left-5 p-3`} style={{ border: `3px solid #${color1}` }}>
             <Image src={placeholder} alt="Profile" className="h-32 w-32 rounded-full mx-auto" width={280} height={280} />
           </div>
           <div className="w-2/3 sm:text-center pl-5 mt-10 text-start"
@@ -295,30 +295,35 @@ export default function AmitPachange() {
             <div className="flex flex-col sm:w-1/3">
               <div className="py-3 sm:order-none order-3">
                 <h2 className="text-lg font-poppins font-bold text-top-color">My Contact</h2>
-                <div className="border-2 w-20 border-top-color my-3" />
+                <div className="h-1 w-20 my-2 rounded" style={{ backgroundColor: `#${color2}` }} />
                 {renderContactInfo()}
               </div>
               <div className="py-3 sm:order-none order-2">
                 <h2 className="text-lg font-poppins font-bold text-top-color">Skills</h2>
-                <div className="border-2 w-20 border-top-color my-3"></div>
+                <div className="h-1 w-20 my-2 rounded" style={{ backgroundColor: `#${color2}` }} />
                 {renderSkills()}
               </div>
               <div className="py-3 sm:order-none order-1">
                 <h2 className="text-lg font-poppins font-bold text-top-color">Education Background</h2>
-                <div className="border-2 w-20 border-top-color my-3"></div>
+                <div className="h-1 w-20 my-2 rounded" style={{ backgroundColor: `#${color2}` }} />
                 {renderEducation()}
               </div>
             </div>
             <div className="flex flex-col sm:w-2/3 order-first sm:order-none sm:-mt-10">
-              {renderSummary()}
+
+              <div className="py-3">
+                <h2 className="text-lg font-poppins font-bold text-top-color">About Me</h2>
+                <div className="h-1 w-20 my-2 rounded" style={{ backgroundColor: `#${color2}` }} />
+                {renderSummary()}
+              </div>
               <div className="py-3">
                 <h2 className="text-lg font-poppins font-bold text-top-color">Professional Experience</h2>
-                <div className="border-2 w-20 border-top-color my-3"></div>
+                <div className="h-1 w-20 my-2 rounded" style={{ backgroundColor: `#${color2}` }} />
                 {renderExperiences()}
               </div>
               <div className="py-3">
                 <h2 className="text-lg font-poppins font-bold text-top-color">Projects</h2>
-                <div className="border-2 w-20 border-top-color my-3"></div>
+                <div className="h-1 w-20 my-2 rounded" style={{ backgroundColor: `#${color2}` }} />
                 {renderProject()}
               </div>
             </div>

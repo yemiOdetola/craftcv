@@ -10,7 +10,7 @@ type EditorConfig = {
 type State = {
   fontFamily: string;
   fontSize: string;
-  theme: string[];
+  editorTheme: string[];
   actions: any;
   // editorConfig: EditorConfig;
   // setEditorConfig: (config: EditorConfig) => void;
@@ -19,14 +19,17 @@ type State = {
 const useMainStore = create<State>()((set: any) => ({
   fontFamily: "ubuntu",
   fontSize: "font-sm",
-  theme: [""],
+  editorTheme: ["7D4B82", "B54A71"],
   actions: {
-    setFontFamily: (fontFamily: string) =>
-      set(() => ({ fontFamily: fontFamily })),
+    setFontFamily: (fontFamily: string) => set(() => ({ fontFamily })),
+    setEditorTheme: (theme: string[]) => set(() => ({ editorTheme: theme })),
   },
 }));
 
 export const useFontFamily = () =>
   useMainStore((state: State) => state.fontFamily);
 
-export const useActions = () => useMainStore((state) => state.actions);
+export const useEditorTheme = () =>
+  useMainStore((state: State) => state.editorTheme);
+
+export const useStoreActions = () => useMainStore((state) => state.actions);

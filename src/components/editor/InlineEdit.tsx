@@ -7,10 +7,11 @@ interface InlineEditProps {
   onParentClick?: () => void;
   editable?: boolean;
   onBlurEv?: () => void;
+  style?: any;
 }
 
 
-const InlineEdit = ({ className, text, editable, onSave, onBlurEv, onParentClick }: InlineEditProps) => {
+const InlineEdit = ({ className, text, editable, style, onSave, onBlurEv, onParentClick }: InlineEditProps) => {
   const [isEditing, setEditing] = useState(false);
   const [editedText, setEditedText] = useState(text);
   const inputRef: MutableRefObject<any> = useRef(null);
@@ -49,6 +50,7 @@ const InlineEdit = ({ className, text, editable, onSave, onBlurEv, onParentClick
     <div
       className={`outline-none p-1 ${className} 
       ${editable && 'underline underline-offset-4 py-2 decoration-dashed decoration-2'}`}
+      style={style}
       ref={inputRef}
       onClick={handleClick}
       onBlur={handleBlur}

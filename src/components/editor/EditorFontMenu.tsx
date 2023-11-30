@@ -1,4 +1,3 @@
-'use client'
 import { Popoverlay } from '../common'
 import { PiCheckCircleDuotone } from "react-icons/pi";
 
@@ -31,12 +30,12 @@ const fonts = [
 ]
 interface EditorFontMenuProps {
   fontFamily: string;
-  onChange: (e: any) => void;
+  onChange: (e: string) => void;
 }
 
 export function EditorFontMenu({ fontFamily, onChange }: EditorFontMenuProps) {
   return (
-    <Popoverlay title="Edit Font">
+    <Popoverlay title="Edit Font" className="lg:max-w-sm">
       <div className="relative gap-y-3 bg-white p-4">
         {fonts.map((font, index) => {
           const selected: boolean = font.key == fontFamily;

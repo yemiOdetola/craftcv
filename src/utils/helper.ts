@@ -30,24 +30,8 @@ const colors = [
   "132729",
   "00DFD6",
   "FF581F",
-  "5A5133",
-  "8BA987",
-  "6C7767",
-  "4A6266",
   "F46B63",
   "BE6263",
-  "DC0809",
-  "E4CD00",
-  "050505",
-  "2AACCF",
-  "7FCDDF",
-  "7BE0D0",
-  "FF6F18",
-  "A84B05",
-  "BED891",
-  "203428",
-  "64A1A5",
-  "E3D9BB",
   "F7BD80",
   "ED767A",
   "B54A71",
@@ -70,7 +54,23 @@ const colors = [
   "40505B",
   "00BFFF",
   // "203340",
+  // "5A5133",
+  // "8BA987",
+  // "6C7767",
+  // "4A6266",
   // "0AD1B3",
+  // "DC0809",
+  // "E4CD00",
+  // "050505",
+  // "2AACCF",
+  // "7FCDDF",
+  // "7BE0D0",
+  // "FF6F18",
+  // "A84B05",
+  // "BED891",
+  // "203428",
+  // "64A1A5",
+  // "E3D9BB",
   // "FF003E",
   // "E2AF56",
   // "00B9D7",
@@ -141,4 +141,17 @@ export const groupColors = (groupSize: number) => {
     groupedColors.push(shuffledColors.slice(i, i + groupSize));
   }
   return groupedColors;
+};
+
+export const arraysEqual = (arrayA: string[], arrayB: string[]) => {
+  if (arrayA.length !== arrayB.length) {
+    return false;
+  }
+
+  for (let i = 0; i < arrayA.length; i++) {
+    if (arrayA[i] !== arrayB[i]) {
+      return false;
+    }
+  }
+  return true;
 };

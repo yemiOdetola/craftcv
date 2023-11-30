@@ -5,10 +5,11 @@ import { MdExpandMore } from "react-icons/md";
 
 interface PopoverlayProps {
   title: string;
-  children: ReactNode
+  children: ReactNode;
+  className?: string;
 }
 
-export function Popoverlay({ children, title }: PopoverlayProps) {
+export function Popoverlay({ children, title, className }: PopoverlayProps) {
   return (
     <>
       <Popover className="relative">
@@ -35,7 +36,7 @@ export function Popoverlay({ children, title }: PopoverlayProps) {
               leaveFrom="opacity-100 translate-y-0"
               leaveTo="opacity-0 translate-y-1"
             >
-              <Popover.Panel className="absolute left-1/2 z-10 mt-3 w-screen max-w-sm -translate-x-1/2 transform px-4 sm:px-0 lg:max-w-lg">
+              <Popover.Panel className={`absolute left-1/2 z-10 mt-3 w-screen max-w-sm -translate-x-1/2 transform px-4 sm:px-0 lg:max-w-lg ${className}`}>
                 <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black/5">
                   {children}
                 </div>
