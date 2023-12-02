@@ -1,11 +1,10 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import Image from 'next/image';
 import { Container, Navbar } from '@/components/common';
 import placeholder from '@/images/placeholder/neil-sims.png';
 
 export default function Craft() {
-  const [primaryColor, setPrimarycolor] = useState<string>('#');
   return (
     <main className='bg-white'>
       <Navbar />

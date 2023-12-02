@@ -1,5 +1,7 @@
 import { arraysEqual, groupColors } from '@/utils/helper';
 import { Popoverlay } from '../common';
+import { PiArrowsDownUpDuotone } from 'react-icons/pi';
+import { useEffect, useState } from 'react';
 
 const themes = groupColors(2);
 
@@ -13,10 +15,27 @@ export function EditorThemeMenu({
   editorTheme,
 }: EditorThemeMenuProps) {
   console.log('editorThemeeditorTheme: ', editorTheme);
+
+  const flipColors = () => {
+    editorTheme = editorTheme.reverse();
+    changeTheme(editorTheme);
+  };
+
   return (
     <Popoverlay title='Change Theme'>
       <div className='relative grid bg-white px-2 py-4'>
-        <h4 className='mb-2 text-xl'>Choose pair</h4>
+        <div className='mb-2 flex items-center justify-between border-b-2 p-2 text-gray-600'>
+          <h4 className='mb-2 text-lg font-semibold'>Choose pair</h4>
+          {/* <button
+            className='flex border-none bg-none p-2 text-sm text-gray-600'
+            onClick={flipColors}
+          >
+            Switch
+            <span className='rotate-180'>
+              <PiArrowsDownUpDuotone size={20} />
+            </span>
+          </button> */}
+        </div>
         <div className='flex flex-wrap'>
           {themes.map((theme, index) => {
             const selected = arraysEqual(editorTheme, theme);

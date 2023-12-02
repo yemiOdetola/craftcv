@@ -1,17 +1,17 @@
 import React from 'react';
-import { Popoverlay } from '../common';
 import { EditorFontMenu } from './EditorFontMenu';
 import { EditorSpacingMenu } from './EditorSpacingMenu';
 import { EditorThemeMenu } from './EditorThemeMenu';
-import { useStoreActions, useFontFamily, useEditorTheme } from '@/store';
+import { useFontFamily, useEditorTheme, useMainStore } from '@/store';
 
 export default function Menu() {
-  const { setFontFamily, setEditorTheme } = useStoreActions();
+  const { changeEditorTheme, changeFontFamily } = useMainStore();
+
   const fontFamily = useFontFamily();
   const editorTheme = useEditorTheme();
 
-  const changeFontFamily = (fontFamily: string) => setFontFamily(fontFamily);
-  const changeEditorTheme = (theme: string[]) => setEditorTheme(theme);
+  const setFontFamily = (fontFamily: string) => changeFontFamily(fontFamily);
+  const setEditorTheme = (theme: string[]) => changeEditorTheme(theme);
 
   return (
     <div className='fixed left-0 right-0 top-0 z-10 flex items-center bg-white p-2 shadow-md'>
@@ -21,11 +21,11 @@ export default function Menu() {
             <span className='text-xl font-bold'>Resume Editor</span>
             <div className='ml-4 flex items-center gap-x-4'>
               <EditorFontMenu
-                onChange={changeFontFamily}
+                changeFont={setFontFamily}
                 fontFamily={fontFamily}
               />
               <EditorThemeMenu
-                changeTheme={changeEditorTheme}
+                changeTheme={setEditorTheme}
                 editorTheme={editorTheme}
               />
               <EditorSpacingMenu />

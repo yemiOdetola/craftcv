@@ -29,10 +29,13 @@ const fonts = [
 ];
 interface EditorFontMenuProps {
   fontFamily: string;
-  onChange: (e: string) => void;
+  changeFont: (e: string) => void;
 }
 
-export function EditorFontMenu({ fontFamily, onChange }: EditorFontMenuProps) {
+export function EditorFontMenu({
+  fontFamily,
+  changeFont,
+}: EditorFontMenuProps) {
   return (
     <Popoverlay title='Edit Font' className='lg:max-w-sm'>
       <div className='relative gap-y-3 bg-white p-4'>
@@ -41,7 +44,7 @@ export function EditorFontMenu({ fontFamily, onChange }: EditorFontMenuProps) {
           return (
             <button
               key={`font-${index}`}
-              onClick={() => onChange(font.key)}
+              onClick={() => changeFont(font.key)}
               className={`item flex w-full cursor-pointer border-b py-3 pl-3 ${
                 selected ? 'font-semibold' : ''
               }`}

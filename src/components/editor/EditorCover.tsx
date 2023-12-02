@@ -45,16 +45,14 @@ const cabin: any = localFont({
 
 export default function EditorCover({ className, children }: EditorCoverProps) {
   return (
-    <>
-      <div className={`w-full bg-white py-32`}>
-        <Menu />
-        <div
-          className={`editor-container mx-auto min-h-screen w-full rounded-lg p-8 shadow shadow-gray-400 lg:w-11/12 xl:w-4/6 
+    <div className={`w-full bg-white py-32`}>
+      <Menu />
+      <div
+        className={`editor-container mx-auto min-h-screen w-full rounded-lg p-8 shadow shadow-gray-400 lg:w-11/12 xl:w-4/6 
           ${className} ${ubuntu.variable} ${cabin.variable} ${cfspaceship.variable} ${swansea.variable} ${clearsans.variable} ${hack.variable}`}
-        >
-          {children}
-        </div>
+      >
+        {children}
       </div>
-    </>
+    </div>
   );
 }

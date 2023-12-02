@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { EditorCover, InlineEdit } from '@/components/editor';
 import { Modal } from '@/components/common';

@@ -2,6 +2,8 @@ import { Footer } from '@/components/common/Footer';
 import { Header } from '@/components/common/Header';
 import { Button } from '@/components/common/Button';
 import { Container } from '@/components/common/Container';
+import { useEffect } from 'react';
+import { useMainStore } from '@/store';
 
 export default function Home() {
   const bullets: any = [
