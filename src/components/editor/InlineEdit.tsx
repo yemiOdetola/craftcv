@@ -3,11 +3,12 @@ import React, { useState, useEffect, useRef, MutableRefObject } from 'react';
 interface InlineEditProps {
   text: string;
   className?: string;
+  editable?: boolean;
+  dottedActive?: boolean;
+  style?: any;
   onSave: (val: string) => void;
   onParentClick?: () => void;
-  editable?: boolean;
   onBlurEv?: () => void;
-  style?: any;
 }
 
 const InlineEdit = ({
@@ -15,6 +16,7 @@ const InlineEdit = ({
   text,
   editable,
   style,
+  dottedActive,
   onSave,
   onBlurEv,
   onParentClick,
@@ -35,8 +37,6 @@ const InlineEdit = ({
   };
 
   const handleBlur = () => {
-    console.log('document.activeElement: ', document.activeElement);
-    console.log('inputRef.current: ', inputRef.current);
     const nextActiveElement = document.activeElement;
     if (nextActiveElement && inputRef.current.contains(nextActiveElement)) {
       return;
@@ -51,13 +51,13 @@ const InlineEdit = ({
     setEditedText(e.target.innerText);
   };
 
+  // 
+
   return (
     <div
       className={`p-1 outline-none ${className} 
-      ${
-        editable &&
-        'py-2 underline decoration-dashed decoration-2 underline-offset-4'
-      }`}
+      ${editable && !dottedActive && 'border-b border-gray-600 py-1'}
+      ${editable && dottedActive && 'underline decoration-2 decoration-dashed underline-offset-4'}`}
       style={style}
       ref={inputRef}
       onClick={handleClick}

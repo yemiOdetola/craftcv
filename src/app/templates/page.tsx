@@ -155,7 +155,9 @@ export default function Templates() {
           </Tab.Panels>
         </Tab.Group>
       </Container>
-      <BottomNavigation from='/' to='craft' />
+
+      {/* @TODO */}
+      <BottomNavigation from='/' to='/editor/amit-pachange' />
       <Footer />
     </main>
   );

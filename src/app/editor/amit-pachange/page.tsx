@@ -140,11 +140,12 @@ export default function AmitPachange() {
     text: string,
     className: string,
     editable: boolean,
-    style?: any
+    style?: any,
+    dottedActive?: boolean
   ) => {
     return (
       <InlineEdit
-        {...{ text, editable, className, style }}
+        {...{ text, editable, className, style, dottedActive }}
         onSave={(e) => console.log('CHANGE: ', e)}
       />
     );
@@ -171,7 +172,9 @@ export default function AmitPachange() {
                   {renderInlineEdit(
                     resume.contact[key],
                     'ml-2 truncate',
-                    resume?.contact?.id == editableSection
+                    resume?.contact?.id == editableSection,
+                    null,
+                    true
                   )}
                 </div>
               );
@@ -201,7 +204,9 @@ export default function AmitPachange() {
                 {renderInlineEdit(
                   skill,
                   'ml-2 truncate',
-                  resume?.skills?.id == editableSection
+                  resume?.skills?.id == editableSection,
+                  null,
+                  true
                 )}
               </div>
             );
@@ -225,7 +230,9 @@ export default function AmitPachange() {
               {renderInlineEdit(
                 education?.graduationYear,
                 'font-semibold text-xs text-gray-700',
-                education.id == editableSection
+                education.id == editableSection,
+                null,
+                true
               )}
               {renderInlineEdit(
                 `${education?.award}(${education.degree}), ${education?.school}`,
@@ -236,7 +243,9 @@ export default function AmitPachange() {
               {renderInlineEdit(
                 `Percentage: ${education.gp}`,
                 'font-bold text-xs text-gray-700 mb-2',
-                education.id == editableSection
+                education.id == editableSection,
+                null,
+                true
               )}
             </div>
           ))}
@@ -272,13 +281,16 @@ export default function AmitPachange() {
             {renderInlineEdit(
               `${experience.company} | ${experience.position}`,
               'text-lg font-bold text-gray-700',
-              experience?.id == editableSection
+              experience?.id == editableSection,
+              null,
+              true
             )}
             {renderInlineEdit(
               `${experience.startDate} - ${experience.endDate}`,
               'font-semibold text-sm text-green-700 font-mono my-1',
               experience?.id == editableSection,
-              { color: `#${color1}` }
+              { color: `#${color1}` },
+              true
             )}
             <span className='mb-1 mt-2 text-sm font-semibold text-gray-700'>
               Key Responsibilities
@@ -396,12 +408,14 @@ export default function AmitPachange() {
               onSave={(e) => console.log('CHANGE: ', e)}
               className='font-poppins text-heading text-2xl font-bold sm:text-4xl'
               style={{ color: `#${color2}` }}
+              dottedActive
             />
             <InlineEdit
               className='text-heading'
               editable={resume?.user?.id == editableSection}
               text={resume?.user?.title}
               onSave={(e) => console.log('CHANGE: ', e)}
+              dottedActive
             />
           </div>
         </div>

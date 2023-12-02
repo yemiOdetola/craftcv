@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import Image from 'next/image';
 import { Container, Navbar } from '@/components/common';
-import placeholder from '@/images/placeholder/neil-sims.png';
+import placeholder from '@/assets/images/placeholder/generator.png';
 
 export default function Craft() {
   return (

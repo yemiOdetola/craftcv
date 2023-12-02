@@ -26,10 +26,10 @@ const fonts = [
     title: 'Ronny Siswadi',
     key: 'ronnysiswadi',
   },
-  // {
-  //   title: 'Sunny Spells',
-  //   key: 'sunnyspells',
-  // },
+  {
+    title: 'Sunny Spells',
+    key: 'sunnyspells',
+  },
   {
     title: 'Motley Forces',
     key: 'motleyforces',
