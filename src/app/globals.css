@@ -53,16 +53,24 @@ body {
   font-family: var(--font-cfspaceship);
 }
 
-.text-swansea {
-  font-family: var(--font-swansea);
+.text-ronnysiswadi {
+  font-family: var(--font-ronnysiswadi);
 }
 
-.text-clearsans {
-  font-family: var(--font-clearsans);
+.text-motleyforces {
+  font-family: var(--font-motleyforces);
 }
 
-.text-hack {
-  font-family: var(--font-hack);
+.text-sparkystones {
+  font-family: var(--font-sparkystones);
+}
+
+.text-sunnyspells {
+  font-family: var(--font-sunnyspells);
+}
+
+.text-glitchgoblin {
+  font-family: var(--font-glitchgoblin);
 }
 
 .text-cabin {

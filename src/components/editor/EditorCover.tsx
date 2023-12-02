@@ -19,21 +19,27 @@ const cfspaceship: any = localFont({
   display: 'swap',
 });
 
-const swansea: any = localFont({
-  src: '../../assets/fonts/Swansea.ttf',
-  variable: '--font-swansea',
+const glitchgoblin: any = localFont({
+  src: '../../assets/fonts/GlitchGoblin-Regular.ttf',
+  variable: '--font-glitchgoblin',
   display: 'swap',
 });
 
-const clearsans: any = localFont({
-  src: '../../assets/fonts/ClearSans.ttf',
-  variable: '--font-clearsans',
+const motleyforces: any = localFont({
+  src: '../../assets/fonts/MotleyForces-Regular.ttf',
+  variable: '--font-motleyforces',
   display: 'swap',
 });
 
-const hack: any = localFont({
-  src: '../../assets/fonts/Hack.ttf',
-  variable: '--font-hack',
+const sparkystones: any = localFont({
+  src: '../../assets/fonts/SparkyStones-Regular.ttf',
+  variable: '--font-sparkystones',
+  display: 'swap',
+});
+
+const ronysiswadi: any = localFont({
+  src: '../../assets/fonts/Ronysiswadi-Architect.ttf',
+  variable: '--font-ronysiswadi',
   display: 'swap',
 });
 
@@ -43,13 +49,19 @@ const cabin: any = localFont({
   display: 'swap',
 });
 
+const sunnyspells: any = localFont({
+  src: '../../assets/fonts/SunnySpells-Regular.ttf',
+  variable: '--font-sunnyspells',
+  display: 'swap',
+});
+
 export default function EditorCover({ className, children }: EditorCoverProps) {
   return (
     <div className={`w-full bg-white py-32`}>
       <Menu />
       <div
         className={`editor-container mx-auto min-h-screen w-full rounded-lg p-8 shadow shadow-gray-400 lg:w-11/12 xl:w-4/6 
-          ${className} ${ubuntu.variable} ${cabin.variable} ${cfspaceship.variable} ${swansea.variable} ${clearsans.variable} ${hack.variable}`}
+          ${className} ${ubuntu.variable} ${cabin.variable} ${cfspaceship.variable} ${sparkystones.variable} ${glitchgoblin.variable} ${motleyforces.variable} ${ronysiswadi.variable} ${sunnyspells.variable}`}
       >
         {children}
       </div>

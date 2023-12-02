@@ -11,20 +11,28 @@ const fonts = [
     key: 'cfspaceship',
   },
   {
-    title: 'Swansea',
-    key: 'swansea',
-  },
-  {
-    title: 'Clear Sans',
-    key: 'clearsans',
-  },
-  {
-    title: 'Hack',
-    key: 'hack',
-  },
-  {
     title: 'Cabin',
     key: 'cabin',
+  },
+  {
+    title: 'Glitch Goblin',
+    key: 'glitchgoblin',
+  },
+  {
+    title: 'Sparky Stones',
+    key: 'sparkystones',
+  },
+  {
+    title: 'Ronny Siswadi',
+    key: 'ronnysiswadi',
+  },
+  // {
+  //   title: 'Sunny Spells',
+  //   key: 'sunnyspells',
+  // },
+  {
+    title: 'Motley Forces',
+    key: 'motleyforces',
   },
 ];
 interface EditorFontMenuProps {
@@ -41,13 +49,14 @@ export function EditorFontMenu({
       <div className='relative gap-y-3 bg-white p-4'>
         {fonts.map((font, index) => {
           const selected: boolean = font.key == fontFamily;
+          const isLastItem = index === fonts.length - 1;
           return (
             <button
               key={`font-${index}`}
               onClick={() => changeFont(font.key)}
-              className={`item flex w-full cursor-pointer border-b py-3 pl-3 ${
+              className={`item flex w-full cursor-pointer py-3 pl-3 ${
                 selected ? 'font-semibold' : ''
-              }`}
+              } ${isLastItem ? '' : 'border-b'}`}
             >
               {selected ? (
                 <PiCheckCircleDuotone

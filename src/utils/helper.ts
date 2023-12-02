@@ -9,14 +9,20 @@ export const getFontFamilyStyle = (fontFamily: string) => {
     case fontFamily.includes('cfspaceship'):
       return 'text-spaceship';
 
-    case fontFamily.includes('swansea'):
-      return 'text-swansea';
+    case fontFamily.includes('ronnysiswadi'):
+      return 'text-ronnysiswadi';
 
-    case fontFamily.includes('clear'):
-      return 'text-clearsans';
+    case fontFamily.includes('motleyforces'):
+      return 'text-motleyforces';
 
-    case fontFamily.includes('charger'):
-      return 'text-charger';
+    case fontFamily.includes('sparkystones'):
+      return 'text-sparkystones';
+
+    case fontFamily.includes('sunnyspells'):
+      return 'text-sunnyspells';
+
+    case fontFamily.includes('glitchgoblin'):
+      return 'text-glitchgoblin';
   }
 };
 
