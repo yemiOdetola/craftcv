@@ -61,7 +61,7 @@ export default function AmitPachange() {
                     editable={resume?.contact?.id == editableSection}
                     className='ml-2 truncate'
                     dottedActive
-                    onSave={(e) => handleSaveField('contact', key, e)}
+                    onSave={(val) => handleSaveField('contact', key, val)}
                   />
                 </div>
               );
@@ -93,7 +93,9 @@ export default function AmitPachange() {
                   editable={resume?.skills?.id == editableSection}
                   className='ml-2 truncate'
                   dottedActive
-                  onSave={(e) => handleSaveField('skills', 'set', [index, e])}
+                  onSave={(val) =>
+                    handleSaveField('skills', 'set', [index, val])
+                  }
                 />
               </div>
             );
@@ -121,10 +123,10 @@ export default function AmitPachange() {
                   editable={education.id == editableSection}
                   className='text-xs font-semibold text-gray-700'
                   dottedActive
-                  onSave={(e) =>
+                  onSave={(val) =>
                     handleSaveField('education', key, {
                       ...education,
-                      gradyear: e,
+                      gradyear: val,
                     })
                   }
                 />
@@ -133,10 +135,10 @@ export default function AmitPachange() {
                   editable={education.id == editableSection}
                   className='text-sm font-medium text-green-700'
                   style={{ color: `#${color1}` }}
-                  onSave={(e) =>
+                  onSave={(val) =>
                     handleSaveField('education', key, {
                       ...education,
-                      award: e,
+                      award: val,
                     })
                   }
                 />
@@ -145,10 +147,10 @@ export default function AmitPachange() {
                   editable={education.id == editableSection}
                   className='text-sm font-medium text-green-700'
                   style={{ color: `#${color1}` }}
-                  onSave={(e) =>
+                  onSave={(val) =>
                     handleSaveField('education', key, {
                       ...education,
-                      school: e,
+                      school: val,
                     })
                   }
                 />
@@ -168,7 +170,7 @@ export default function AmitPachange() {
         <InlineEdit
           text={resume?.about?.summary}
           editable={resume?.about?.id == editableSection}
-          onSave={(e) => handleSaveField('about', 'summary', e)}
+          onSave={(val) => handleSaveField('about', 'summary', val)}
         />
       </div>
     );
@@ -254,7 +256,12 @@ export default function AmitPachange() {
                       <InlineEdit
                         text={responsibility}
                         editable={experience.id == editableSection}
-                        onSave={(e) => console.log('jss')}
+                        onSave={(val) =>
+                          saveWithPath(
+                            ['experiences', key, 'responsibilities', index],
+                            val
+                          )
+                        }
                       />
                     </li>
                   )
@@ -284,20 +291,20 @@ export default function AmitPachange() {
                 text={project.title}
                 editable={project?.id == editableSection}
                 className='text-lg font-semibold text-gray-700'
-                onSave={(e) => console.log('jss')}
+                onSave={(val) => console.log('jss')}
               />
               <InlineEdit
                 text={project?.tech.join(', ')}
                 editable={project?.id == editableSection}
                 style={{ color: `#${color1}` }}
                 className='my-2 font-mono text-sm font-semibold text-green-700'
-                onSave={(e) => console.log('jss')}
+                onSave={(val) => console.log('jss')}
               />
               <InlineEdit
                 text={project.description}
                 editable={project?.id == editableSection}
                 className='mb-1 pl-2 text-sm font-normal text-gray-700'
-                onSave={(e) => console.log('jss')}
+                onSave={(val) => console.log('jss')}
               />
             </div>
           );
@@ -313,6 +320,27 @@ export default function AmitPachange() {
     />
   );
 
+  const saveWithPath = (pathArray: any, newValue: any) => {
+    let cres = { ...resume };
+    if (!Array.isArray(pathArray) || pathArray.length === 0) {
+      return cres;
+    }
+
+    const updateRecursively = (obj: any, path: string[], value: string) => {
+      if (path.length === 1) {
+        obj[path[0]] = value;
+        return;
+      }
+      if (!obj[path[0]]) {
+        obj[path[0]] = {};
+      }
+      updateRecursively(obj[path[0]], path.slice(1), value);
+    };
+
+    updateRecursively(cres, pathArray, newValue);
+    updateResume(cres);
+  };
+
   const handleSaveField = (
     section: (typeof sectionKeys)[number],
     fieldId: string,
@@ -321,12 +349,16 @@ export default function AmitPachange() {
     let cloneResume = { ...resume };
     let currentField = cloneResume[section][fieldId];
     if (typeof currentField == 'string') {
+      console.log('as string');
       cloneResume[section][fieldId] = value;
-    } else if (typeof value === 'object' && !Array.isArray(currentField)) {
-      cloneResume[section][fieldId] = value;
+      // } else if (typeof value === 'object' && !Array.isArray(currentField)) {
+      //   console.log('as object');
+      //   cloneResume[section][fieldId] = value;
     } else if (typeof value === 'object' && Array.isArray(currentField)) {
+      console.log('as array');
       const [index, val] = value;
-      cloneResume[section][fieldId][index] = val;
+      console.log(index, val);
+      // cloneResume[section][fieldId][index] = val;
     }
     updateResume(cloneResume);
   };
