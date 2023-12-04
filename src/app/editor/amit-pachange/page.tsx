@@ -5,7 +5,12 @@ import { EditorCover, InlineEdit } from '@/components/editor';
 import { Modal } from '@/components/common';
 import placeholder from '@/assets/images/placeholder/generator.png';
 import { getIconByType } from '../Icons';
-import { useEditorTheme, useFontFamily } from '@/store';
+import {
+  useEditorTheme,
+  useFontFamily,
+  useResume,
+  useMainStore,
+} from '@/store';
 import { getFontFamilyStyle } from '@/utils/helper';
 interface Experience {
   id: string;
@@ -21,135 +26,17 @@ interface Resume {
 export default function AmitPachange() {
   const fontFamily = useFontFamily();
   const editorTheme = useEditorTheme();
+  const { updateResume } = useMainStore();
+  const [resume, setResume] = useState(useResume());
   const [color1, color2] = editorTheme;
   const [isOpen, setIsOpen] = useState(false);
   const [editableSection, setEditableSectionId] = useState<string | null>(null);
-  const [resume, setResume] = useState<any>({
-    user: {
-      id: 'user',
-      fullname: "John 'Junior' Doe",
-      title: 'Web Developer',
-    },
-    about: {
-      id: 'about',
-      title: 'About me',
-      summary:
-        'Passionate and detail-oriented Web Developer with hands-on experience in designing and implementing web applications. Adept at collaborating with cross-functional teams to drive project success.',
-    },
-    contact: {
-      id: 'contact',
-      email: 'john.doe@example.com',
-      phone: '+123 456 7890',
-      website: 'www.johndoe.com',
-      linkedin: 'linkedin.com/in/johndoe',
-      github: 'github.com/johndoe',
-    },
-    education: [
-      {
-        id: 'education-1',
-        degree: 'Computer Science',
-        award: 'Bachelor of Science',
-        school: 'University XYZ',
-        graduationYear: '2020',
-        gp: 4.33,
-      },
-      {
-        id: 'education-2',
-        degree: 'Computer Science',
-        award: 'Bachelor of Science',
-        school: 'University XYZ',
-        graduationYear: '2020',
-        gp: 4.33,
-      },
-      {
-        id: 'education-3',
-        degree: 'Computer Science',
-        award: 'Bachelor of Science',
-        school: 'University XYZ',
-        graduationYear: '2020',
-        gp: 4.33,
-      },
-    ],
-    experiences: [
-      {
-        id: 'experience-0',
-        position: 'Frontend Developer',
-        company: 'Tech Solutions Inc.',
-        startDate: 'June 2020',
-        endDate: 'Present',
-        responsibilities: [
-          'Develop and maintain responsive user interfaces for web applications.',
-          'Collaborate with backend developers to integrate user-facing elements with server-side logic.',
-          'Optimize application performance and troubleshoot issues.',
-        ],
-      },
-      {
-        id: 'experience-1',
-        position: 'Junior Web Developer',
-        company: 'CodeCrafters LLC',
-        startDate: 'January 2019',
-        endDate: 'May 2020',
-        responsibilities: [
-          'Assisted in the development of new features for client websites.',
-          'Collaborated with the design team to implement user-friendly interfaces.',
-          'Participated in code reviews and testing processes.',
-        ],
-      },
-      {
-        id: 'experience-2',
-        position: 'Junior Web Developer',
-        company: 'CodeCrafters LLC',
-        startDate: 'January 2019',
-        endDate: 'May 2020',
-        responsibilities: [
-          'Assisted in the development of new features for client websites.',
-          'Collaborated with the design team to implement user-friendly interfaces.',
-          'Participated in code reviews and testing processes.',
-        ],
-      },
-    ],
-    projects: [
-      {
-        id: 'project-1',
-        title: 'Used Books mobile app',
-        description:
-          'A platform to sell as well as to buy used books only for PCCoE College due to this reuse of books will be there beneficial for environment also indirectly helps increase communication between juniors and seniors',
-        url: 'https://google.com',
-        tech: ['Javascript', 'HTML', 'SCSS', 'Browsify'],
-      },
-      {
-        id: 'project-2',
-        title: 'Parking Automation System',
-        description:
-          'A web application which helps you to book your slot for your car just like booking a movie ticket from home.',
-        url: 'https://google.com',
-        tech: ['Javascript', 'HTML', 'SCSS', 'Browsify'],
-      },
-    ],
-    skills: {
-      id: 'skills',
-      set: ['React', 'HTML, CSS, Javascript', 'Tailwind CSS', 'Git'],
-    },
-  });
-
-  const toggleModal = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const renderInlineEdit = (
-    text: string,
-    className: string,
-    editable: boolean,
-    style?: any,
-    dottedActive?: boolean
-  ) => {
-    return (
-      <InlineEdit
-        {...{ text, editable, className, style, dottedActive }}
-        onSave={(e) => console.log('CHANGE: ', e)}
-      />
-    );
-  };
+  const sectionKeys = Object.keys(resume);
+  interface OnsavePayload {
+    section: (typeof sectionKeys)[number];
+    fieldId: string;
+    value: string | number;
+  }
 
   const renderContactInfo = () => {
     return (
@@ -169,13 +56,13 @@ export default function AmitPachange() {
                   <span className='font-sm w-6 text-gray-700'>
                     {getIconByType(key)}
                   </span>
-                  {renderInlineEdit(
-                    resume.contact[key],
-                    'ml-2 truncate',
-                    resume?.contact?.id == editableSection,
-                    null,
-                    true
-                  )}
+                  <InlineEdit
+                    text={resume.contact[key]}
+                    editable={resume?.contact?.id == editableSection}
+                    className='ml-2 truncate'
+                    dottedActive
+                    onSave={(e) => handleSaveField('contact', key, e)}
+                  />
                 </div>
               );
             }
@@ -201,13 +88,13 @@ export default function AmitPachange() {
                 <a className='font-sm w-6 text-gray-700'>
                   {getIconByType(skill)}
                 </a>
-                {renderInlineEdit(
-                  skill,
-                  'ml-2 truncate',
-                  resume?.skills?.id == editableSection,
-                  null,
-                  true
-                )}
+                <InlineEdit
+                  text={skill}
+                  editable={resume?.skills?.id == editableSection}
+                  className='ml-2 truncate'
+                  dottedActive
+                  onSave={(e) => handleSaveField('skills', 'set', [index, e])}
+                />
               </div>
             );
           }
@@ -220,35 +107,54 @@ export default function AmitPachange() {
     return (
       <div className='flex flex-col space-y-1'>
         {resume.education &&
-          resume.education.map((education: any, index: number) => (
-            <div
-              className='flex flex-col'
-              key={`resume-education-${index}`}
-              onClick={() => setEditableSectionId(education.id)}
-              onBlur={(e) => editBlurEvent(e)}
-            >
-              {renderInlineEdit(
-                education?.graduationYear,
-                'font-semibold text-xs text-gray-700',
-                education.id == editableSection,
-                null,
-                true
-              )}
-              {renderInlineEdit(
-                `${education?.award}(${education.degree}), ${education?.school}`,
-                'text-sm font-medium text-green-700',
-                education.id == editableSection,
-                { color: `#${color1}` }
-              )}
-              {renderInlineEdit(
-                `Percentage: ${education.gp}`,
-                'font-bold text-xs text-gray-700 mb-2',
-                education.id == editableSection,
-                null,
-                true
-              )}
-            </div>
-          ))}
+          Object.keys(resume.education).map((key: any, index: number) => {
+            const education = resume.education[key];
+            return (
+              <div
+                className='flex flex-col'
+                key={`resume-education-${index}`}
+                onClick={() => setEditableSectionId(education.id)}
+                onBlur={(e) => editBlurEvent(e)}
+              >
+                <InlineEdit
+                  text={education?.gradyear}
+                  editable={education.id == editableSection}
+                  className='text-xs font-semibold text-gray-700'
+                  dottedActive
+                  onSave={(e) =>
+                    handleSaveField('education', key, {
+                      ...education,
+                      gradyear: e,
+                    })
+                  }
+                />
+                <InlineEdit
+                  text={education?.award}
+                  editable={education.id == editableSection}
+                  className='text-sm font-medium text-green-700'
+                  style={{ color: `#${color1}` }}
+                  onSave={(e) =>
+                    handleSaveField('education', key, {
+                      ...education,
+                      award: e,
+                    })
+                  }
+                />
+                <InlineEdit
+                  text={education?.school}
+                  editable={education.id == editableSection}
+                  className='text-sm font-medium text-green-700'
+                  style={{ color: `#${color1}` }}
+                  onSave={(e) =>
+                    handleSaveField('education', key, {
+                      ...education,
+                      school: e,
+                    })
+                  }
+                />
+              </div>
+            );
+          })}
       </div>
     );
   };
@@ -259,92 +165,143 @@ export default function AmitPachange() {
         onClick={() => setEditableSectionId(resume?.about?.id)}
         onBlur={(e) => editBlurEvent(e)}
       >
-        {renderInlineEdit(
-          resume?.about?.summary,
-          '',
-          resume?.about?.id == editableSection
-        )}
+        <InlineEdit
+          text={resume?.about?.summary}
+          editable={resume?.about?.id == editableSection}
+          onSave={(e) => handleSaveField('about', 'summary', e)}
+        />
       </div>
     );
   };
 
+  // @TODO
   const renderExperiences = () => {
     return (
       <div className='flex flex-col'>
-        {resume?.experiences.map((experience: any, index: number) => (
-          <div
-            className='mb-6 flex flex-col'
-            key={`resume-experience-${index}`}
-            onClick={() => setEditableSectionId(experience?.id)}
-            onBlur={(e) => editBlurEvent(e)}
-          >
-            {renderInlineEdit(
-              `${experience.company} | ${experience.position}`,
-              'text-lg font-bold text-gray-700',
-              experience?.id == editableSection,
-              null,
-              true
-            )}
-            {renderInlineEdit(
-              `${experience.startDate} - ${experience.endDate}`,
-              'font-semibold text-sm text-green-700 font-mono my-1',
-              experience?.id == editableSection,
-              { color: `#${color1}` },
-              true
-            )}
-            <span className='mb-1 mt-2 text-sm font-semibold text-gray-700'>
-              Key Responsibilities
-            </span>
-            <ul className='list-disc space-y-1 pl-4 text-sm'>
-              {experience?.responsibilities.map(
-                (responsibility: string, index: number) => (
-                  <li key={`proj-responsibility-${index}`}>
-                    {' '}
-                    {renderInlineEdit(
-                      responsibility,
-                      '',
-                      experience?.id == editableSection
-                    )}
-                  </li>
-                )
-              )}
-              <li>Deliverying highly efficient solutions</li>
-              <li>Solving critical bugs</li>
-            </ul>
-          </div>
-        ))}
+        {Object.keys(resume.experiences).map((key: any, index: number) => {
+          const experience = resume.experiences[key];
+          return (
+            <div
+              className='mb-6 flex flex-col'
+              key={`resume-experience-${index}`}
+              onClick={() => setEditableSectionId(experience?.id)}
+              onBlur={(e) => editBlurEvent(e)}
+            >
+              <div className='flex items-center justify-normal'>
+                <InlineEdit
+                  text={experience.company}
+                  className='text-lg font-bold text-gray-700'
+                  editable={experience.id == editableSection}
+                  dottedActive
+                  onSave={(val) =>
+                    handleSaveField('experiences', key, {
+                      ...experience,
+                      company: val,
+                    })
+                  }
+                />
+                <span> | </span>
+                <InlineEdit
+                  text={experience.position}
+                  className='text-lg font-bold text-gray-700'
+                  editable={experience.id == editableSection}
+                  dottedActive
+                  onSave={(val) =>
+                    handleSaveField('experiences', key, {
+                      ...experience,
+                      position: val,
+                    })
+                  }
+                />
+              </div>
+              <div className='flex items-center justify-normal'>
+                <InlineEdit
+                  text={experience.startDate}
+                  className='my-1 font-mono text-sm font-semibold text-green-700'
+                  editable={experience.id == editableSection}
+                  style={{ color: `#${color1}` }}
+                  dottedActive
+                  onSave={(val) =>
+                    handleSaveField('experiences', key, {
+                      ...experience,
+                      startDate: val,
+                    })
+                  }
+                />
+                <span> - </span>
+                <InlineEdit
+                  text={experience.endDate}
+                  className='my-1 font-mono text-sm font-semibold text-green-700'
+                  editable={experience.id == editableSection}
+                  style={{ color: `#${color1}` }}
+                  dottedActive
+                  onSave={(val) =>
+                    handleSaveField('experiences', key, {
+                      ...experience,
+                      endDate: val,
+                    })
+                  }
+                />
+              </div>
+              <span className='mb-1 mt-2 text-sm font-semibold text-gray-700'>
+                Key Responsibilities
+              </span>
+              <ul className='list-disc space-y-1 pl-4 text-sm'>
+                {experience?.responsibilities.map(
+                  (responsibility: string, index: number) => (
+                    <li key={`proj-responsibility-${index}`}>
+                      {' '}
+                      <InlineEdit
+                        text={responsibility}
+                        editable={experience.id == editableSection}
+                        onSave={(e) => console.log('jss')}
+                      />
+                    </li>
+                  )
+                )}
+              </ul>
+            </div>
+          );
+        })}
       </div>
     );
   };
 
-  const renderProject = () => {
+  // @TODO
+  const renderProjects = () => {
     return (
       <div className='flex flex-col'>
-        {resume?.projects.map((project: any, index: number) => (
-          <div
-            className='mb-4 flex flex-col'
-            key={`resume-project-${index}`}
-            onClick={() => setEditableSectionId(project?.id)}
-            onBlur={(e) => editBlurEvent(e)}
-          >
-            {renderInlineEdit(
-              project.title,
-              'text-lg font-semibold text-gray-700',
-              project?.id == editableSection
-            )}
-            {renderInlineEdit(
-              project?.tech.join(', '),
-              'text-sm my-2 font-semibold text-green-700 font-mono',
-              project?.id == editableSection,
-              { color: `#${color1}` }
-            )}
-            {renderInlineEdit(
-              project.description,
-              'font-normal text-sm text-gray-700 mb-1 pl-2',
-              project?.id == editableSection
-            )}
-          </div>
-        ))}
+        {Object.keys(resume.projects).map((key: any, index: number) => {
+          const project = resume.projects[key];
+          return (
+            <div
+              className='mb-4 flex flex-col'
+              key={`resume-project-${index}`}
+              onClick={() => setEditableSectionId(project?.id)}
+              onBlur={(e) => editBlurEvent(e)}
+            >
+              <InlineEdit
+                text={project.title}
+                editable={project?.id == editableSection}
+                className='text-lg font-semibold text-gray-700'
+                onSave={(e) => console.log('jss')}
+              />
+              <InlineEdit
+                text={project?.tech.join(', ')}
+                editable={project?.id == editableSection}
+                style={{ color: `#${color1}` }}
+                className='my-2 font-mono text-sm font-semibold text-green-700'
+                onSave={(e) => console.log('jss')}
+              />
+              <InlineEdit
+                text={project.description}
+                editable={project?.id == editableSection}
+                className='mb-1 pl-2 text-sm font-normal text-gray-700'
+                onSave={(e) => console.log('jss')}
+              />
+            </div>
+          );
+        })}
       </div>
     );
   };
@@ -357,21 +314,21 @@ export default function AmitPachange() {
   );
 
   const handleSaveField = (
-    section: any,
+    section: (typeof sectionKeys)[number],
     fieldId: string,
-    updatedValue: string | number
+    value: any
   ) => {
-    setResume((prevResume: any) => ({
-      ...prevResume,
-      [section]: prevResume[section].map((field: any) => {
-        // if (field.id === fieldId) {
-        //   field = { ...field, value: updatedValue }
-        // } else {
-        //   return
-        // }
-        field.id === fieldId ? { ...field, value: updatedValue } : field;
-      }),
-    }));
+    let cloneResume = { ...resume };
+    let currentField = cloneResume[section][fieldId];
+    if (typeof currentField == 'string') {
+      cloneResume[section][fieldId] = value;
+    } else if (typeof value === 'object' && !Array.isArray(currentField)) {
+      cloneResume[section][fieldId] = value;
+    } else if (typeof value === 'object' && Array.isArray(currentField)) {
+      const [index, val] = value;
+      cloneResume[section][fieldId][index] = val;
+    }
+    updateResume(cloneResume);
   };
 
   const editBlurEvent = (e: React.FocusEvent<HTMLDivElement, Element>) => {
@@ -405,7 +362,7 @@ export default function AmitPachange() {
             <InlineEdit
               text={resume?.user?.fullname}
               editable={resume?.user?.id == editableSection}
-              onSave={(e) => console.log('CHANGE: ', e)}
+              onSave={(val) => handleSaveField('user', 'fullname', val)}
               className='font-poppins text-heading text-2xl font-bold sm:text-4xl'
               style={{ color: `#${color2}` }}
               dottedActive
@@ -414,7 +371,7 @@ export default function AmitPachange() {
               className='text-heading'
               editable={resume?.user?.id == editableSection}
               text={resume?.user?.title}
-              onSave={(e) => console.log('CHANGE: ', e)}
+              onSave={(val) => handleSaveField('user', 'title', val)}
               dottedActive
             />
           </div>
@@ -464,13 +421,13 @@ export default function AmitPachange() {
                   Projects
                 </h2>
                 {renderUnderline()}
-                {renderProject()}
+                {renderProjects()}
               </div>
             </div>
           </div>
         </div>
       </EditorCover>
-      <Modal {...{ isOpen, toggleModal }} />
+      {/* <Modal {...{ isOpen, toggleModal }} /> */}
     </>
   );
 }
