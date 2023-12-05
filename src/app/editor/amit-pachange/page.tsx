@@ -12,6 +12,7 @@ import {
   useMainStore,
 } from '@/store';
 import { getFontFamilyStyle } from '@/utils/helper';
+import LineEdit from '@/components/editor/LineEdit';
 interface Experience {
   id: string;
   title: string;
@@ -27,7 +28,7 @@ export default function AmitPachange() {
   const fontFamily = useFontFamily();
   const editorTheme = useEditorTheme();
   const { updateResume } = useMainStore();
-  const [resume, setResume] = useState(useResume());
+  const [resume] = useState(useResume());
   const [color1, color2] = editorTheme;
   const [isOpen, setIsOpen] = useState(false);
   const [editableSection, setEditableSectionId] = useState<string | null>(null);
@@ -61,7 +62,7 @@ export default function AmitPachange() {
                     editable={resume?.contact?.id == editableSection}
                     className='ml-2 truncate'
                     dottedActive
-                    onSave={(val) => handleSaveField('contact', key, val)}
+                    onSave={(val) => saveWithPath(['contact', key], val)}
                   />
                 </div>
               );
@@ -93,9 +94,7 @@ export default function AmitPachange() {
                   editable={resume?.skills?.id == editableSection}
                   className='ml-2 truncate'
                   dottedActive
-                  onSave={(val) =>
-                    handleSaveField('skills', 'set', [index, val])
-                  }
+                  onSave={(val) => saveWithPath(['skills', 'set', index], val)}
                 />
               </div>
             );
@@ -124,7 +123,7 @@ export default function AmitPachange() {
                   className='text-xs font-semibold text-gray-700'
                   dottedActive
                   onSave={(val) =>
-                    handleSaveField('education', key, {
+                    saveWithPath(['education', key], {
                       ...education,
                       gradyear: val,
                     })
@@ -136,7 +135,7 @@ export default function AmitPachange() {
                   className='text-sm font-medium text-green-700'
                   style={{ color: `#${color1}` }}
                   onSave={(val) =>
-                    handleSaveField('education', key, {
+                    saveWithPath(['education', key], {
                       ...education,
                       award: val,
                     })
@@ -148,7 +147,7 @@ export default function AmitPachange() {
                   className='text-sm font-medium text-green-700'
                   style={{ color: `#${color1}` }}
                   onSave={(val) =>
-                    handleSaveField('education', key, {
+                    saveWithPath(['education', key], {
                       ...education,
                       school: val,
                     })
@@ -170,13 +169,12 @@ export default function AmitPachange() {
         <InlineEdit
           text={resume?.about?.summary}
           editable={resume?.about?.id == editableSection}
-          onSave={(val) => handleSaveField('about', 'summary', val)}
+          onSave={(val) => saveWithPath(['about', 'summary'], val)}
         />
       </div>
     );
   };
 
-  // @TODO
   const renderExperiences = () => {
     return (
       <div className='flex flex-col'>
@@ -196,7 +194,7 @@ export default function AmitPachange() {
                   editable={experience.id == editableSection}
                   dottedActive
                   onSave={(val) =>
-                    handleSaveField('experiences', key, {
+                    saveWithPath(['experiences', key], {
                       ...experience,
                       company: val,
                     })
@@ -209,7 +207,7 @@ export default function AmitPachange() {
                   editable={experience.id == editableSection}
                   dottedActive
                   onSave={(val) =>
-                    handleSaveField('experiences', key, {
+                    saveWithPath(['experiences', key], {
                       ...experience,
                       position: val,
                     })
@@ -224,7 +222,7 @@ export default function AmitPachange() {
                   style={{ color: `#${color1}` }}
                   dottedActive
                   onSave={(val) =>
-                    handleSaveField('experiences', key, {
+                    saveWithPath(['experiences', key], {
                       ...experience,
                       startDate: val,
                     })
@@ -238,7 +236,7 @@ export default function AmitPachange() {
                   style={{ color: `#${color1}` }}
                   dottedActive
                   onSave={(val) =>
-                    handleSaveField('experiences', key, {
+                    saveWithPath(['experiences', key], {
                       ...experience,
                       endDate: val,
                     })
@@ -251,11 +249,12 @@ export default function AmitPachange() {
               <ul className='list-disc space-y-1 pl-4 text-sm'>
                 {experience?.responsibilities.map(
                   (responsibility: string, index: number) => (
-                    <li key={`proj-responsibility-${index}`}>
+                    <li key={`exp-responsibility-${index}`}>
                       {' '}
-                      <InlineEdit
+                      <LineEdit
                         text={responsibility}
                         editable={experience.id == editableSection}
+                        id={`responsibility-${index}`}
                         onSave={(val) =>
                           saveWithPath(
                             ['experiences', key, 'responsibilities', index],
@@ -274,7 +273,6 @@ export default function AmitPachange() {
     );
   };
 
-  // @TODO
   const renderProjects = () => {
     return (
       <div className='flex flex-col'>
@@ -291,20 +289,29 @@ export default function AmitPachange() {
                 text={project.title}
                 editable={project?.id == editableSection}
                 className='text-lg font-semibold text-gray-700'
-                onSave={(val) => console.log('jss')}
+                onSave={(val) =>
+                  saveWithPath(['projects', key], { ...project, title: val })
+                }
               />
               <InlineEdit
-                text={project?.tech.join(', ')}
+                text={project?.tech}
                 editable={project?.id == editableSection}
                 style={{ color: `#${color1}` }}
                 className='my-2 font-mono text-sm font-semibold text-green-700'
-                onSave={(val) => console.log('jss')}
+                onSave={(val) =>
+                  saveWithPath(['projects', key], { ...project, tech: val })
+                }
               />
               <InlineEdit
                 text={project.description}
                 editable={project?.id == editableSection}
                 className='mb-1 pl-2 text-sm font-normal text-gray-700'
-                onSave={(val) => console.log('jss')}
+                onSave={(val) =>
+                  saveWithPath(['projects', key], {
+                    ...project,
+                    description: val,
+                  })
+                }
               />
             </div>
           );
@@ -349,16 +356,9 @@ export default function AmitPachange() {
     let cloneResume = { ...resume };
     let currentField = cloneResume[section][fieldId];
     if (typeof currentField == 'string') {
-      console.log('as string');
       cloneResume[section][fieldId] = value;
-      // } else if (typeof value === 'object' && !Array.isArray(currentField)) {
-      //   console.log('as object');
-      //   cloneResume[section][fieldId] = value;
-    } else if (typeof value === 'object' && Array.isArray(currentField)) {
-      console.log('as array');
-      const [index, val] = value;
-      console.log(index, val);
-      // cloneResume[section][fieldId][index] = val;
+    } else if (typeof value === 'object' && !Array.isArray(currentField)) {
+      cloneResume[section][fieldId] = value;
     }
     updateResume(cloneResume);
   };
@@ -394,7 +394,7 @@ export default function AmitPachange() {
             <InlineEdit
               text={resume?.user?.fullname}
               editable={resume?.user?.id == editableSection}
-              onSave={(val) => handleSaveField('user', 'fullname', val)}
+              onSave={(val) => saveWithPath(['user', 'fullname'], val)}
               className='font-poppins text-heading text-2xl font-bold sm:text-4xl'
               style={{ color: `#${color2}` }}
               dottedActive
@@ -403,7 +403,7 @@ export default function AmitPachange() {
               className='text-heading'
               editable={resume?.user?.id == editableSection}
               text={resume?.user?.title}
-              onSave={(val) => handleSaveField('user', 'title', val)}
+              onSave={(val) => saveWithPath(['user', 'title'], val)}
               dottedActive
             />
           </div>
@@ -459,7 +459,6 @@ export default function AmitPachange() {
           </div>
         </div>
       </EditorCover>
-      {/* <Modal {...{ isOpen, toggleModal }} /> */}
     </>
   );
 }

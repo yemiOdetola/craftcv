@@ -1,35 +1,32 @@
-import React, {
-  useState,
-  useEffect,
-  useRef,
-  MutableRefObject,
-  KeyboardEvent,
-} from 'react';
+import React, { useState, useEffect, useRef, MutableRefObject } from 'react';
+import { useResume } from '@/store';
 
-interface InlineEditProps {
+interface LineEditProps {
   text: string;
   className?: string;
   editable?: boolean;
   dottedActive?: boolean;
   style?: any;
+  id?: any;
   onSave: (val: string) => void;
   onParentClick?: () => void;
   onBlurEv?: () => void;
 }
 
-const InlineEdit = ({
+const LineEdit = ({
   className,
   text,
   editable,
   style,
   dottedActive,
   onSave,
-  onBlurEv,
+  id,
   onParentClick,
-}: InlineEditProps) => {
+}: LineEditProps) => {
   const [isEditing, setEditing] = useState(false);
   const [editedText, setEditedText] = useState(text);
   const inputRef: MutableRefObject<any> = useRef(null);
+  const resume = useResume();
 
   useEffect(() => {
     if (isEditing && inputRef.current) {
@@ -48,29 +45,46 @@ const InlineEdit = ({
       return;
     }
     setEditing(false);
-    onBlurEv && onBlurEv();
     onSave(editedText);
   };
 
-  // const handleKeyDown = (e: any) => {
-  //   console.log('e: ', e);
-  //   setEditedText(e.target.innerHTML);
-  //   if (e.key === 'Enter') {
-  //     e.preventDefault();
-  //     console.log('enter key is pressed');
-  //   } else if (e.key === 'Backspace') {
-  //     if (editedText === '') {
-  //       e.preventDefault();
-  //     }
-  //   }
-  // };
+  const handleKeyDownInput = (rms: any, pathArray: any[]) => {
+    if (!Array.isArray(pathArray) || pathArray.length === 0) {
+      return rms;
+    }
+    const updateRecursively = (obj: any, path: string[]) => {
+      if (path.length === 1) {
+        obj[path[0]].push('');
+        return;
+      }
+      if (!obj[path[0]]) {
+        obj[path[0]] = {};
+      }
+      updateRecursively(obj[path[0]], path.slice(1));
+    };
+    updateRecursively(rms, pathArray);
+    onSave(editedText);
+    setTimeout(() => {
+      const newFieldIndex =
+        rms.experiences.experience0.responsibilities.length - 1;
+      const newFieldRef = document.getElementById(
+        `responsibility-${newFieldIndex}`
+      );
+      if (newFieldRef) {
+        newFieldRef.focus();
+      }
+    }, 100);
+  };
 
   const handleKeyDown = (e: any) => {
     if (e.key === 'Enter') {
       e.preventDefault();
       console.log('enter key is prsed');
-      onSave(editedText);
-      setEditing(false);
+      handleKeyDownInput(resume, [
+        'experiences',
+        'experience0',
+        'responsibilities',
+      ]);
     } else if (e.key === 'Backspace' && editedText === '') {
       e.preventDefault();
     } else {
@@ -94,6 +108,7 @@ const InlineEdit = ({
       onClick={handleClick}
       onKeyDown={handleKeyDown}
       onBlur={handleBlur}
+      id={id}
       contentEditable={editable}
       suppressContentEditableWarning={true}
     >
@@ -102,4 +117,4 @@ const InlineEdit = ({
   );
 };
 
-export default InlineEdit;
+export default LineEdit;

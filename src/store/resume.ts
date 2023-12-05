@@ -86,7 +86,7 @@ export const amitpachange = {
       description:
         'A platform to sell as well as to buy used books only for PCCoE College due to this reuse of books will be there beneficial for environment also indirectly helps increase communication between juniors and seniors',
       url: 'https://google.com',
-      tech: ['Javascript', 'HTML', 'SCSS', 'Browsify'],
+      tech: 'Javascript, HTML, SCSS, Browsify',
     },
     project2: {
       id: 'project-2',
@@ -94,7 +94,7 @@ export const amitpachange = {
       description:
         'A web application which helps you to book your slot for your car just like booking a movie ticket from home.',
       url: 'https://google.com',
-      tech: ['Javascript', 'HTML', 'SCSS', 'Browsify'],
+      tech: 'Javascript, HTML, SCSS, Browsify',
     },
   },
   skills: {
