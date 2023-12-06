@@ -99,6 +99,6 @@ export const amitpachange = {
   },
   skills: {
     id: 'skills',
-    set: ['React', 'HTML, CSS, Javascript', 'Tailwind CSS', 'Git'],
+    skillset: ['React', 'HTML, CSS, Javascript', 'Tailwind CSS', 'Git'],
   },
 };

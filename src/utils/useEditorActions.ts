@@ -1,6 +1,6 @@
 import { useMainStore, useResume } from '@/store';
 
-export const useResumeActions = () => {
+export const useEditorActions = () => {
   const resume = useResume();
   const { updateResume } = useMainStore();
   const sectionKeys = Object.keys(resume);
@@ -24,9 +24,9 @@ export const useResumeActions = () => {
     updateResume(cres);
   };
 
-  const addNewInputField = (rms: any, pathArray: string[]) => {
+  const addNewInputField = (pathArray: string[]) => {
     if (!Array.isArray(pathArray) || pathArray.length === 0) {
-      return rms;
+      return resume;
     }
     const updateRecursively = (obj: any, path: string[]) => {
       if (path.length === 1) {
@@ -38,18 +38,24 @@ export const useResumeActions = () => {
       }
       updateRecursively(obj[path[0]], path.slice(1));
     };
-    updateRecursively(rms, pathArray);
+    updateRecursively(resume, pathArray);
     setTimeout(() => {
-      const newFieldIndex =
-        rms.experiences.experience0.responsibilities.length - 1;
+      const lastSection = pathArray[pathArray.length - 1];
+      let parentSections = resume;
+      for (let i = 0; i < pathArray.length - 1; i++) {
+        parentSections = parentSections[pathArray[i]];
+        console.log('parentSections: ', parentSections);
+      }
+
+      const newFieldIndex = parentSections[lastSection].length - 1;
+      console.log('lastSection:newFieldIndex: ', lastSection, newFieldIndex);
       const newFieldRef = document.getElementById(
-        `responsibility-${newFieldIndex}`
+        `${lastSection}-${newFieldIndex}`
       );
       if (newFieldRef) {
         newFieldRef.focus();
       }
     }, 100);
-    //TODO onSave(editedText);
   };
 
   const handleSaveField = (

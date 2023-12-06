@@ -2,18 +2,11 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { EditorCover, InlineEdit } from '@/components/editor';
-import { Modal } from '@/components/common';
 import placeholder from '@/assets/images/placeholder/generator.png';
 import { getIconByType } from '../Icons';
-import {
-  useEditorTheme,
-  useFontFamily,
-  useResume,
-  useMainStore,
-} from '@/store';
+import { useEditorTheme, useFontFamily, useResume } from '@/store';
 import { getFontFamilyStyle } from '@/utils/helper';
-import LineEdit from '@/components/editor/LineEdit';
-import { useResumeActions } from '@/utils/useResumeActions';
+import { useEditorActions } from '@/utils/useEditorActions';
 interface Experience {
   id: string;
   title: string;
@@ -21,14 +14,10 @@ interface Experience {
   duration: string;
 }
 
-interface Resume {
-  experiences: Experience[];
-}
-
 export default function AmitPachange() {
   const fontFamily = useFontFamily();
   const editorTheme = useEditorTheme();
-  const { saveWithPath } = useResumeActions();
+  const { saveWithPath } = useEditorActions();
   const [resume] = useState(useResume());
   const [color1, color2] = editorTheme;
   const [editableSection, setEditableSectionId] = useState<string | null>(null);
@@ -54,7 +43,7 @@ export default function AmitPachange() {
                   <InlineEdit
                     text={resume.contact[key]}
                     editable={resume?.contact?.id == editableSection}
-                    className='ml-2 truncate'
+                    className='ml-2'
                     dottedActive
                     onSave={(val) => saveWithPath(['contact', key], val)}
                   />
@@ -73,7 +62,7 @@ export default function AmitPachange() {
         onClick={() => setEditableSectionId(resume?.skills?.id)}
         onBlur={(e) => editBlurEvent(e)}
       >
-        {resume?.skills?.set.map((skill: string, index: number) => {
+        {resume?.skills?.skillset.map((skill: string, index: number) => {
           if (skill !== 'skills') {
             return (
               <div
@@ -86,9 +75,13 @@ export default function AmitPachange() {
                 <InlineEdit
                   text={skill}
                   editable={resume?.skills?.id == editableSection}
-                  className='ml-2 truncate'
+                  className='ml-2'
+                  newItemPath={['skills', 'skillset']}
+                  id={`skillset-${index}`}
                   dottedActive
-                  onSave={(val) => saveWithPath(['skills', 'set', index], val)}
+                  onSave={(val) =>
+                    saveWithPath(['skills', 'skillset', index], val)
+                  }
                 />
               </div>
             );
@@ -245,10 +238,11 @@ export default function AmitPachange() {
                   (responsibility: string, index: number) => (
                     <li key={`exp-responsibility-${index}`}>
                       {' '}
-                      <LineEdit
+                      <InlineEdit
                         text={responsibility}
                         editable={experience.id == editableSection}
-                        id={`responsibility-${index}`}
+                        id={`responsibilities-${index}`}
+                        newItemPath={['experiences', key, 'responsibilities']}
                         onSave={(val) =>
                           saveWithPath(
                             ['experiences', key, 'responsibilities', index],
@@ -322,7 +316,7 @@ export default function AmitPachange() {
   );
 
   const editBlurEvent = (e: React.FocusEvent<HTMLDivElement, Element>) => {
-    // Check if the related target is null
+    //TODO: Check if the related target is null or undefined
     if (e.relatedTarget === null) {
       setEditableSectionId(null);
     }

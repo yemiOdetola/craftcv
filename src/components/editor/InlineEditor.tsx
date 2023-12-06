@@ -1,16 +1,13 @@
-import React, {
-  useState,
-  useEffect,
-  useRef,
-  MutableRefObject,
-  KeyboardEvent,
-} from 'react';
+import React, { useState, useEffect, useRef, MutableRefObject } from 'react';
+import { useEditorActions } from '@/utils/useEditorActions';
 
 interface InlineEditProps {
   text: string;
   className?: string;
+  id?: string;
   editable?: boolean;
   dottedActive?: boolean;
+  newItemPath?: any[];
   style?: any;
   onSave: (val: string) => void;
   onParentClick?: () => void;
@@ -20,15 +17,18 @@ interface InlineEditProps {
 const InlineEdit = ({
   className,
   text,
+  id,
   editable,
   style,
   dottedActive,
+  newItemPath,
   onSave,
   onBlurEv,
   onParentClick,
 }: InlineEditProps) => {
   const [isEditing, setEditing] = useState(false);
   const [editedText, setEditedText] = useState(text);
+  const { addNewInputField } = useEditorActions();
   const inputRef: MutableRefObject<any> = useRef(null);
 
   useEffect(() => {
@@ -52,25 +52,15 @@ const InlineEdit = ({
     onSave(editedText);
   };
 
-  // const handleKeyDown = (e: any) => {
-  //   console.log('e: ', e);
-  //   setEditedText(e.target.innerHTML);
-  //   if (e.key === 'Enter') {
-  //     e.preventDefault();
-  //     console.log('enter key is pressed');
-  //   } else if (e.key === 'Backspace') {
-  //     if (editedText === '') {
-  //       e.preventDefault();
-  //     }
-  //   }
-  // };
-
   const handleKeyDown = (e: any) => {
     if (e.key === 'Enter') {
       e.preventDefault();
-      console.log('enter key is prsed');
-      onSave(editedText);
-      setEditing(false);
+      if (newItemPath && newItemPath.length > 0) {
+        addNewInputField([...newItemPath]);
+        onSave(editedText);
+      } else {
+        handleBlur();
+      }
     } else if (e.key === 'Backspace' && editedText === '') {
       e.preventDefault();
     } else {
@@ -94,6 +84,7 @@ const InlineEdit = ({
       onClick={handleClick}
       onKeyDown={handleKeyDown}
       onBlur={handleBlur}
+      id={id}
       contentEditable={editable}
       suppressContentEditableWarning={true}
     >
