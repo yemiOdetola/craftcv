@@ -23,9 +23,10 @@ export const useEditorActions = () => {
     updateRecursively(cres, pathArray, newValue);
     updateResume(cres);
   };
-
   const addNewInputField = (pathArray: string[]) => {
-    if (!Array.isArray(pathArray) || pathArray.length === 0) {
+    const pathArr = [...pathArray];
+    pathArr.pop();
+    if (!Array.isArray(pathArr) || pathArr.length === 0) {
       return resume;
     }
     const updateRecursively = (obj: any, path: string[]) => {
@@ -38,17 +39,14 @@ export const useEditorActions = () => {
       }
       updateRecursively(obj[path[0]], path.slice(1));
     };
-    updateRecursively(resume, pathArray);
+    updateRecursively(resume, pathArr);
     setTimeout(() => {
-      const lastSection = pathArray[pathArray.length - 1];
+      const lastSection = pathArr[pathArr.length - 1];
       let parentSections = resume;
-      for (let i = 0; i < pathArray.length - 1; i++) {
-        parentSections = parentSections[pathArray[i]];
-        console.log('parentSections: ', parentSections);
+      for (let i = 0; i < pathArr.length - 1; i++) {
+        parentSections = parentSections[pathArr[i]];
       }
-
       const newFieldIndex = parentSections[lastSection].length - 1;
-      console.log('lastSection:newFieldIndex: ', lastSection, newFieldIndex);
       const newFieldRef = document.getElementById(
         `${lastSection}-${newFieldIndex}`
       );
@@ -56,6 +54,22 @@ export const useEditorActions = () => {
         newFieldRef.focus();
       }
     }, 100);
+  };
+
+  const removeInputField = (pathArray: string[]) => {
+    const idx = pathArray.pop();
+    const pathArr = [...pathArray];
+    const lastSection = pathArr[pathArr.length - 1];
+    const updatedResume = { ...resume };
+    let parentSections = updatedResume;
+
+    for (let i = 0; i < pathArr.length - 1; i++) {
+      parentSections = parentSections[pathArr[i]];
+    }
+  
+    const inputs = parentSections[lastSection];
+    inputs.splice(idx, 1);
+    updateResume(updatedResume);
   };
 
   const handleSaveField = (
@@ -77,6 +91,7 @@ export const useEditorActions = () => {
     resume,
     saveWithPath,
     addNewInputField,
+    removeInputField,
     handleSaveField,
   };
 };

@@ -7,7 +7,7 @@ interface InlineEditProps {
   id?: string;
   editable?: boolean;
   dottedActive?: boolean;
-  newItemPath?: any[];
+  elementPath?: any[];
   style?: any;
   onSave: (val: string) => void;
   onParentClick?: () => void;
@@ -21,14 +21,14 @@ const InlineEdit = ({
   editable,
   style,
   dottedActive,
-  newItemPath,
+  elementPath,
   onSave,
   onBlurEv,
   onParentClick,
 }: InlineEditProps) => {
   const [isEditing, setEditing] = useState(false);
   const [editedText, setEditedText] = useState(text);
-  const { addNewInputField } = useEditorActions();
+  const { addNewInputField, removeInputField } = useEditorActions();
   const inputRef: MutableRefObject<any> = useRef(null);
 
   useEffect(() => {
@@ -55,14 +55,16 @@ const InlineEdit = ({
   const handleKeyDown = (e: any) => {
     if (e.key === 'Enter') {
       e.preventDefault();
-      if (newItemPath && newItemPath.length > 0) {
-        addNewInputField([...newItemPath]);
+      if (elementPath && elementPath.length > 0) {
+        addNewInputField([...elementPath]);
         onSave(editedText);
-      } else {
-        handleBlur();
       }
     } else if (e.key === 'Backspace' && editedText === '') {
       e.preventDefault();
+      console.log('backspaced');
+      if (elementPath && elementPath.length > 0) {
+        removeInputField([...elementPath]);
+      }
     } else {
       setTimeout(() => {
         setEditedText(e.target.innerText);

@@ -76,7 +76,7 @@ export default function AmitPachange() {
                   text={skill}
                   editable={resume?.skills?.id == editableSection}
                   className='ml-2'
-                  newItemPath={['skills', 'skillset']}
+                  elementPath={['skills', 'skillset', index]}
                   id={`skillset-${index}`}
                   dottedActive
                   onSave={(val) =>
@@ -242,7 +242,7 @@ export default function AmitPachange() {
                         text={responsibility}
                         editable={experience.id == editableSection}
                         id={`responsibilities-${index}`}
-                        newItemPath={['experiences', key, 'responsibilities']}
+                        elementPath={['experiences', key, 'responsibilities', index]}
                         onSave={(val) =>
                           saveWithPath(
                             ['experiences', key, 'responsibilities', index],
