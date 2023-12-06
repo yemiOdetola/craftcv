@@ -6,10 +6,8 @@ import { useFontFamily, useEditorTheme, useMainStore } from '@/store';
 
 export default function Menu() {
   const { changeEditorTheme, changeFontFamily } = useMainStore();
-
   const fontFamily = useFontFamily();
   const editorTheme = useEditorTheme();
-
   const setFontFamily = (fontFamily: string) => changeFontFamily(fontFamily);
   const setEditorTheme = (theme: string[]) => changeEditorTheme(theme);
 

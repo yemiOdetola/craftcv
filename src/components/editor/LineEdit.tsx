@@ -48,7 +48,7 @@ const LineEdit = ({
     onSave(editedText);
   };
 
-  const handleKeyDownInput = (rms: any, pathArray: any[]) => {
+  const addNewInputField = (rms: any, pathArray: any[]) => {
     if (!Array.isArray(pathArray) || pathArray.length === 0) {
       return rms;
     }
@@ -63,7 +63,6 @@ const LineEdit = ({
       updateRecursively(obj[path[0]], path.slice(1));
     };
     updateRecursively(rms, pathArray);
-    onSave(editedText);
     setTimeout(() => {
       const newFieldIndex =
         rms.experiences.experience0.responsibilities.length - 1;
@@ -74,13 +73,14 @@ const LineEdit = ({
         newFieldRef.focus();
       }
     }, 100);
+    onSave(editedText);
   };
 
   const handleKeyDown = (e: any) => {
     if (e.key === 'Enter') {
       e.preventDefault();
       console.log('enter key is prsed');
-      handleKeyDownInput(resume, [
+      addNewInputField(resume, [
         'experiences',
         'experience0',
         'responsibilities',

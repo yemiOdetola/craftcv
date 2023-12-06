@@ -13,6 +13,7 @@ import {
 } from '@/store';
 import { getFontFamilyStyle } from '@/utils/helper';
 import LineEdit from '@/components/editor/LineEdit';
+import { useResumeActions } from '@/utils/useResumeActions';
 interface Experience {
   id: string;
   title: string;
@@ -27,17 +28,10 @@ interface Resume {
 export default function AmitPachange() {
   const fontFamily = useFontFamily();
   const editorTheme = useEditorTheme();
-  const { updateResume } = useMainStore();
+  const { saveWithPath } = useResumeActions();
   const [resume] = useState(useResume());
   const [color1, color2] = editorTheme;
-  const [isOpen, setIsOpen] = useState(false);
   const [editableSection, setEditableSectionId] = useState<string | null>(null);
-  const sectionKeys = Object.keys(resume);
-  interface OnsavePayload {
-    section: (typeof sectionKeys)[number];
-    fieldId: string;
-    value: string | number;
-  }
 
   const renderContactInfo = () => {
     return (
@@ -326,42 +320,6 @@ export default function AmitPachange() {
       style={{ backgroundColor: `#${color2}` }}
     />
   );
-
-  const saveWithPath = (pathArray: any, newValue: any) => {
-    let cres = { ...resume };
-    if (!Array.isArray(pathArray) || pathArray.length === 0) {
-      return cres;
-    }
-
-    const updateRecursively = (obj: any, path: string[], value: string) => {
-      if (path.length === 1) {
-        obj[path[0]] = value;
-        return;
-      }
-      if (!obj[path[0]]) {
-        obj[path[0]] = {};
-      }
-      updateRecursively(obj[path[0]], path.slice(1), value);
-    };
-
-    updateRecursively(cres, pathArray, newValue);
-    updateResume(cres);
-  };
-
-  const handleSaveField = (
-    section: (typeof sectionKeys)[number],
-    fieldId: string,
-    value: any
-  ) => {
-    let cloneResume = { ...resume };
-    let currentField = cloneResume[section][fieldId];
-    if (typeof currentField == 'string') {
-      cloneResume[section][fieldId] = value;
-    } else if (typeof value === 'object' && !Array.isArray(currentField)) {
-      cloneResume[section][fieldId] = value;
-    }
-    updateResume(cloneResume);
-  };
 
   const editBlurEvent = (e: React.FocusEvent<HTMLDivElement, Element>) => {
     // Check if the related target is null
