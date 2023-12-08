@@ -13,7 +13,6 @@ export default function CustomTemplate() {
   const handle0nDrop = (e: React.DragEvent) => {
     const widgetType = e.dataTransfer.getData('widgetType') as string;
     if (widgetType !== '') {
-      console.log(widgets, widgetType);
       setWidgets([...widgets, widgetType]);
     }
   };
