@@ -3,6 +3,7 @@ import { useEditorActions } from '@/utils/useEditorActions';
 
 interface InlineEditProps {
   text: string;
+  useNumber?: boolean;
   className?: string;
   id?: string;
   editable?: boolean;
@@ -20,6 +21,7 @@ const InlineEdit = ({
   id,
   editable,
   style,
+  useNumber,
   dottedActive,
   elementPath,
   onSave,
@@ -61,13 +63,16 @@ const InlineEdit = ({
       }
     } else if (e.key === 'Backspace' && editedText === '') {
       e.preventDefault();
-      console.log('backspaced');
       if (elementPath && elementPath.length > 0) {
         removeInputField([...elementPath]);
       }
     } else {
       setTimeout(() => {
-        setEditedText(e.target.innerText);
+        const innerText = e.target.innerText;
+        // if (useNumber || /^\d+$/.test(innerText)) {
+        //   setEditedText(innerText);
+        // }
+        setEditedText(innerText);
       }, 100);
     }
   };

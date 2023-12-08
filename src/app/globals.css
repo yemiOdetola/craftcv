@@ -76,7 +76,38 @@ body {
 .text-cabin {
   font-family: var(--font-cabin);
 }
+.widget-container {
+  width: 100vw;
+  display: flex;
+  gap: 50px;
+  flex-wrap: wrap;
+  align-items: center;
+}
 
+.widget {
+  width: 400px;
+  height: 180px;
+  border: 1px solid #dd9900;
+}
+
+.dropped {
+  width: 390px;
+  height: 120px;
+  border: 2px solid #dd9900;
+  background-color: cyan;
+  transition: all 0.3s ease-in-out;
+}
+.dropped:hover {
+  transition: all 0.3s ease;
+  background-color: red;
+  border: 4px solid;
+}
+
+.drop-zone {
+  width: 400px;
+  height: 50vh;
+  border: 1px dotted #333;
+}
 /* width: 1182px!important
 height: auto;
 widtj: 65% - transform: scale(0.65)
