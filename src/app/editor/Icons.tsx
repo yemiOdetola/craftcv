@@ -7,6 +7,18 @@ import {
   PiRecordBold,
   PiFileHtmlDuotone,
   PiAtomDuotone,
+  PiChartPie,
+  PiBook,  
+  PiUsersThree,
+  PiHandshake,
+  PiMegaphone, 
+  PiPenNib,
+  PiGavel,
+  PiFlask,
+  PiAtom,
+  PiFigmaLogo,
+  PiRocketLaunch,
+  PiPlanet,
 } from 'react-icons/pi';
 
 export const getIconByType = (type: string) => {
@@ -31,8 +43,7 @@ export const getIconByType = (type: string) => {
       return <PiFileHtmlDuotone size={22} />;
 
     case lctype.includes('react'):
-      return <PiAtomDuotone size={22} />;
-
+      return <PiAtomDuotone size={22} />
     default:
       return <PiRecordBold size={22} />;
   }

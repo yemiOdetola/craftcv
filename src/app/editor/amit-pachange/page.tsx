@@ -242,7 +242,12 @@ export default function AmitPachange() {
                         text={responsibility}
                         editable={experience.id == editableSection}
                         id={`responsibilities-${index}`}
-                        elementPath={['experiences', key, 'responsibilities', index]}
+                        elementPath={[
+                          'experiences',
+                          key,
+                          'responsibilities',
+                          index,
+                        ]}
                         onSave={(val) =>
                           saveWithPath(
                             ['experiences', key, 'responsibilities', index],

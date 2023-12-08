@@ -54,8 +54,8 @@ const InlineEdit = ({
 
   const handleKeyDown = (e: any) => {
     if (e.key === 'Enter') {
-      e.preventDefault();
       if (elementPath && elementPath.length > 0) {
+        e.preventDefault();
         addNewInputField([...elementPath]);
         onSave(editedText);
       }
