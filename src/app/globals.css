@@ -80,11 +80,6 @@ body {
 .cs-width {
   width: 48%;
 }
-.cs-height {
-  height: 500px;
-  max-height: 500px;
-  overflow-y: auto;
-}
 /* width: 1182px!important
 height: auto;
 widtj: 65% - transform: scale(0.65)
