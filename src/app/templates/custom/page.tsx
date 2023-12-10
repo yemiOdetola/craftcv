@@ -1,5 +1,5 @@
 'use client';
-import React, { Fragment, useRef, useState } from 'react';
+import React, { Fragment, useEffect, useRef, useState } from 'react';
 import {
   PiBookOpenText,
   PiPenDuotone,
@@ -36,12 +36,12 @@ const sections: any = {
 
 interface DropColumnProps {
   widgets: string[];
-  onDrop: (e: any) => void;
   position: 'left' | 'right';
+  // onDrop: (e: any) => void;
+  // handleRearrange: (e: any) => void;
 }
 
 export default function CustomTemplate() {
-  const [widgets, setWidgets] = useState<string[]>([]);
   const [leftWidgets, setLeftWidgets] = useState<string[]>([]);
   const [rightWidgets, setRightWidgets] = useState<string[]>([]);
   const [twoColumns, setTwoColumns] = useState(false);
@@ -52,17 +52,14 @@ export default function CustomTemplate() {
     e.dataTransfer.setData('widgetType', widgetType);
   };
 
-  const handleLeftOnDrop = (e: React.DragEvent) => {
+  const handleOnDrop = (e: React.DragEvent, position: string) => {
     const widgetType = e.dataTransfer.getData('widgetType') as string;
     if (widgetType !== '') {
-      setLeftWidgets([...leftWidgets, widgetType]);
-    }
-  };
-
-  const handleRight0nDrop = (e: React.DragEvent) => {
-    const widgetType = e.dataTransfer.getData('widgetType') as string;
-    if (twoColumns) {
-      setRightWidgets([...rightWidgets, widgetType]);
+      if (position == 'left') {
+        setLeftWidgets([...leftWidgets, widgetType]);
+      } else {
+        setRightWidgets([...rightWidgets, widgetType]);
+      }
     }
   };
 
@@ -70,12 +67,20 @@ export default function CustomTemplate() {
     e.preventDefault();
   };
 
-  const handleRearrange = () => {
-    const widgetsCopy = [...widgets];
-    const temp = widgetsCopy[dragStartWidget.current];
-    widgetsCopy[dragStartWidget.current] = widgetsCopy[dragToWidget.current];
-    widgetsCopy[dragToWidget.current] = temp;
-    setWidgets(widgetsCopy);
+  const handleRearrange = (position: string) => {
+    const lwc = [...leftWidgets];
+    const rwc = [...rightWidgets];
+    if (position == 'left') {
+      const temp = lwc[dragStartWidget.current];
+      lwc[dragStartWidget.current] = lwc[dragToWidget.current];
+      lwc[dragToWidget.current] = temp;
+      setLeftWidgets(lwc);
+    } else {
+      const temp = rwc[dragStartWidget.current];
+      rwc[dragStartWidget.current] = rwc[dragToWidget.current];
+      rwc[dragToWidget.current] = temp;
+      setRightWidgets(rwc);
+    }
   };
 
   const removeItemPosition = (idx: number, position: string) => {
@@ -90,13 +95,13 @@ export default function CustomTemplate() {
     }
   };
 
-  const DropColumn = ({ widgets, position, onDrop }: DropColumnProps) => {
+  const DropColumn = ({ widgets, position }: DropColumnProps) => {
     return (
       <div
         className={`h-[480px] overflow-y-auto overflow-x-hidden p-2 lg:h-[600px] ${
           twoColumns && 'w-1/2'
         } ${position == 'left' && 'border-l-0'}`}
-        onDrop={onDrop}
+        onDrop={(e) => handleOnDrop(e, position)}
         onDragOver={handleDragOver}
       >
         {widgets.map((widget, index) => (
@@ -107,7 +112,7 @@ export default function CustomTemplate() {
             draggable
             onDragStart={() => (dragStartWidget.current = index)}
             onDragEnter={() => (dragToWidget.current = index)}
-            onDragEnd={handleRearrange}
+            onDragEnd={() => handleRearrange(position)}
             onDragOver={handleDragOver}
           >
             <div
@@ -130,6 +135,7 @@ export default function CustomTemplate() {
           <h2 className='font-display text-2xl font-medium tracking-tighter text-blue-600 sm:text-3xl'>
             Create a custom template
           </h2>
+          {/* <p>This is the order your resume template is going to display</p> */}
         </div>
         <div className='gap-x-7 align-top lg:flex'>
           <div className='w-full lg:w-2/6'>
@@ -169,13 +175,13 @@ export default function CustomTemplate() {
               }`}
             >
               <DropColumn
-                onDrop={(e) => handleLeftOnDrop(e)}
+                // onDrop={(e) => handleLeftOnDrop(e)}
                 widgets={leftWidgets}
                 position='left'
               />
               {twoColumns ? (
                 <DropColumn
-                  onDrop={(e) => handleRight0nDrop(e)}
+                  // onDrop={(e) => handleRight0nDrop(e)}
                   widgets={rightWidgets}
                   position='right'
                 />
