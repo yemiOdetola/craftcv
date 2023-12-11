@@ -53,11 +53,11 @@ export default function CustomTemplate() {
   const dragToWidget = useRef<number>(0);
 
   useEffect(() => {
-    setLWh((vh - 20) / leftWidgets.length);
+    setLWh((vh - 24) / leftWidgets.length);
   }, [lwh, leftWidgets]);
 
   useEffect(() => {
-    setRWh((vh - 20) / rightWidgets.length);
+    setRWh((vh - 24) / rightWidgets.length);
   }, [rwh, rightWidgets]);
 
   const handle0nDrag = (e: React.DragEvent, widgetType: string) => {
@@ -74,8 +74,9 @@ export default function CustomTemplate() {
       } else {
         setRightWidgets([...rightWidgets, widgetType]);
       }
-    } {
-      console.log('errrhhhmmmmm, nope!')
+    }
+    {
+      console.log('errrhhhmmmmm, nope!');
     }
   };
 
