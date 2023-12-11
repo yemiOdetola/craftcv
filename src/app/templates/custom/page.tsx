@@ -38,15 +38,27 @@ interface DropColumnProps {
   widgets: string[];
   position: 'left' | 'right';
   // onDrop: (e: any) => void;
-  // handleRearrange: (e: any) => void;
+  // handleReorder: (e: any) => void;
 }
-
+const vh = 620;
 export default function CustomTemplate() {
   const [leftWidgets, setLeftWidgets] = useState<string[]>([]);
   const [rightWidgets, setRightWidgets] = useState<string[]>([]);
-  const [twoColumns, setTwoColumns] = useState(false);
+  const [rwh, setRWh] = useState<any>(`[${vh}px]`);
+  const [lwh, setLWh] = useState<any>(vh);
+  const [tHeight] = useState(`[${vh}px]`);
+  const [twoColumns, setTwoColumns] = useState<boolean>(false);
+  const [populate, setPopulate] = useState<boolean>(true);
   const dragStartWidget = useRef<number>(0);
   const dragToWidget = useRef<number>(0);
+
+  useEffect(() => {
+    setLWh((vh - 20) / leftWidgets.length);
+  }, [lwh, leftWidgets]);
+
+  useEffect(() => {
+    setRWh((vh - 20) / rightWidgets.length);
+  }, [rwh, rightWidgets]);
 
   const handle0nDrag = (e: React.DragEvent, widgetType: string) => {
     e.dataTransfer.setData('widgetType', widgetType);
@@ -54,12 +66,16 @@ export default function CustomTemplate() {
 
   const handleOnDrop = (e: React.DragEvent, position: string) => {
     const widgetType = e.dataTransfer.getData('widgetType') as string;
-    if (widgetType !== '') {
+    const rlWidgets = [...leftWidgets, ...rightWidgets];
+    // TODO: hmm, should I accept duplicate section on seperate columns??
+    if (widgetType !== '' && !rlWidgets.includes(widgetType)) {
       if (position == 'left') {
         setLeftWidgets([...leftWidgets, widgetType]);
       } else {
         setRightWidgets([...rightWidgets, widgetType]);
       }
+    } {
+      console.log('errrhhhmmmmm, nope!')
     }
   };
 
@@ -67,7 +83,7 @@ export default function CustomTemplate() {
     e.preventDefault();
   };
 
-  const handleRearrange = (position: string) => {
+  const handleReorder = (position: string) => {
     const lwc = [...leftWidgets];
     const rwc = [...rightWidgets];
     if (position == 'left') {
@@ -98,21 +114,22 @@ export default function CustomTemplate() {
   const DropColumn = ({ widgets, position }: DropColumnProps) => {
     return (
       <div
-        className={`h-[480px] overflow-y-auto overflow-x-hidden p-2 lg:h-[600px] ${
+        className={`h-[480px] overflow-x-hidden p-2 lg:h-${tHeight} ${
           twoColumns && 'w-1/2'
-        } ${position == 'left' && 'border-l-0'}`}
+        }`}
         onDrop={(e) => handleOnDrop(e, position)}
         onDragOver={handleDragOver}
       >
         {widgets.map((widget, index) => (
           <div
-            className='relative mb-3 flex w-full items-center gap-x-2 border-2 border-dotted 
-          border-indigo-500 p-2 py-4 transition-all duration-300 hover:cursor-move hover:bg-indigo-50'
+            className={`relative mb-3 flex w-full items-center gap-x-2 border-2 border-dotted border-indigo-500 
+            p-2 transition-all duration-300 hover:cursor-move hover:bg-indigo-50`}
+            style={{ height: position == 'left' ? `${lwh}px` : `${rwh}px` }}
             key={index}
             draggable
             onDragStart={() => (dragStartWidget.current = index)}
             onDragEnter={() => (dragToWidget.current = index)}
-            onDragEnd={() => handleRearrange(position)}
+            onDragEnd={() => handleReorder(position)}
             onDragOver={handleDragOver}
           >
             <div
@@ -128,6 +145,7 @@ export default function CustomTemplate() {
       </div>
     );
   };
+
   return (
     <main className='bg-white'>
       <Container className='min-h-screen bg-white'>
@@ -148,10 +166,10 @@ export default function CustomTemplate() {
               />
             </div>
             <div className='my-4 flex w-full justify-between gap-x-3 pr-2'>
-              <h5>Allow duplicate sections</h5>
+              <h5>Populate sections</h5>
               <Toggle
-                active={twoColumns}
-                setActive={() => setTwoColumns(!twoColumns)}
+                active={populate}
+                setActive={() => setPopulate(!populate)}
                 labelSr='Use two colum format'
               />
             </div>
@@ -170,21 +188,13 @@ export default function CustomTemplate() {
           </div>
           <div className={`mt-2 w-full lg:w-4/6`}>
             <div
-              className={`h-[480px] w-full overflow-y-auto overflow-x-hidden border-2 border-gray-400 lg:h-[600px] ${
+              className={`h-[480px] w-full overflow-y-auto overflow-x-hidden border-2 border-gray-400 lg:h-${tHeight} ${
                 twoColumns && 'flex items-center'
               }`}
             >
-              <DropColumn
-                // onDrop={(e) => handleLeftOnDrop(e)}
-                widgets={leftWidgets}
-                position='left'
-              />
+              <DropColumn widgets={leftWidgets} position='left' />
               {twoColumns ? (
-                <DropColumn
-                  // onDrop={(e) => handleRight0nDrop(e)}
-                  widgets={rightWidgets}
-                  position='right'
-                />
+                <DropColumn widgets={rightWidgets} position='right' />
               ) : null}
             </div>
           </div>

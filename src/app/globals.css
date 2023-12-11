@@ -80,6 +80,49 @@ body {
 .cs-width {
   width: 48%;
 }
+
+.fancy-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.fancy-spinner div {
+  position: absolute;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+}
+
+.fancy-spinner div.ring {
+  border-width: 0.25rem;
+  border-style: solid;
+  border-color: transparent;
+  animation: 2s fancy infinite alternate;
+}
+
+.fancy-spinner div.dot {
+  width: 0.75rem;
+  height: 0.75rem;
+}
+.fancy-spinner div.ring:nth-child(1) {
+  border-left-color: blue;
+  border-right-color: red;
+}
+
+.fancy-spinner div.ring:nth-child(2) {
+  border-top-color: green;
+  border-bottom-color: purple;
+  animation-delay: 1s;
+}
+
+@keyframes fancy {
+  to {
+    transform: rotate(360deg) scale(0.5);
+  }
+}
 /* width: 1182px!important
 height: auto;
 widtj: 65% - transform: scale(0.65)
