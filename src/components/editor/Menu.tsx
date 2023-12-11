@@ -35,12 +35,13 @@ export default function Menu() {
         <button className='rounded bg-gray-400 px-4 py-2 text-white hover:bg-gray-600'>
           Preview
         </button>
-        <button className='flex items-center gap-x-1 rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-600'>
-          <div className='fancy-spinner'>
+        <button className='flex items-center gap-x-2 rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-600'>
+          <div className='kinetic'></div>
+          {/* <div className='fancy-spinner'>
             <div className='ring'></div>
             <div className='ring'></div>
             <div className='dot'></div>
-          </div>
+          </div> */}
           <span className='block'>Save</span>
         </button>
       </div>

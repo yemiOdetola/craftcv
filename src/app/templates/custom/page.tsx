@@ -1,5 +1,5 @@
 'use client';
-import React, { Fragment, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   PiBookOpenText,
   PiPenDuotone,
@@ -16,7 +16,8 @@ import {
   PiMedalDuotone,
   PiTrashDuotone,
 } from 'react-icons/pi';
-import { Container, Toggle } from '@/components/common';
+import { Button, Container, Toggle } from '@/components/common';
+import { BottomNavigation } from '@/components/templates';
 
 const sections: any = {
   Education: <PiBookOpenText size={48} />,
@@ -30,7 +31,7 @@ const sections: any = {
   'Soft skills': <PiArrowsInDuotone size={48} />,
   Certifications: <PiCertificateDuotone size={48} />,
   Languages: <PiCurrencyCnyDuotone size={48} />,
-  Conferences: <PiCircleHalfBold size={48} />,
+  // Conferences: <PiCircleHalfBold size={48} />,
   References: <PiDatabaseDuotone size={48} />,
 };
 
@@ -40,7 +41,7 @@ interface DropColumnProps {
   // onDrop: (e: any) => void;
   // handleReorder: (e: any) => void;
 }
-const vh = 620;
+const vh = 600;
 export default function CustomTemplate() {
   const [leftWidgets, setLeftWidgets] = useState<string[]>([]);
   const [rightWidgets, setRightWidgets] = useState<string[]>([]);
@@ -53,11 +54,11 @@ export default function CustomTemplate() {
   const dragToWidget = useRef<number>(0);
 
   useEffect(() => {
-    setLWh((vh - 24) / leftWidgets.length);
+    setLWh(vh / leftWidgets.length);
   }, [lwh, leftWidgets]);
 
   useEffect(() => {
-    setRWh((vh - 24) / rightWidgets.length);
+    setRWh(vh / rightWidgets.length);
   }, [rwh, rightWidgets]);
 
   const handle0nDrag = (e: React.DragEvent, widgetType: string) => {
@@ -67,7 +68,7 @@ export default function CustomTemplate() {
   const handleOnDrop = (e: React.DragEvent, position: string) => {
     const widgetType = e.dataTransfer.getData('widgetType') as string;
     const rlWidgets = [...leftWidgets, ...rightWidgets];
-    // TODO: hmm, should I accept duplicate section on seperate columns??
+    // TODO: hmm, should I accept duplicate widget on seperate columns?? - nah, don't
     if (widgetType !== '' && !rlWidgets.includes(widgetType)) {
       if (position == 'left') {
         setLeftWidgets([...leftWidgets, widgetType]);
@@ -112,10 +113,12 @@ export default function CustomTemplate() {
     }
   };
 
+  const prepareTemplate = () => {};
+
   const DropColumn = ({ widgets, position }: DropColumnProps) => {
     return (
       <div
-        className={`h-[480px] overflow-x-hidden p-2 lg:h-${tHeight} ${
+        className={`tpheight h-[480px] overflow-x-hidden p-2 ${
           twoColumns && 'w-1/2'
         }`}
         onDrop={(e) => handleOnDrop(e, position)}
@@ -189,7 +192,7 @@ export default function CustomTemplate() {
           </div>
           <div className={`mt-2 w-full lg:w-4/6`}>
             <div
-              className={`h-[480px] w-full overflow-y-auto overflow-x-hidden border-2 border-gray-400 lg:h-${tHeight} ${
+              className={`tpheight h-[480px] w-full overflow-y-auto overflow-x-hidden border-2 border-gray-400 ${
                 twoColumns && 'flex items-center'
               }`}
             >
@@ -201,6 +204,14 @@ export default function CustomTemplate() {
           </div>
         </div>
       </Container>
+      <BottomNavigation>
+        <Button href='/' className='bg-gray-300 px-8 py-3 text-gray-500'>
+          Cancel
+        </Button>
+        <Button onPress={prepareTemplate} className='px-8 py-3'>
+          Continue
+        </Button>
+      </BottomNavigation>
     </main>
   );
 }

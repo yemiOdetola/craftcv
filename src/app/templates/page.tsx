@@ -2,7 +2,7 @@
 import { useEffect, useId, useState } from 'react';
 import { Tab } from '@headlessui/react';
 import { Footer } from '@/components/common/Footer';
-import { Container } from '@/components/common';
+import { Button, Container } from '@/components/common';
 import placeholder from '@/assets/images/placeholder/generator.png';
 import { BottomNavigation, Template } from '@/components/templates';
 import Link from 'next/link';
@@ -159,7 +159,14 @@ export default function Templates() {
       <Link href='/templates/custom'>Drag and drop bitch!</Link>
 
       {/* @TODO */}
-      <BottomNavigation from='/' to='/editor/amit-pachange' />
+      <BottomNavigation>
+        <Button href='/' className='bg-gray-300 px-8 py-3 text-gray-500'>
+          Cancel
+        </Button>
+        <Button href='/editor/amit-pachange' className='px-8 py-3'>
+          Continue
+        </Button>
+      </BottomNavigation>
       <Footer />
     </main>
   );
