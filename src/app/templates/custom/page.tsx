@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import {
   PiBookOpenText,
   PiPenDuotone,
-  PiCircleHalfBold,
+  // PiCircleHalfBold,
   PiBooksDuotone,
   PiShapesFill,
   PiArrowsInDuotone,
@@ -18,6 +18,7 @@ import {
 } from 'react-icons/pi';
 import { Button, Container, Toggle } from '@/components/common';
 import { BottomNavigation } from '@/components/templates';
+import { basetemplate } from '@/store/basetemplate';
 
 const sections: any = {
   Education: <PiBookOpenText size={48} />,
@@ -25,7 +26,7 @@ const sections: any = {
   'Technical Skills': <PiShapesFill size={48} />,
   Awards: <PiMedalDuotone size={48} />,
   Interests: <PiParachuteDuotone size={48} />,
-  Volunteers: <PiFlaskDuotone size={48} />,
+  // Volunteers: <PiFlaskDuotone size={48} />,
   Publications: <PiBooksDuotone size={48} />,
   Projects: <PiSwatchesDuotone size={48} />,
   'Soft skills': <PiArrowsInDuotone size={48} />,
@@ -48,8 +49,8 @@ export default function CustomTemplate() {
   const [rwh, setRWh] = useState<any>(`[${vh}px]`);
   const [lwh, setLWh] = useState<any>(vh);
   const [tHeight] = useState(`[${vh}px]`);
-  const [twoColumns, setTwoColumns] = useState<boolean>(false);
-  const [populate, setPopulate] = useState<boolean>(true);
+  const [twoColumns, setTwoColumns] = useState<boolean>(true);
+  const [populate, setPopulate] = useState<boolean>(false);
   const dragStartWidget = useRef<number>(0);
   const dragToWidget = useRef<number>(0);
 
@@ -75,8 +76,7 @@ export default function CustomTemplate() {
       } else {
         setRightWidgets([...rightWidgets, widgetType]);
       }
-    }
-    {
+    } else {
       console.log('errrhhhmmmmm, nope!');
     }
   };
@@ -113,7 +113,16 @@ export default function CustomTemplate() {
     }
   };
 
-  const prepareTemplate = () => {};
+  const prepareTemplate = () => {
+    console.log('hey!');
+    const mytemplate: any = {};
+    const selectedWidgets = [...leftWidgets, ...rightWidgets];
+    selectedWidgets.map((wdg) => {
+      wdg = wdg.toLowerCase();
+      mytemplate[wdg] = basetemplate[wdg];
+    });
+    console.log('myTenplate', mytemplate);
+  };
 
   const DropColumn = ({ widgets, position }: DropColumnProps) => {
     return (
@@ -153,7 +162,7 @@ export default function CustomTemplate() {
   return (
     <main className='bg-white'>
       <Container className='min-h-screen bg-white'>
-        <div className='mx-auto max-w-2xl pt-12 lg:mx-0'>
+        <div className='mx-auto max-w-2xl pt-12 lg:mx-0 lg:mb-6'>
           <h2 className='font-display text-2xl font-medium tracking-tighter text-blue-600 sm:text-3xl'>
             Create a custom template
           </h2>
@@ -208,7 +217,7 @@ export default function CustomTemplate() {
         <Button href='/' className='bg-gray-300 px-8 py-3 text-gray-500'>
           Cancel
         </Button>
-        <Button onPress={prepareTemplate} className='px-8 py-3'>
+        <Button onClick={prepareTemplate} className='px-8 py-3'>
           Continue
         </Button>
       </BottomNavigation>

@@ -1,4 +1,4 @@
-export const amitpachange = {
+export const basetemplate: any = {
   user: {
     id: 'user',
     fullname: '',
@@ -19,7 +19,7 @@ export const amitpachange = {
   },
   education: {
     education0: {
-      id: 'education-1',
+      id: 'education1',
       award: '',
       school: '',
       gradyear: '',
@@ -28,15 +28,7 @@ export const amitpachange = {
   },
   experiences: {
     experience0: {
-      id: 'experience-0',
-      position: '',
-      company: '',
-      startDate: '',
-      endDate: '',
-      responsibilities: [''],
-    },
-    experience1: {
-      id: 'experience-1',
+      id: 'experience0',
       position: '',
       company: '',
       startDate: '',
@@ -46,7 +38,7 @@ export const amitpachange = {
   },
   projects: {
     project1: {
-      id: 'project-1',
+      id: 'project1',
       title: '',
       description: '',
       url: '',
@@ -57,8 +49,8 @@ export const amitpachange = {
     id: 'skills',
     skillset: ['React'],
   },
-  certificates: {
-    certificat1: {
+  certifications: {
+    certificate1: {
       name: '',
       from: '',
       to: '',
@@ -83,7 +75,14 @@ export const amitpachange = {
       description: '',
     },
   },
-  softSkills: [''],
+  'soft skills': {
+    id: 'skills',
+    skillset: [''],
+  },
+  'technical skills': {
+    id: 'skills',
+    skillset: [''],
+  },
   interests: [''],
   languages: [''],
   publications: {
@@ -92,6 +91,13 @@ export const amitpachange = {
       Authors: [''],
       publicationDate: '',
       description: '',
+    },
+  },
+  references: {
+    ref1: {
+      name: '',
+      reference: '',
+      contacts: [],
     },
   },
 };
