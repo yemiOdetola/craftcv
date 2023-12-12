@@ -19,6 +19,7 @@ import {
 import { Button, Container, Toggle } from '@/components/common';
 import { BottomNavigation } from '@/components/templates';
 import { basetemplate } from '@/store/basetemplate';
+import { useMainStore } from '@/store';
 
 const sections: any = {
   Education: <PiBookOpenText size={48} />,
@@ -42,24 +43,26 @@ interface DropColumnProps {
   // onDrop: (e: any) => void;
   // handleReorder: (e: any) => void;
 }
-const vh = 600;
+const vh = 624;
 export default function CustomTemplate() {
+  const { updateCustomLayout } = useMainStore();
   const [leftWidgets, setLeftWidgets] = useState<string[]>([]);
   const [rightWidgets, setRightWidgets] = useState<string[]>([]);
   const [rwh, setRWh] = useState<any>(`[${vh}px]`);
   const [lwh, setLWh] = useState<any>(vh);
-  const [tHeight] = useState(`[${vh}px]`);
   const [twoColumns, setTwoColumns] = useState<boolean>(true);
   const [populate, setPopulate] = useState<boolean>(false);
   const dragStartWidget = useRef<number>(0);
   const dragToWidget = useRef<number>(0);
 
+  const setLayout = (layout: string) => updateCustomLayout(layout);
+
   useEffect(() => {
-    setLWh(vh / leftWidgets.length);
+    setLWh(vh / leftWidgets.length - leftWidgets.length * 2.25);
   }, [lwh, leftWidgets]);
 
   useEffect(() => {
-    setRWh(vh / rightWidgets.length);
+    setRWh(vh / rightWidgets.length - rightWidgets.length * 2.25);
   }, [rwh, rightWidgets]);
 
   const handle0nDrag = (e: React.DragEvent, widgetType: string) => {
@@ -121,7 +124,12 @@ export default function CustomTemplate() {
       wdg = wdg.toLowerCase();
       mytemplate[wdg] = basetemplate[wdg];
     });
-    console.log('myTenplate', mytemplate);
+    mytemplate.options = {
+      twoColumns: twoColumns,
+      populate: populate,
+    };
+    setLayout(mytemplate);
+    console.log('myTemplate', mytemplate);
   };
 
   const DropColumn = ({ widgets, position }: DropColumnProps) => {

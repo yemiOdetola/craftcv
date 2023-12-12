@@ -45,10 +45,6 @@ export const basetemplate: any = {
       tech: '',
     },
   },
-  skills: {
-    id: 'skills',
-    skillset: ['React'],
-  },
   certifications: {
     certificate1: {
       name: '',
