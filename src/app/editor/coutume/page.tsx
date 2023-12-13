@@ -12,7 +12,7 @@ import {
 } from '@/store';
 import { getFontFamilyStyle } from '@/utils/helper';
 import { useEditorActions } from '@/utils/useEditorActions';
-import Summary from './components/summary';
+import Summary from './components/Summary';
 
 interface Experience {
   id: string;
@@ -37,6 +37,77 @@ export default function Coutume() {
     if (e.relatedTarget === null) {
       setEditableSectionId(null);
     }
+  };
+
+  const leftRender = () => {
+    const sections: any = [];
+    Object.keys(customLayout).forEach((key) => {
+      if (key === 'interests') {
+        sections.push(renderInterests(customLayout[key]));
+      }
+      if (key === 'languages') {
+        sections.push(renderLanguages(customLayout[key]));
+      }
+      if (key.length > 9) {
+        sections.push(
+          <Summary
+            text={customLayout['summary']}
+            editable={false}
+            editBlurEvent={() => console.log('heyyyy')}
+            setEditableSectionId={() => console.log('heyyyy')}
+            onSave={() => console.log('heyyyy')}
+          />
+        );
+      }
+    });
+    return <>{[...sections]}</>;
+  };
+
+  const renderInterests = (interests: string[]) => {
+    return (
+      <div
+        className='my-1'
+        onClick={() => setEditableSectionId('interests')}
+        onBlur={(e) => editBlurEvent(e)}
+      >
+        {interests.map((interest, index) => {
+          return (
+            <div className='mb-1 flex items-center' key={`interest-${index}`}>
+              <InlineEdit
+                text={interest}
+                editable={'interests' == editableSection}
+                className='ml-2'
+                dottedActive
+                onSave={(val) => saveWithPath(['interests'], val)}
+              />
+            </div>
+          );
+        })}
+      </div>
+    );
+  };
+  const renderLanguages = (languages: string[]) => {
+    return (
+      <div
+        className='my-1'
+        onClick={() => setEditableSectionId('languages')}
+        onBlur={(e) => editBlurEvent(e)}
+      >
+        {languages.map((language, index) => {
+          return (
+            <div className='mb-1 flex items-center' key={`language-${index}`}>
+              <InlineEdit
+                text={language}
+                editable={'languages' == editableSection}
+                className='ml-2'
+                dottedActive
+                onSave={(val) => saveWithPath(['languages'], val)}
+              />
+            </div>
+          );
+        })}
+      </div>
+    );
   };
 
   return (
@@ -67,7 +138,7 @@ export default function Coutume() {
         </div>
         <div className='p-5'>
           <div className='flex flex-col sm:mt-10 sm:flex-row'>
-            {/* <Summary text="1234" onSave={() => saveWithPath()} /> */}
+            {leftRender()}
           </div>
         </div>
       </EditorCover>

@@ -79,8 +79,8 @@ export const basetemplate: any = {
     id: 'skills',
     skillset: [''],
   },
-  interests: [''],
-  languages: [''],
+  interests: ['aaaaa'],
+  languages: ['bbbbb'],
   publications: {
     publication1: {
       id: 'publication1',
