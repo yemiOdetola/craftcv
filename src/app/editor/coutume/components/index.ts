@@ -1,0 +1,9 @@
+export { default as Languages } from './Languages';
+export { default as Contact } from './Contact';
+export { default as Education } from './Education';
+export { default as Experiences } from './Experiences';
+export { default as Interests } from './Interests';
+export { default as Projects } from './Projects';
+export { default as Summary } from './Summary';
+export { default as SoftSkills } from './SoftSkills';
+export { default as TechnicalSkills } from './TechnicalSkills';

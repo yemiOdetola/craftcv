@@ -29,10 +29,10 @@ export const basetemplate: any = {
   experiences: {
     experience0: {
       id: 'experience0',
-      position: '',
-      company: '',
-      startDate: '',
-      endDate: '',
+      position: 'Position',
+      company: 'Company',
+      startDate: 'Start date',
+      endDate: 'end date',
       responsibilities: [''],
     },
   },

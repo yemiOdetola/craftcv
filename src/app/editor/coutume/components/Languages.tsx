@@ -17,20 +17,29 @@ export default function Languages({
   languages,
 }: LanguagesProps) {
   return (
-    <div className='my-1' onClick={setEditableSectionId} onBlur={editBlurEvent}>
-      {languages.map((language, index) => {
-        return (
-          <div className='mb-1 flex items-center' key={`language-${index}`}>
-            <InlineEdit
-              text={language}
-              editable={editable}
-              className='ml-2'
-              dottedActive
-              onSave={onSave}
-            />
-          </div>
-        );
-      })}
+    <div className='py-3'>
+      <h2 className='font-poppins text-top-color text-lg font-bold'>
+        Languages
+      </h2>
+      <div
+        className='my-1'
+        onClick={setEditableSectionId}
+        onBlur={editBlurEvent}
+      >
+        {languages.map((language, index) => {
+          return (
+            <div className='mb-1 flex items-center' key={`language-${index}`}>
+              <InlineEdit
+                text={language}
+                editable={editable}
+                className='ml-2'
+                dottedActive
+                onSave={onSave}
+              />
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }

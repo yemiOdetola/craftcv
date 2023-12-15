@@ -1,9 +1,6 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import Image from 'next/image';
 import { EditorCover, InlineEdit } from '@/components/editor';
-import placeholder from '@/assets/images/placeholder/generator.png';
-import { getIconByType } from '../Icons';
 import {
   useCustomLayout,
   useEditorTheme,
@@ -12,7 +9,16 @@ import {
 } from '@/store';
 import { getFontFamilyStyle } from '@/utils/helper';
 import { useEditorActions } from '@/utils/useEditorActions';
-import Summary from './components/Summary';
+import {
+  Contact,
+  Education,
+  Experiences,
+  Languages,
+  Projects,
+  SoftSkills,
+  Summary,
+  TechnicalSkills,
+} from './components';
 
 interface Experience {
   id: string;
@@ -20,6 +26,17 @@ interface Experience {
   achievements: string;
   duration: string;
 }
+
+const componentMapping: any = {
+  // Certifications: Certifications,
+  Languages: Languages,
+  'Technical Skills': TechnicalSkills,
+  Experiences: Experiences,
+  Projects: Projects,
+  Summary: Summary,
+  // Certifications: Certifications,
+  // References: References,
+};
 
 export default function Coutume() {
   const fontFamily = useFontFamily();
@@ -32,6 +49,8 @@ export default function Coutume() {
 
   console.log('customLayout: ', customLayout);
 
+  useEffect(() => {});
+
   const editBlurEvent = (e: React.FocusEvent<HTMLDivElement, Element>) => {
     //TODO: Check if the related target is null or undefined
     if (e.relatedTarget === null) {
@@ -39,29 +58,117 @@ export default function Coutume() {
     }
   };
 
-  const leftRender = () => {
-    const sections: any = [];
-    Object.keys(customLayout).forEach((key) => {
-      if (key === 'interests') {
-        sections.push(renderInterests(customLayout[key]));
-      }
-      if (key === 'languages') {
-        sections.push(renderLanguages(customLayout[key]));
-      }
-      if (key.length > 9) {
-        sections.push(
-          <Summary
-            text={customLayout['summary']}
-            editable={false}
-            editBlurEvent={() => console.log('heyyyy')}
-            setEditableSectionId={() => console.log('heyyyy')}
-            onSave={() => console.log('heyyyy')}
-          />
-        );
-      }
-    });
-    return <>{[...sections]}</>;
+  const renderExperiences = (meta: any) => {
+    console.log('experiences');
+    return (
+      <Experiences
+        editableSection={editableSection}
+        editBlurEvent={(e) => editBlurEvent(e)}
+        setEditableSectionId={(id) => setEditableSectionId(id)}
+        color1={color1}
+        color2={color2}
+        experiences={meta}
+      />
+    );
   };
+
+  const renderProjects = (meta: any) => {
+    console.log('projects');
+    return (
+      <Projects
+        editableSection={editableSection}
+        editBlurEvent={(e) => editBlurEvent(e)}
+        setEditableSectionId={(id) => setEditableSectionId(id)}
+        color1={color1}
+        projects={meta}
+      />
+    );
+  };
+
+  const renderSummary = (meta: any) => {
+    return (
+      <Summary
+        editableSection={editableSection}
+        editBlurEvent={(e) => editBlurEvent(e)}
+        setEditableSectionId={(id) => setEditableSectionId(id)}
+        summary={meta}
+      />
+    );
+  };
+
+  const renderEducation = (meta: any) => {
+    console.log('education');
+    return (
+      <Education
+        color1={color1}
+        editableSection={editableSection}
+        editBlurEvent={(e) => editBlurEvent(e)}
+        setEditableSectionId={(id) => setEditableSectionId(id)}
+        educationhistory={meta}
+      />
+    );
+  };
+
+  const renderSoftSkills = (meta: any) => {
+    return (
+      <SoftSkills
+        editableSection={editableSection}
+        editBlurEvent={(e) => editBlurEvent(e)}
+        setEditableSectionId={(id) => setEditableSectionId(id)}
+        softSkills={meta}
+      />
+    );
+  };
+
+  const renderTechnicalSkills = (meta: any) => {
+    console.log('technical skills');
+    return (
+      <TechnicalSkills
+        editableSection={editableSection}
+        editBlurEvent={(e) => editBlurEvent(e)}
+        setEditableSectionId={(id) => setEditableSectionId(id)}
+        technicalSkills={meta}
+      />
+    );
+  };
+
+  const renderContactInfo = (meta: any) => {
+    return (
+      <Contact
+        editableSection={editableSection}
+        editBlurEvent={(e) => editBlurEvent(e)}
+        setEditableSectionId={(id) => setEditableSectionId(id)}
+        contact={meta}
+      />
+    );
+  };
+
+  const renderComponents = (componentNames: string[]) => {
+    return componentNames.map((componentName, index) => {
+      componentName = componentName.toLocaleLowerCase();
+      const meta = customLayout[componentName];
+      if (componentName == 'experiences') {
+        return renderExperiences(meta);
+      }
+      if (componentName == 'technical skills') {
+        return renderTechnicalSkills(meta);
+      }
+      if (componentName == 'projects') {
+        return renderProjects(meta);
+      }
+      if (componentName == 'education') {
+        return renderEducation(meta);
+      }
+      // if (componentName == 'references') {
+      //   return renderRefereces(meta);
+      // }
+      // if (componentName == 'certifications') {
+      //   return renderCertifications(meta);
+      // }
+    });
+  };
+  const renderedMainComponents = renderComponents(customLayout.layout.left);
+  const renderedRightComponents = renderComponents(customLayout.layout.right);
 
   const renderInterests = (interests: string[]) => {
     return (
@@ -138,7 +245,14 @@ export default function Coutume() {
         </div>
         <div className='p-5'>
           <div className='flex flex-col sm:mt-10 sm:flex-row'>
-            {leftRender()}
+            <div className='flex flex-col sm:w-1/3'>
+              {renderedMainComponents}
+            </div>
+            <div className='order-first flex flex-col sm:order-none sm:-mt-10 sm:w-2/3'>
+              {customLayout?.options &&
+                customLayout.options.twoColumns &&
+                renderedRightComponents}
+            </div>
           </div>
         </div>
       </EditorCover>

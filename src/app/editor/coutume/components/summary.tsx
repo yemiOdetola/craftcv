@@ -1,24 +1,36 @@
 import React from 'react';
 import { InlineEdit } from '@/components/editor';
+import { useEditorActions } from '@/utils/useEditorActions';
 
 interface SummaryProps {
-  text: string;
-  editable: boolean;
+  summary: any;
+  editableSection: null | string;
   editBlurEvent: (e: any) => void;
-  setEditableSectionId: () => void;
-  onSave: () => void;
+  setEditableSectionId: (id: any) => void;
 }
 
 export default function Summary({
-  text,
-  editable,
+  summary,
+  editableSection,
   editBlurEvent,
   setEditableSectionId,
-  onSave,
 }: SummaryProps) {
+  const { saveWithPath } = useEditorActions();
   return (
-    <div onClick={setEditableSectionId} onBlur={(e) => editBlurEvent(e)}>
-      <InlineEdit text={text} editable={editable} onSave={onSave} />
+    <div className='py-3'>
+      <h2 className='font-poppins text-top-color text-lg font-bold'>
+        Executive Summary
+      </h2>
+      <div
+        onClick={() => setEditableSectionId(summary.id)}
+        onBlur={(e) => editBlurEvent(e)}
+      >
+        <InlineEdit
+          text={summary?.text}
+          editable={(editableSection = summary.id)}
+          onSave={(val) => saveWithPath(['about', 'summary'], val)}
+        />
+      </div>
     </div>
   );
 }

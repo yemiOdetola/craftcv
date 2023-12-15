@@ -1,97 +1,129 @@
 import React from 'react';
 import { InlineEdit } from '@/components/editor';
+import { useEditorActions } from '@/utils/useEditorActions';
 
 interface ExperiencesProps {
-  editable: boolean;
+  editableSection: null | string;
   color1: string;
+  color2: string;
   experiences: any;
   editBlurEvent: (e: any) => void;
-  setEditableSectionId: () => void;
-  onSave: () => void;
+  setEditableSectionId: (id: string) => void;
+  // onSave: () => void;
 }
 
 export default function Experiences({
-  editable,
+  editableSection,
   editBlurEvent,
   setEditableSectionId,
-  onSave,
   color1,
   experiences,
 }: ExperiencesProps) {
+  const { saveWithPath } = useEditorActions();
   return (
-    <div className='flex flex-col'>
-      {Object.keys(experiences).map((key: any, index: number) => {
-        const exp = experiences[key];
-        return (
-          <div
-            className='mb-6 flex flex-col'
-            key={`resume-experience-${index}`}
-            onClick={setEditableSectionId}
-            onBlur={editBlurEvent}
-          >
-            <div className='flex items-center justify-normal'>
-              <InlineEdit
-                text={exp.company}
-                className='text-lg font-bold text-gray-700'
-                editable={editable}
-                dottedActive
-                onSave={onSave}
-              />
-              <span> | </span>
-              <InlineEdit
-                text={exp.position}
-                className='text-lg font-bold text-gray-700'
-                editable={editable}
-                dottedActive
-                onSave={onSave}
-              />
+    <div className='py-3'>
+      <h2 className='font-poppins text-top-color text-lg font-bold'>
+        Professional Experiences
+      </h2>
+      <div className='flex flex-col'>
+        {Object.keys(experiences).map((key: any, index: number) => {
+          const exp = experiences[key];
+          return (
+            <div
+              className='mb-6 flex flex-col'
+              key={`resume-experience-${index}`}
+              onClick={() => setEditableSectionId(exp.id)}
+              onBlur={editBlurEvent}
+            >
+              <div className='flex items-center justify-normal'>
+                <InlineEdit
+                  text={exp.company}
+                  className='text-lg font-bold text-gray-700'
+                  editable={editableSection == exp.id}
+                  dottedActive
+                  onSave={(val) =>
+                    saveWithPath(['experiences', key], {
+                      ...exp,
+                      company: val,
+                    })
+                  }
+                />
+                <span> | </span>
+                <InlineEdit
+                  text={exp.position}
+                  className='text-lg font-bold text-gray-700'
+                  editable={editableSection == exp.id}
+                  dottedActive
+                  onSave={(val) =>
+                    saveWithPath(['experiences', key], {
+                      ...exp,
+                      position: val,
+                    })
+                  }
+                />
+              </div>
+              <div className='flex items-center justify-normal'>
+                <InlineEdit
+                  text={exp.startDate}
+                  className='my-1 font-mono text-sm font-semibold text-green-700'
+                  editable={editableSection == exp.id}
+                  style={{ color: `#${color1}` }}
+                  dottedActive
+                  onSave={(val) =>
+                    saveWithPath(['experiences', key], {
+                      ...exp,
+                      startDate: val,
+                    })
+                  }
+                />
+                <span> - </span>
+                <InlineEdit
+                  text={exp.endDate}
+                  className='my-1 font-mono text-sm font-semibold text-green-700'
+                  editable={editableSection == exp.id}
+                  style={{ color: `#${color1}` }}
+                  dottedActive
+                  onSave={(val) =>
+                    saveWithPath(['experiences', key], {
+                      ...exp,
+                      endDate: val,
+                    })
+                  }
+                />
+              </div>
+              <span className='mb-1 mt-2 text-sm font-semibold text-gray-700'>
+                Key Responsibilities
+              </span>
+              <ul className='list-disc space-y-1 pl-4 text-sm'>
+                {exp?.responsibilities.map(
+                  (responsibility: string, index: number) => (
+                    <li key={`exp-responsibility-${index}`}>
+                      {' '}
+                      <InlineEdit
+                        text={responsibility}
+                        editable={editableSection == exp.id}
+                        id={`responsibilities-${index}`}
+                        elementPath={[
+                          'experiences',
+                          key,
+                          'responsibilities',
+                          index,
+                        ]}
+                        onSave={(val) =>
+                          saveWithPath(
+                            ['experiences', key, 'responsibilities', index],
+                            val
+                          )
+                        }
+                      />
+                    </li>
+                  )
+                )}
+              </ul>
             </div>
-            <div className='flex items-center justify-normal'>
-              <InlineEdit
-                text={exp.startDate}
-                className='my-1 font-mono text-sm font-semibold text-green-700'
-                editable={editable}
-                style={{ color: `#${color1}` }}
-                dottedActive
-                onSave={onSave}
-              />
-              <span> - </span>
-              <InlineEdit
-                text={exp.endDate}
-                className='my-1 font-mono text-sm font-semibold text-green-700'
-                editable={editable}
-                style={{ color: `#${color1}` }}
-                dottedActive
-                onSave={onSave}
-              />
-            </div>
-            <span className='mb-1 mt-2 text-sm font-semibold text-gray-700'>
-              Key Responsibilities
-            </span>
-            <ul className='list-disc space-y-1 pl-4 text-sm'>
-              {exp?.responsibilities.map(
-                (responsibility: string, index: number) => (
-                  <li key={`exp-responsibility-${index}`}>
-                    {' '}
-                    <InlineEdit
-                      text={responsibility}
-                      editable={editable}
-                      id={`responsibilities-${index}`}
-                      elementPath={[
-                        'experiences',
-                        key,
-                        'responsibilities',
-                        index,
-                      ]}
-                      onSave={onSave}
-                    />
-                  </li>
-                )
-              )}
-            </ul>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
     </div>
   );
 }

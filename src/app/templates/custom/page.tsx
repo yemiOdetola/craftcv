@@ -117,19 +117,23 @@ export default function CustomTemplate() {
   };
 
   const prepareTemplate = () => {
-    console.log('hey!');
-    const mytemplate: any = {};
-    const selectedWidgets = [...leftWidgets, ...rightWidgets];
-    selectedWidgets.map((wdg) => {
-      wdg = wdg.toLowerCase();
-      mytemplate[wdg] = basetemplate[wdg];
+    const customOptions: any = {};
+    const allSections = [...leftWidgets, ...rightWidgets];
+    allSections.map((sec) => {
+      sec = sec.toLowerCase();
+      customOptions[sec] = basetemplate[sec];
     });
-    mytemplate.options = {
+    let placements: any = { left: [...leftWidgets] };
+    if (twoColumns) {
+      placements = { left: [...leftWidgets], right: [...rightWidgets] };
+    }
+    customOptions.layout = placements;
+    customOptions.options = {
       twoColumns: twoColumns,
       populate: populate,
     };
-    setLayout(mytemplate);
-    console.log('myTemplate', mytemplate);
+    setLayout(customOptions);
+    console.log('customOptions', customOptions);
   };
 
   const DropColumn = ({ widgets, position }: DropColumnProps) => {

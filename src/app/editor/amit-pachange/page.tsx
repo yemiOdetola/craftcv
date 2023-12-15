@@ -321,7 +321,7 @@ export default function AmitPachange() {
   );
 
   const editBlurEvent = (e: React.FocusEvent<HTMLDivElement, Element>) => {
-    //TODO: Check if the related target is null or undefined
+    // TODO: Check if the related target is null or undefined
     if (e.relatedTarget === null) {
       setEditableSectionId(null);
     }

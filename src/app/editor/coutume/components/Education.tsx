@@ -1,60 +1,79 @@
 import React from 'react';
+import { useEditorActions } from '@/utils/useEditorActions';
 import { InlineEdit } from '@/components/editor';
-import { getIconByType } from '../../Icons';
 
 interface EducationProps {
-  education: any;
+  educationhistory: any;
   color1: string;
-  editable: boolean;
+  editableSection: null | string;
   editBlurEvent: (e: any) => void;
-  setEditableSectionId: () => void;
-  onSave: () => void;
+  setEditableSectionId: (id: string) => void;
 }
 
 export default function Education({
-  education,
-  editable,
+  educationhistory,
+  editableSection,
   color1,
   editBlurEvent,
   setEditableSectionId,
-  onSave,
 }: EducationProps) {
+  const { saveWithPath } = useEditorActions();
   return (
-    <div className='flex flex-col space-y-1'>
-      {education &&
-        Object.keys(education).map((key: any, index: number) => {
-          const edu = education[key];
-          return (
-            <div
-              className='flex flex-col'
-              key={`resume-education-${index}`}
-              onClick={setEditableSectionId}
-              onBlur={editBlurEvent}
-            >
-              <InlineEdit
-                text={education?.gradyear}
-                editable={editable}
-                className='text-xs font-semibold text-gray-700'
-                dottedActive
-                onSave={onSave}
-              />
-              <InlineEdit
-                text={education?.award}
-                editable={editable}
-                className='text-sm font-medium text-green-700'
-                style={{ color: `#${color1}` }}
-                onSave={onSave}
-              />
-              <InlineEdit
-                text={education?.school}
-                editable={editable}
-                className='text-sm font-medium text-green-700'
-                style={{ color: `#${color1}` }}
-                onSave={onSave}
-              />
-            </div>
-          );
-        })}
+    <div className='py-3'>
+      <h2 className='font-poppins text-top-color text-lg font-bold'>
+        Education History
+      </h2>
+      <div className='flex flex-col space-y-1'>
+        {educationhistory &&
+          Object.keys(educationhistory).map((key: any, index: number) => {
+            const edu = educationhistory[key];
+            return (
+              <div
+                className='flex flex-col'
+                key={`resume-education-${index}`}
+                onClick={() => setEditableSectionId(edu.id)}
+                onBlur={editBlurEvent}
+              >
+                <InlineEdit
+                  text={edu?.gradyear}
+                  editable={editableSection == edu.id}
+                  className='text-xs font-semibold text-gray-700'
+                  dottedActive
+                  onSave={(val) =>
+                    saveWithPath(['education', key], {
+                      ...edu,
+                      gradyear: val,
+                    })
+                  }
+                />
+                <InlineEdit
+                  text={edu?.award}
+                  editable={editableSection == edu.id}
+                  className='text-sm font-medium text-green-700'
+                  style={{ color: `#${color1}` }}
+                  onSave={(val) =>
+                    saveWithPath(['education', key], {
+                      ...edu,
+                      award: val,
+                    })
+                  }
+                />
+                <InlineEdit
+                  text={edu?.school}
+                  editable={editableSection == edu.id}
+                  className='text-sm font-medium text-green-700'
+                  style={{ color: `#${color1}` }}
+                  onSave={(val) =>
+                    saveWithPath(['education', key], {
+                      ...edu,
+                      school: val,
+                    })
+                  }
+                />
+              </div>
+            );
+          })}
+      </div>
     </div>
   );
 }
