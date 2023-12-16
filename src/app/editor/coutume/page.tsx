@@ -68,8 +68,8 @@ export default function Coutume() {
     }
   };
 
-  const renderExperiences = (meta: any) => {
-    console.log('experiences');
+  const renderExperiences = () => {
+    console.log('rendering experiences');
     return (
       <Experiences
         editableSection={editableSection}
@@ -77,7 +77,6 @@ export default function Coutume() {
         setEditableSectionId={(id) => setEditableSectionId(id)}
         color1={color1}
         color2={color2}
-        experiences={meta}
       />
     );
   };
@@ -159,7 +158,7 @@ export default function Coutume() {
         componentName = componentName.toLocaleLowerCase();
         const meta = customLayout[componentName];
         if (componentName == 'experiences') {
-          return renderExperiences(meta);
+          return renderExperiences();
         }
         if (componentName == 'technical skills') {
           return renderTechnicalSkills(meta);
@@ -239,12 +238,13 @@ export default function Coutume() {
           <div className='bg-top-color flex w-full rounded-t-lg sm:px-2'>
             <div
               className='w-full pl-5 text-center'
-              onClick={() => setEditableSectionId(resume?.user?.id)}
+              onClick={() => setEditableSectionId('user')}
               onBlur={(e) => editBlurEvent(e)}
             >
               <InlineEdit
                 text={resume?.user?.fullname}
-                editable={resume?.user?.id == editableSection}
+                editable={editableSection == 'user'}
+                placeholder='Name in Full'
                 onSave={(val) => saveWithPath(['user', 'fullname'], val)}
                 className='font-poppins text-heading text-2xl font-bold sm:text-4xl'
                 style={{ color: `#${color2}` }}
@@ -252,11 +252,20 @@ export default function Coutume() {
               />
               <InlineEdit
                 className='text-heading'
-                editable={resume?.user?.id == editableSection}
+                placeholder='Professional Title'
+                editable={editableSection == 'user'}
                 text={resume?.user?.title}
                 onSave={(val) => saveWithPath(['user', 'title'], val)}
                 dottedActive
               />
+              {/* <InlineEdit
+                className='text-heading'
+                placeholder='Professional profile overview'
+                editable={editableSection == 'user'}
+                text={resume?.user?.summary}
+                onSave={(val) => saveWithPath(['user', 'summary'], val)}
+                dottedActive
+              /> */}
             </div>
           </div>
           <div className='p-5'>

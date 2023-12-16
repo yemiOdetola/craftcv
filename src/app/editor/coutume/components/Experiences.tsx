@@ -1,12 +1,12 @@
 import React from 'react';
 import { InlineEdit } from '@/components/editor';
 import { useEditorActions } from '@/utils/useEditorActions';
+import { useResume } from '@/store';
 
 interface ExperiencesProps {
   editableSection: null | string;
   color1: string;
   color2: string;
-  experiences: any;
   editBlurEvent: (e: any) => void;
   setEditableSectionId: (id: string) => void;
   // onSave: () => void;
@@ -17,13 +17,14 @@ export default function Experiences({
   editBlurEvent,
   setEditableSectionId,
   color1,
-  experiences,
 }: ExperiencesProps) {
   const { saveWithPath } = useEditorActions();
+  const resume = useResume();
+  const experiences = resume.experiences;
   return (
     <div className='py-3'>
       <h2 className='font-poppins text-top-color text-lg font-bold'>
-        Professional Experiences
+        Experience History
       </h2>
       <div className='flex flex-col'>
         {Object.keys(experiences).map((key: any, index: number) => {

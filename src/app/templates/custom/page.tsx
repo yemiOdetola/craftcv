@@ -56,9 +56,9 @@ export default function CustomTemplate() {
   const dragToWidget = useRef<number>(0);
   const setLayout = (layout: string) => updateCustomLayout(layout);
 
-  useEffect(() => {
-    updateResume({});
-  }, [updateResume]);
+  // useEffect(() => {
+  //   updateResume({});
+  // }, [updateResume]);
 
   useEffect(() => {
     setLWh(vh / leftWidgets.length - leftWidgets.length * 2.25);
@@ -137,6 +137,7 @@ export default function CustomTemplate() {
       twoColumns: twoColumns,
       populate: populate,
     };
+    updateResume({});
     setLayout(customOptions);
     console.log('customOptions', customOptions);
   };
