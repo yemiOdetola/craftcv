@@ -46,7 +46,8 @@ export const basetemplate: any = {
     },
   },
   certifications: {
-    certificate1: {
+    certification1: {
+      id: 'certification1',
       name: '',
       from: '',
       to: '',

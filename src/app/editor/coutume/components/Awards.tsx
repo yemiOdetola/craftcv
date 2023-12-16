@@ -77,7 +77,7 @@ export default function Awards({
                   text={award?.description}
                   editable={editableSection == award.id}
                   placeholder='Brief description'
-                  className='text-sm font-light'
+                  className='text-sm text-gray-700 font-light'
                   onSave={(val) =>
                     saveWithPath(['awards', key], {
                       ...award,

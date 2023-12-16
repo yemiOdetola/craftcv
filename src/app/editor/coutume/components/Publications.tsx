@@ -78,7 +78,7 @@ export default function Contact({
                   text={publication?.description}
                   editable={editableSection == publication.id}
                   placeholder='Brief description'
-                  className='text-xs font-light'
+                  className='text-sm text-gray-700 font-light'
                   onSave={(val) =>
                     saveWithPath(['publications', key], {
                       ...publication,

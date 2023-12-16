@@ -24,6 +24,7 @@ import {
   Summary,
   TechnicalSkills,
 } from './components';
+import Certifications from './components/Certifications';
 
 interface Experience {
   id: string;
@@ -169,9 +170,19 @@ export default function Coutume() {
   };
 
   const renderPublication = () => {
-    console.log('publicatipns');
     return (
       <Publications
+        color1={color1}
+        editableSection={editableSection}
+        editBlurEvent={(e) => editBlurEvent(e)}
+        setEditableSectionId={(id) => setEditableSectionId(id)}
+      />
+    );
+  };
+
+  const renderCertifications = () => {
+    return (
+      <Certifications
         color1={color1}
         editableSection={editableSection}
         editBlurEvent={(e) => editBlurEvent(e)}
@@ -219,6 +230,9 @@ export default function Coutume() {
         }
         if (componentName == 'publications') {
           return renderPublication();
+        }
+        if (componentName == 'certifications') {
+          return renderCertifications();
         }
       });
     }
