@@ -15,6 +15,7 @@ import {
   Contact,
   Education,
   Experiences,
+  Interests,
   Languages,
   Projects,
   SoftSkills,
@@ -82,7 +83,6 @@ export default function Coutume() {
   };
 
   const renderProjects = () => {
-    console.log('projects');
     return (
       <Projects
         editableSection={editableSection}
@@ -93,13 +93,12 @@ export default function Coutume() {
     );
   };
 
-  const renderSummary = (meta: any) => {
+  const renderSummary = () => {
     return (
       <Summary
         editableSection={editableSection}
         editBlurEvent={(e) => editBlurEvent(e)}
         setEditableSectionId={(id) => setEditableSectionId(id)}
-        summary={meta}
       />
     );
   };
@@ -116,36 +115,52 @@ export default function Coutume() {
     );
   };
 
-  const renderSoftSkills = (meta: any) => {
+  const renderSoftSkills = () => {
     return (
       <SoftSkills
         editableSection={editableSection}
         editBlurEvent={(e) => editBlurEvent(e)}
         setEditableSectionId={(id) => setEditableSectionId(id)}
-        softSkills={meta}
       />
     );
   };
 
-  const renderTechnicalSkills = (meta: any) => {
-    console.log('technical skills');
+  const renderTechnicalSkills = () => {
     return (
       <TechnicalSkills
         editableSection={editableSection}
         editBlurEvent={(e) => editBlurEvent(e)}
         setEditableSectionId={(id) => setEditableSectionId(id)}
-        technicalSkills={meta}
       />
     );
   };
 
-  const renderContactInfo = (meta: any) => {
+  const renderContactInfo = () => {
     return (
       <Contact
         editableSection={editableSection}
         editBlurEvent={(e) => editBlurEvent(e)}
         setEditableSectionId={(id) => setEditableSectionId(id)}
-        contact={meta}
+      />
+    );
+  };
+
+  const renderInterests = () => {
+    return (
+      <Interests
+        editableSection={editableSection}
+        editBlurEvent={(e) => editBlurEvent(e)}
+        setEditableSectionId={(id) => setEditableSectionId(id)}
+      />
+    );
+  };
+
+  const renderLanguages = () => {
+    return (
+      <Languages
+        editableSection={editableSection}
+        editBlurEvent={(e) => editBlurEvent(e)}
+        setEditableSectionId={(id) => setEditableSectionId(id)}
       />
     );
   };
@@ -154,12 +169,11 @@ export default function Coutume() {
     if (componentNames?.length > 0) {
       return componentNames.map((componentName, index) => {
         componentName = componentName.toLocaleLowerCase();
-        const meta = customLayout[componentName];
         if (componentName == 'experiences') {
           return renderExperiences();
         }
         if (componentName == 'technical skills') {
-          return renderTechnicalSkills(meta);
+          return renderTechnicalSkills();
         }
         if (componentName == 'projects') {
           return renderProjects();
@@ -167,63 +181,26 @@ export default function Coutume() {
         if (componentName == 'education') {
           return renderEducation();
         }
-        // if (componentName == 'references') {
-        //   return renderRefereces(meta);
-        // }
-        // if (componentName == 'certifications') {
-        //   return renderCertifications(meta);
-        // }
+        if (componentName == 'soft skills') {
+          return renderSoftSkills();
+        }
+        if (componentName == 'technical skills') {
+          return renderTechnicalSkills();
+        }
+        if (componentName == 'languages') {
+          return renderLanguages();
+        }
+        if (componentName == 'summary') {
+          return renderSummary();
+        }
+        if (componentName == 'interests') {
+          return renderInterests();
+        }
+        if (componentName == 'contact') {
+          return renderContactInfo();
+        }
       });
-    } else {
-      // router.push('/templates/custom');
     }
-  };
-
-  const renderInterests = (interests: string[]) => {
-    return (
-      <div
-        className='my-1'
-        onClick={() => setEditableSectionId('interests')}
-        onBlur={(e) => editBlurEvent(e)}
-      >
-        {interests.map((interest, index) => {
-          return (
-            <div className='mb-1 flex items-center' key={`interest-${index}`}>
-              <InlineEdit
-                text={interest}
-                editable={'interests' == editableSection}
-                className='ml-2'
-                dottedActive
-                onSave={(val) => saveWithPath(['interests'], val)}
-              />
-            </div>
-          );
-        })}
-      </div>
-    );
-  };
-  const renderLanguages = (languages: string[]) => {
-    return (
-      <div
-        className='my-1'
-        onClick={() => setEditableSectionId('languages')}
-        onBlur={(e) => editBlurEvent(e)}
-      >
-        {languages.map((language, index) => {
-          return (
-            <div className='mb-1 flex items-center' key={`language-${index}`}>
-              <InlineEdit
-                text={language}
-                editable={'languages' == editableSection}
-                className='ml-2'
-                dottedActive
-                onSave={(val) => saveWithPath(['languages'], val)}
-              />
-            </div>
-          );
-        })}
-      </div>
-    );
   };
 
   const renderedMainComponents = renderComponents(customLayout?.layout?.left);

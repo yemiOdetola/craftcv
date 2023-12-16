@@ -1,20 +1,21 @@
 import React from 'react';
 import { InlineEdit } from '@/components/editor';
 import { useEditorActions } from '@/utils/useEditorActions';
+import { useResume } from '@/store';
 
 interface SummaryProps {
-  summary: any;
   editableSection: null | string;
   editBlurEvent: (e: any) => void;
   setEditableSectionId: (id: any) => void;
 }
 
 export default function Summary({
-  summary,
   editableSection,
   editBlurEvent,
   setEditableSectionId,
 }: SummaryProps) {
+  const resume = useResume();
+  const summary = resume.summary;
   const { saveWithPath } = useEditorActions();
   return (
     <div className='py-3'>
@@ -22,7 +23,7 @@ export default function Summary({
         Executive Summary
       </h2>
       <div
-        onClick={() => setEditableSectionId(summary.id)}
+        onClick={() => setEditableSectionId('about')}
         onBlur={(e) => editBlurEvent(e)}
       >
         <InlineEdit

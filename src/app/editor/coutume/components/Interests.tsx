@@ -1,21 +1,22 @@
 import React from 'react';
 import { InlineEdit } from '@/components/editor';
+import { useResume } from '@/store';
+import { useEditorActions } from '@/utils/useEditorActions';
 
 interface InterestsProps {
-  editable: boolean;
-  interests: string[];
+  editableSection: null | string;
   editBlurEvent: (e: any) => void;
-  setEditableSectionId: () => void;
-  onSave: () => void;
+  setEditableSectionId: (id: string) => void;
 }
 
 export default function Interests({
-  editable,
+  editableSection,
   editBlurEvent,
   setEditableSectionId,
-  onSave,
-  interests,
 }: InterestsProps) {
+  const { saveWithPath } = useEditorActions();
+  const resume = useResume();
+  const interests: string[] = resume.languages;
   return (
     <div className='py-3'>
       <h2 className='font-poppins text-top-color text-lg font-bold'>
@@ -23,7 +24,7 @@ export default function Interests({
       </h2>
       <div
         className='my-1'
-        onClick={setEditableSectionId}
+        onClick={() => setEditableSectionId('interests')}
         onBlur={editBlurEvent}
       >
         {interests.map((interest, index) => {
@@ -31,10 +32,12 @@ export default function Interests({
             <div className='mb-1 flex items-center' key={`interest-${index}`}>
               <InlineEdit
                 text={interest}
-                editable={editable}
+                editable={editableSection == 'interests'}
                 className='ml-2'
                 dottedActive
-                onSave={onSave}
+                elementPath={['interests', index]}
+                id={`interests-${index}`}
+                onSave={(val) => saveWithPath(['interests', index], val)}
               />
             </div>
           );

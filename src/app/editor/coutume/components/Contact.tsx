@@ -2,27 +2,28 @@ import React from 'react';
 import { InlineEdit } from '@/components/editor';
 import { getIconByType } from '../../Icons';
 import { useEditorActions } from '@/utils/useEditorActions';
+import { useResume } from '@/store';
 
 interface ContactProps {
-  contact: any;
   editableSection: null | string;
   editBlurEvent: (e: any) => void;
   setEditableSectionId: (id: string) => void;
 }
 
 export default function Contact({
-  contact,
   editableSection,
   editBlurEvent,
   setEditableSectionId,
 }: ContactProps) {
   const { saveWithPath } = useEditorActions();
+  const resume = useResume();
+  const contact = resume.contact;
   return (
     <div className='py-3'>
       <h2 className='font-poppins text-top-color text-lg font-bold'>Contact</h2>
       <div
         className='my-1'
-        onClick={() => setEditableSectionId(contact.id)}
+        onClick={() => setEditableSectionId('contact')}
         onBlur={editBlurEvent}
       >
         {contact &&
@@ -38,7 +39,7 @@ export default function Contact({
                   </span>
                   <InlineEdit
                     text={contact[key]}
-                    editable={editableSection == contact.id}
+                    editable={editableSection == 'contact'}
                     className='ml-2'
                     dottedActive
                     onSave={(val) => saveWithPath(['contact', key], val)}

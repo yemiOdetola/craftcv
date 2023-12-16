@@ -2,10 +2,10 @@ import React from 'react';
 import { InlineEdit } from '@/components/editor';
 import { getIconByType } from '../../Icons';
 import { useEditorActions } from '@/utils/useEditorActions';
+import { useResume } from '@/store';
 
 interface SoftSkillsProps {
   editableSection: null | string;
-  softSkills: any;
   editBlurEvent: (e: any) => void;
   setEditableSectionId: (id: string) => void;
 }
@@ -14,9 +14,10 @@ export default function SoftSkills({
   editableSection,
   editBlurEvent,
   setEditableSectionId,
-  softSkills,
 }: SoftSkillsProps) {
   const { saveWithPath } = useEditorActions();
+  const resume = useResume();
+  const softSkills = resume['soft skills'];
   return (
     <div className='py-3'>
       <h2 className='font-poppins text-top-color text-lg font-bold'>

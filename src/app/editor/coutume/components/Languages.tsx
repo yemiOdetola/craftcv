@@ -1,21 +1,22 @@
 import React from 'react';
 import { InlineEdit } from '@/components/editor';
+import { useEditorActions } from '@/utils/useEditorActions';
+import { useResume } from '@/store';
 
 interface LanguagesProps {
-  editable: boolean;
-  languages: string[];
+  editableSection: null | string;
   editBlurEvent: (e: any) => void;
-  setEditableSectionId: () => void;
-  onSave: () => void;
+  setEditableSectionId: (id: string) => void;
 }
 
 export default function Languages({
-  editable,
+  editableSection,
   editBlurEvent,
   setEditableSectionId,
-  onSave,
-  languages,
 }: LanguagesProps) {
+  const { saveWithPath } = useEditorActions();
+  const resume = useResume();
+  const languages: string[] = resume.languages;
   return (
     <div className='py-3'>
       <h2 className='font-poppins text-top-color text-lg font-bold'>
@@ -23,7 +24,7 @@ export default function Languages({
       </h2>
       <div
         className='my-1'
-        onClick={setEditableSectionId}
+        onClick={() => setEditableSectionId('languages')}
         onBlur={editBlurEvent}
       >
         {languages.map((language, index) => {
@@ -31,10 +32,12 @@ export default function Languages({
             <div className='mb-1 flex items-center' key={`language-${index}`}>
               <InlineEdit
                 text={language}
-                editable={editable}
+                editable={editableSection == 'languages'}
                 className='ml-2'
                 dottedActive
-                onSave={onSave}
+                elementPath={['languages', index]}
+                id={`languages-${index}`}
+                onSave={(val) => saveWithPath(['languages', index], val)}
               />
             </div>
           );

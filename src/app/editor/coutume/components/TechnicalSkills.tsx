@@ -2,10 +2,10 @@ import React from 'react';
 import { InlineEdit } from '@/components/editor';
 import { getIconByType } from '../../Icons';
 import { useEditorActions } from '@/utils/useEditorActions';
+import { useResume } from '@/store';
 
 interface TechnicalSkillsProps {
   editableSection: null | string;
-  technicalSkills: any;
   editBlurEvent: (e: any) => void;
   setEditableSectionId: (id: string) => void;
 }
@@ -14,9 +14,11 @@ export default function TechnicalSkills({
   editableSection,
   editBlurEvent,
   setEditableSectionId,
-  technicalSkills,
 }: TechnicalSkillsProps) {
   const { saveWithPath } = useEditorActions();
+  const resume = useResume();
+  const technicalSkills = resume['technical skills'];
+
   return (
     <div className='py-3'>
       <h2 className='font-poppins text-top-color text-lg font-bold'>
@@ -24,7 +26,7 @@ export default function TechnicalSkills({
       </h2>
       <div
         className='my-1'
-        onClick={() => setEditableSectionId(technicalSkills.id)}
+        onClick={() => setEditableSectionId('technicalSkills')}
         onBlur={editBlurEvent}
       >
         {technicalSkills?.skillset.map((skill: string, index: number) => {
@@ -38,7 +40,7 @@ export default function TechnicalSkills({
               </a>
               <InlineEdit
                 text={skill}
-                editable={editableSection == technicalSkills.id}
+                editable={editableSection == 'technicalSkills'}
                 className='ml-2'
                 elementPath={['technical skills', 'skillset', index]}
                 id={`skillset-${index}`}
