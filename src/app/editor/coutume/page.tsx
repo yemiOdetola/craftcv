@@ -104,7 +104,7 @@ export default function Coutume() {
     );
   };
 
-  const renderEducation = (meta: any) => {
+  const renderEducation = () => {
     console.log('education');
     return (
       <Education
@@ -112,7 +112,6 @@ export default function Coutume() {
         editableSection={editableSection}
         editBlurEvent={(e) => editBlurEvent(e)}
         setEditableSectionId={(id) => setEditableSectionId(id)}
-        educationhistory={meta}
       />
     );
   };
@@ -166,7 +165,7 @@ export default function Coutume() {
           return renderProjects();
         }
         if (componentName == 'education') {
-          return renderEducation(meta);
+          return renderEducation();
         }
         // if (componentName == 'references') {
         //   return renderRefereces(meta);
