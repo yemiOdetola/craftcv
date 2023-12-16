@@ -1,9 +1,9 @@
 import React from 'react';
 import { InlineEdit } from '@/components/editor';
 import { useEditorActions } from '@/utils/useEditorActions';
+import { useResume } from '@/store';
 
 interface ProjectsProps {
-  projects: any;
   editableSection: null | string;
   color1: string;
   editBlurEvent: (e: any) => void;
@@ -11,13 +11,14 @@ interface ProjectsProps {
 }
 
 export default function Projects({
-  projects,
   editableSection,
   color1,
   editBlurEvent,
   setEditableSectionId,
 }: ProjectsProps) {
   const { saveWithPath } = useEditorActions();
+  const resume = useResume();
+  const projects = resume.projects;
   return (
     <div className='py-3'>
       <h2 className='font-poppins text-top-color text-lg font-bold'>
@@ -36,6 +37,7 @@ export default function Projects({
               <InlineEdit
                 text={project.title}
                 editable={editableSection == project.id}
+                placeholder='Project name'
                 className='text-lg font-semibold text-gray-700'
                 onSave={(val) =>
                   saveWithPath(['projects', key], { ...project, title: val })
@@ -44,6 +46,7 @@ export default function Projects({
               <InlineEdit
                 text={project?.tech}
                 editable={editableSection == project.id}
+                placeholder='Tools/Technologies used'
                 style={{ color: `#${color1}` }}
                 className='my-2 font-mono text-sm font-semibold text-green-700'
                 onSave={(val) =>
@@ -52,6 +55,7 @@ export default function Projects({
               />
               <InlineEdit
                 text={project.description}
+                placeholder='Description of achievements'
                 editable={editableSection == project.id}
                 className='mb-1 pl-2 text-sm font-normal text-gray-700'
                 onSave={(val) =>

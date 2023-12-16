@@ -81,7 +81,7 @@ export default function Coutume() {
     );
   };
 
-  const renderProjects = (meta: any) => {
+  const renderProjects = () => {
     console.log('projects');
     return (
       <Projects
@@ -89,7 +89,6 @@ export default function Coutume() {
         editBlurEvent={(e) => editBlurEvent(e)}
         setEditableSectionId={(id) => setEditableSectionId(id)}
         color1={color1}
-        projects={meta}
       />
     );
   };
@@ -164,7 +163,7 @@ export default function Coutume() {
           return renderTechnicalSkills(meta);
         }
         if (componentName == 'projects') {
-          return renderProjects(meta);
+          return renderProjects();
         }
         if (componentName == 'education') {
           return renderEducation(meta);
