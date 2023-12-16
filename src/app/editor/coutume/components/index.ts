@@ -7,3 +7,5 @@ export { default as Projects } from './Projects';
 export { default as Summary } from './Summary';
 export { default as SoftSkills } from './SoftSkills';
 export { default as TechnicalSkills } from './TechnicalSkills';
+export { default as Awards } from './Awards';
+export { default as Publications } from './Publications';

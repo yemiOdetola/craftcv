@@ -12,12 +12,14 @@ import {
 import { getFontFamilyStyle, isObjectEmpty } from '@/utils/helper';
 import { useEditorActions } from '@/utils/useEditorActions';
 import {
+  Awards,
   Contact,
   Education,
   Experiences,
   Interests,
   Languages,
   Projects,
+  Publications,
   SoftSkills,
   Summary,
   TechnicalSkills,
@@ -29,17 +31,6 @@ interface Experience {
   achievements: string;
   duration: string;
 }
-
-const componentMapping: any = {
-  // Certifications: Certifications,
-  Languages: Languages,
-  'Technical Skills': TechnicalSkills,
-  Experiences: Experiences,
-  Projects: Projects,
-  Summary: Summary,
-  // Certifications: Certifications,
-  // References: References,
-};
 
 export default function Coutume() {
   const router = useRouter();
@@ -165,6 +156,30 @@ export default function Coutume() {
     );
   };
 
+  const renderAward = () => {
+    console.log('award');
+    return (
+      <Awards
+        color1={color1}
+        editableSection={editableSection}
+        editBlurEvent={(e) => editBlurEvent(e)}
+        setEditableSectionId={(id) => setEditableSectionId(id)}
+      />
+    );
+  };
+
+  const renderPublication = () => {
+    console.log('publicatipns');
+    return (
+      <Publications
+        color1={color1}
+        editableSection={editableSection}
+        editBlurEvent={(e) => editBlurEvent(e)}
+        setEditableSectionId={(id) => setEditableSectionId(id)}
+      />
+    );
+  };
+
   const renderComponents = (componentNames: string[]) => {
     if (componentNames?.length > 0) {
       return componentNames.map((componentName, index) => {
@@ -198,6 +213,12 @@ export default function Coutume() {
         }
         if (componentName == 'contact') {
           return renderContactInfo();
+        }
+        if (componentName == 'awards') {
+          return renderAward();
+        }
+        if (componentName == 'publications') {
+          return renderPublication();
         }
       });
     }

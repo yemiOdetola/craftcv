@@ -65,8 +65,7 @@ export const basetemplate: any = {
     award1: {
       id: 'award1',
       title: '',
-      from: '',
-      to: '',
+      year: '',
       institution: '',
       description: '',
     },
@@ -84,8 +83,9 @@ export const basetemplate: any = {
   publications: {
     publication1: {
       id: 'publication1',
-      Authors: [''],
-      publicationDate: '',
+      type: '',
+      title: '',
+      authors: '',
       description: '',
     },
   },
