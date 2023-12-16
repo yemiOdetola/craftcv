@@ -85,6 +85,26 @@ body {
   height: 480px;
 }
 
+.pseudo-element[placeholder]:empty:before {
+  content: attr(placeholder);
+  color: inherit;
+  display: block;
+  font-style: italic;
+  font-size: 13px;
+  font-weight: 300;
+  pointer-events: none;
+}
+
+[contentEditable='true']:empty:not(:focus):before {
+  content: attr(placeholder);
+  color: #555;
+  font-style: italic;
+  font-size: 12px;
+  font-weight: 300;
+  display: block;
+  pointer-events: none;
+}
+
 @media (min-width: 768px) {
   .tpheight {
     height: 648px;

@@ -7,6 +7,7 @@ export const useEditorActions = () => {
 
   const saveWithPath = (pathArray: any[], newValue: any) => {
     let cres = { ...resume };
+    console.log('cressssssssssssssssss', cres);
     if (!Array.isArray(pathArray) || pathArray.length === 0) {
       return cres;
     }

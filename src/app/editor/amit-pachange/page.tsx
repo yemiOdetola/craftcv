@@ -4,9 +4,16 @@ import Image from 'next/image';
 import { EditorCover, InlineEdit } from '@/components/editor';
 import placeholder from '@/assets/images/placeholder/generator.png';
 import { getIconByType } from '../Icons';
-import { useEditorTheme, useFontFamily, useResume } from '@/store';
+import {
+  useEditorTheme,
+  useFontFamily,
+  useMainStore,
+  useResume,
+} from '@/store';
 import { getFontFamilyStyle } from '@/utils/helper';
 import { useEditorActions } from '@/utils/useEditorActions';
+import { amitpachange } from '@/store/resume';
+
 interface Experience {
   id: string;
   title: string;
@@ -18,9 +25,14 @@ export default function AmitPachange() {
   const fontFamily = useFontFamily();
   const editorTheme = useEditorTheme();
   const { saveWithPath } = useEditorActions();
+  const { updateResume } = useMainStore();
   const [resume] = useState(useResume());
   const [color1, color2] = editorTheme;
   const [editableSection, setEditableSectionId] = useState<string | null>(null);
+
+  useEffect(() => {
+    updateResume(amitpachange);
+  }, [updateResume]);
 
   const renderContactInfo = () => {
     return (

@@ -45,7 +45,7 @@ interface DropColumnProps {
 }
 const vh = 624;
 export default function CustomTemplate() {
-  const { updateCustomLayout } = useMainStore();
+  const { updateCustomLayout, updateResume } = useMainStore();
   const [leftWidgets, setLeftWidgets] = useState<string[]>([]);
   const [rightWidgets, setRightWidgets] = useState<string[]>([]);
   const [rwh, setRWh] = useState<any>(`[${vh}px]`);
@@ -54,8 +54,11 @@ export default function CustomTemplate() {
   const [populate, setPopulate] = useState<boolean>(false);
   const dragStartWidget = useRef<number>(0);
   const dragToWidget = useRef<number>(0);
-
   const setLayout = (layout: string) => updateCustomLayout(layout);
+
+  useEffect(() => {
+    updateResume({});
+  }, [updateResume]);
 
   useEffect(() => {
     setLWh(vh / leftWidgets.length - leftWidgets.length * 2.25);
@@ -118,10 +121,12 @@ export default function CustomTemplate() {
 
   const prepareTemplate = () => {
     const customOptions: any = {};
+    customOptions['base'] = {};
     const allSections = [...leftWidgets, ...rightWidgets];
     allSections.map((sec) => {
       sec = sec.toLowerCase();
       customOptions[sec] = basetemplate[sec];
+      customOptions['base'][sec] = basetemplate[sec];
     });
     let placements: any = { left: [...leftWidgets] };
     if (twoColumns) {

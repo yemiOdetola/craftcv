@@ -31,16 +31,17 @@ export default function Experiences({
           return (
             <div
               className='mb-6 flex flex-col'
-              key={`resume-experience-${index}`}
+              key={`experience-${index}`}
               onClick={() => setEditableSectionId(exp.id)}
               onBlur={editBlurEvent}
             >
               <div className='flex items-center justify-normal'>
                 <InlineEdit
                   text={exp.company}
-                  className='text-lg font-bold text-gray-700'
+                  className='text-md font-bold text-gray-700'
                   editable={editableSection == exp.id}
                   dottedActive
+                  placeholder='Company'
                   onSave={(val) =>
                     saveWithPath(['experiences', key], {
                       ...exp,
@@ -51,9 +52,10 @@ export default function Experiences({
                 <span> | </span>
                 <InlineEdit
                   text={exp.position}
-                  className='text-lg font-bold text-gray-700'
+                  className='text-md font-bold text-gray-700'
                   editable={editableSection == exp.id}
                   dottedActive
+                  placeholder='Position/Title'
                   onSave={(val) =>
                     saveWithPath(['experiences', key], {
                       ...exp,
@@ -69,6 +71,7 @@ export default function Experiences({
                   editable={editableSection == exp.id}
                   style={{ color: `#${color1}` }}
                   dottedActive
+                  placeholder='Start date'
                   onSave={(val) =>
                     saveWithPath(['experiences', key], {
                       ...exp,
@@ -83,6 +86,7 @@ export default function Experiences({
                   editable={editableSection == exp.id}
                   style={{ color: `#${color1}` }}
                   dottedActive
+                  placeholder='End date'
                   onSave={(val) =>
                     saveWithPath(['experiences', key], {
                       ...exp,
@@ -97,12 +101,13 @@ export default function Experiences({
               <ul className='list-disc space-y-1 pl-4 text-sm'>
                 {exp?.responsibilities.map(
                   (responsibility: string, index: number) => (
-                    <li key={`exp-responsibility-${index}`}>
+                    <li key={`responsibility-${index}`}>
                       {' '}
                       <InlineEdit
                         text={responsibility}
                         editable={editableSection == exp.id}
                         id={`responsibilities-${index}`}
+                        placeholder='Task/Responsibility'
                         elementPath={[
                           'experiences',
                           key,

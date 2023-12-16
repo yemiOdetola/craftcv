@@ -161,3 +161,7 @@ export const arraysEqual = (arrayA: string[], arrayB: string[]) => {
   }
   return true;
 };
+
+export const isObjectEmpty = (obj: any) => {
+  return Object.keys(obj).length === 0;
+};

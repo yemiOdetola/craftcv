@@ -1,6 +1,5 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { amitpachange } from './resume';
 
 interface EditorConfig {
   fontFamily: string;
@@ -26,31 +25,13 @@ interface State {
   actions: Actions;
 }
 
-// export const useMainStore = create<State>()(
-//   persist(
-//     (set, get) => ({
-//       fontFamily: 'ubuntu',
-//       fontSize: 'font-sm',
-//       editorTheme: ['7D4B82', 'B54A71'],
-//       actions: {
-//         setFontFamily: (fontFamily: string) => set(() => ({ fontFamily })),
-//         setEditorTheme: (theme: string[]) =>
-//           set(() => ({ editorTheme: theme })),
-//       },
-//     }),
-//     {
-//       name: 'craftcv',
-//     }
-//   )
-// );
-
 export const useMainStore = create<State>()(
   persist(
     (set: any) => ({
       fontFamily: 'ubuntu',
       fontSize: 'font-sm',
       editorTheme: ['7D4B82', 'B54A71'],
-      resume: { ...amitpachange },
+      resume: {},
       customLayout: {},
       changeFontFamily: (fontFamily: string) => set(() => ({ fontFamily })),
       changeEditorTheme: (theme: string[]) =>
