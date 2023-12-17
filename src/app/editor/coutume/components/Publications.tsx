@@ -23,7 +23,7 @@ export default function Contact({
   const publications = resume.publications;
   return (
     <div className='py-3'>
-      <Heading>Publications</Heading>
+      <Heading id="publications">Publications</Heading>
       <div className='my-1'>
         {publications &&
           Object.keys(publications).map((key, index) => {

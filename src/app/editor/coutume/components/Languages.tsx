@@ -20,13 +20,13 @@ export default function Languages({
   const languages: string[] = resume.languages;
   return (
     <div className='py-3'>
-      <Heading>Languages</Heading>
+      <Heading id='languages'>Languages</Heading>
       <div
         className='my-1'
         onClick={() => setEditableSectionId('languages')}
         onBlur={editBlurEvent}
       >
-        {languages.map((language, index) => {
+        {languages && languages.map((language, index) => {
           return (
             <div className='mb-1 flex items-center' key={`language-${index}`}>
               <InlineEdit

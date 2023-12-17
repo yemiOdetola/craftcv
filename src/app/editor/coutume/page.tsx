@@ -268,14 +268,6 @@ export default function Coutume() {
                 onSave={(val) => saveWithPath(['user', 'title'], val)}
                 dottedActive
               />
-              {/* <InlineEdit
-                className='text-heading'
-                placeholder='Professional profile overview'
-                editable={editableSection == 'user'}
-                text={resume?.user?.summary}
-                onSave={(val) => saveWithPath(['user', 'summary'], val)}
-                dottedActive
-              /> */}
             </div>
           </div>
           <div className='p-5'>

@@ -21,7 +21,7 @@ export default function Contact({
   const contact = resume.contact;
   return (
     <div className='py-3'>
-      <Heading>Contact</Heading>
+      <Heading id="contact">Contact</Heading>
       <div
         className='my-1'
         onClick={() => setEditableSectionId('contact')}

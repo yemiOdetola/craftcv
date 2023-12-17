@@ -22,7 +22,7 @@ export default function Certifications({
   const certifications = resume.certifications;
   return (
     <div className='py-3'>
-      <Heading>Certifications</Heading>
+      <Heading id="certifications">Certifications</Heading>
       <div className='flex flex-col space-y-1'>
         {certifications &&
           Object.keys(certifications).map((key: any, index: number) => {
@@ -47,7 +47,7 @@ export default function Certifications({
                     })
                   }
                 />
-                <div className='flex items-center gap-x-4'>
+                <div className='flex items-center gap-x-1'>
                   <InlineEdit
                     text={certificate?.issued}
                     editable={editableSection == certificate.id}
@@ -65,7 +65,7 @@ export default function Certifications({
                   <InlineEdit
                     text={certificate?.expiry}
                     editable={editableSection == certificate.id}
-                    className='text-sm font-medium text-green-700'
+                    className='text-sm font-bold text-green-700'
                     style={{ color: `#${color1}` }}
                     placeholder='Expiry date'
                     onSave={(val) =>

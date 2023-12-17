@@ -20,7 +20,7 @@ export default function Summary({
   const { saveWithPath } = useEditorActions();
   return (
     <div className='py-3'>
-      <Heading>Executive Summary</Heading>
+      <Heading id='interests'>Executive Summary</Heading>
       <div
         onClick={() => setEditableSectionId('about')}
         onBlur={(e) => editBlurEvent(e)}

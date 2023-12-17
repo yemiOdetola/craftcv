@@ -17,30 +17,32 @@ export default function Interests({
 }: InterestsProps) {
   const { saveWithPath } = useEditorActions();
   const resume = useResume();
-  const interests: string[] = resume.languages;
+  const interests: string[] = resume.interests;
   return (
     <div className='py-3'>
-      <Heading>Interests</Heading>
+      <Heading id='interests'>Interests</Heading>
       <div
         className='my-1'
         onClick={() => setEditableSectionId('interests')}
         onBlur={editBlurEvent}
       >
-        {interests.map((interest, index) => {
-          return (
-            <div className='mb-1 flex items-center' key={`interest-${index}`}>
-              <InlineEdit
-                text={interest}
-                editable={editableSection == 'interests'}
-                className='ml-2'
-                dottedActive
-                elementPath={['interests', index]}
-                id={`interests-${index}`}
-                onSave={(val) => saveWithPath(['interests', index], val)}
-              />
-            </div>
-          );
-        })}
+        {interests &&
+          interests.map((interest, index) => {
+            return (
+              <div className='mb-1 flex items-center' key={`interest-${index}`}>
+                <InlineEdit
+                  text={interest}
+                  editable={editableSection == 'interests'}
+                  className='ml-2'
+                  dottedActive
+                  placeholder='Interest'
+                  elementPath={['interests', index]}
+                  id={`interests-${index}`}
+                  onSave={(val) => saveWithPath(['interests', index], val)}
+                />
+              </div>
+            );
+          })}
       </div>
     </div>
   );

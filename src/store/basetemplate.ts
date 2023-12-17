@@ -19,7 +19,7 @@ export const basetemplate: any = {
   },
   education: {
     education0: {
-      id: 'education1',
+      id: 'education0',
       award: '',
       school: '',
       gradyear: '',
@@ -27,8 +27,8 @@ export const basetemplate: any = {
     },
   },
   experiences: {
-    experience0: {
-      id: 'experience0',
+    experiences0: {
+      id: 'experiences0',
       position: '',
       company: '',
       startDate: '',
@@ -37,8 +37,8 @@ export const basetemplate: any = {
     },
   },
   projects: {
-    project1: {
-      id: 'project1',
+    projects0: {
+      id: 'projects0',
       title: '',
       description: '',
       url: '',
@@ -46,8 +46,8 @@ export const basetemplate: any = {
     },
   },
   certifications: {
-    certification1: {
-      id: 'certification1',
+    certifications0: {
+      id: 'certifications0',
       name: '',
       from: '',
       to: '',
@@ -55,7 +55,7 @@ export const basetemplate: any = {
     },
   },
   achievements: {
-    achievement1: {
+    achievements0: {
       name: '',
       from: '',
       to: '',
@@ -63,8 +63,8 @@ export const basetemplate: any = {
     },
   },
   awards: {
-    award1: {
-      id: 'award1',
+    awards0: {
+      id: 'awards0',
       title: '',
       year: '',
       institution: '',
@@ -82,8 +82,8 @@ export const basetemplate: any = {
   interests: [''],
   languages: [''],
   publications: {
-    publication1: {
-      id: 'publication1',
+    publications0: {
+      id: 'publications0',
       type: '',
       title: '',
       authors: '',
@@ -91,7 +91,7 @@ export const basetemplate: any = {
     },
   },
   references: {
-    ref1: {
+    references0: {
       name: '',
       reference: '',
       contacts: [],

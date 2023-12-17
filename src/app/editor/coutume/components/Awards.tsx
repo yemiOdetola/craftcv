@@ -24,7 +24,7 @@ export default function Awards({
 
   return (
     <div className='py-3'>
-      <Heading>Awards</Heading>
+      <Heading id='awards'>Awards</Heading>
       <div className='my-1' onBlur={editBlurEvent}>
         {awards &&
           Object.keys(awards).map((key, index) => {

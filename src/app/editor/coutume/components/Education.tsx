@@ -22,7 +22,7 @@ export default function Education({
   const educationhistory = resume.education;
   return (
     <div className='py-3'>
-      <Heading>Education History</Heading>
+      <Heading id="education">Education History</Heading>
       <div className='flex flex-col space-y-1'>
         {educationhistory &&
           Object.keys(educationhistory).map((key: any, index: number) => {
@@ -64,8 +64,7 @@ export default function Education({
                   text={edu?.school}
                   editable={editableSection == edu.id}
                   placeholder='Institution/University Attended'
-                  className='text-sm font-medium text-green-700'
-                  style={{ color: `#${color1}` }}
+                  className='text-sm font-medium'
                   onSave={(val) =>
                     saveWithPath(['education', key], {
                       ...edu,

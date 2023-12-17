@@ -22,51 +22,52 @@ export default function Projects({
   const projects = resume.projects;
   return (
     <div className='py-3'>
-      <Heading>Projects</Heading>
+      <Heading id='projects'>Projects</Heading>
       <div className='flex flex-col'>
-        {Object.keys(projects).map((key: any, index: number) => {
-          const project = projects[key];
-          return (
-            <div
-              className='mb-4 flex flex-col'
-              key={`resume-project-${index}`}
-              onClick={() => setEditableSectionId(project.id)}
-              onBlur={editBlurEvent}
-            >
-              <InlineEdit
-                text={project.title}
-                editable={editableSection == project.id}
-                placeholder='Project name'
-                className='text-md font-semibold text-gray-700'
-                onSave={(val) =>
-                  saveWithPath(['projects', key], { ...project, title: val })
-                }
-              />
-              <InlineEdit
-                text={project?.tech}
-                editable={editableSection == project.id}
-                placeholder='Tools/Technologies used'
-                style={{ color: `#${color1}` }}
-                className='font-mono text-sm font-semibold text-green-700'
-                onSave={(val) =>
-                  saveWithPath(['projects', key], { ...project, tech: val })
-                }
-              />
-              <InlineEdit
-                text={project.description}
-                placeholder='Description of achievements'
-                editable={editableSection == project.id}
-                className='mb-1 pl-2 text-sm font-normal text-gray-700'
-                onSave={(val) =>
-                  saveWithPath(['projects', key], {
-                    ...project,
-                    description: val,
-                  })
-                }
-              />
-            </div>
-          );
-        })}
+        {projects &&
+          Object.keys(projects).map((key: any, index: number) => {
+            const project = projects[key];
+            return (
+              <div
+                className='mb-4 flex flex-col'
+                key={`resume-project-${index}`}
+                onClick={() => setEditableSectionId(project.id)}
+                onBlur={editBlurEvent}
+              >
+                <InlineEdit
+                  text={project.title}
+                  editable={editableSection == project.id}
+                  placeholder='Project name'
+                  className='text-md font-semibold text-gray-700'
+                  onSave={(val) =>
+                    saveWithPath(['projects', key], { ...project, title: val })
+                  }
+                />
+                <InlineEdit
+                  text={project?.tech}
+                  editable={editableSection == project.id}
+                  placeholder='Tools/Technologies used'
+                  style={{ color: `#${color1}` }}
+                  className='font-mono text-sm font-semibold text-green-700'
+                  onSave={(val) =>
+                    saveWithPath(['projects', key], { ...project, tech: val })
+                  }
+                />
+                <InlineEdit
+                  text={project.description}
+                  placeholder='Description of achievements'
+                  editable={editableSection == project.id}
+                  className='mb-1 pl-2 text-sm font-normal text-gray-700'
+                  onSave={(val) =>
+                    saveWithPath(['projects', key], {
+                      ...project,
+                      description: val,
+                    })
+                  }
+                />
+              </div>
+            );
+          })}
       </div>
     </div>
   );

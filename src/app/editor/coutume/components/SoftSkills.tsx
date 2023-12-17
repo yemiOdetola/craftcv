@@ -21,13 +21,13 @@ export default function SoftSkills({
   const softSkills = resume['soft skills'];
   return (
     <div className='py-3'>
-      <Heading>Soft Skills</Heading>
+      <Heading id="soft skills">Soft Skills</Heading>
       <div
         className='my-1'
         onClick={() => setEditableSectionId(softSkills.id)}
         onBlur={editBlurEvent}
       >
-        {softSkills?.skillset.map((skill: string, index: number) => {
+        {softSkills && softSkills?.skillset.map((skill: string, index: number) => {
           return (
             <div
               className='mb-1 flex items-center'
