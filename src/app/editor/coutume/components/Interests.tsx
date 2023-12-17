@@ -2,6 +2,7 @@ import React from 'react';
 import { InlineEdit } from '@/components/editor';
 import { useResume } from '@/store';
 import { useEditorActions } from '@/utils/useEditorActions';
+import Heading from './Heading';
 
 interface InterestsProps {
   editableSection: null | string;
@@ -19,9 +20,7 @@ export default function Interests({
   const interests: string[] = resume.languages;
   return (
     <div className='py-3'>
-      <h2 className='font-poppins text-top-color text-lg font-bold'>
-        Interests
-      </h2>
+      <Heading>Interests</Heading>
       <div
         className='my-1'
         onClick={() => setEditableSectionId('interests')}

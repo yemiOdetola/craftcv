@@ -2,6 +2,7 @@ import React from 'react';
 import { useEditorActions } from '@/utils/useEditorActions';
 import { InlineEdit } from '@/components/editor';
 import { useResume } from '@/store';
+import Heading from './Heading';
 
 interface EducationProps {
   color1: string;
@@ -21,9 +22,7 @@ export default function Education({
   const educationhistory = resume.education;
   return (
     <div className='py-3'>
-      <h2 className='font-poppins text-top-color text-lg font-bold'>
-        Education History
-      </h2>
+      <Heading>Education History</Heading>
       <div className='flex flex-col space-y-1'>
         {educationhistory &&
           Object.keys(educationhistory).map((key: any, index: number) => {

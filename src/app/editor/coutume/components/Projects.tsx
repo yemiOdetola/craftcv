@@ -2,6 +2,7 @@ import React from 'react';
 import { InlineEdit } from '@/components/editor';
 import { useEditorActions } from '@/utils/useEditorActions';
 import { useResume } from '@/store';
+import Heading from './Heading';
 
 interface ProjectsProps {
   editableSection: null | string;
@@ -21,9 +22,7 @@ export default function Projects({
   const projects = resume.projects;
   return (
     <div className='py-3'>
-      <h2 className='font-poppins text-top-color text-lg font-bold'>
-        Projects
-      </h2>
+      <Heading>Projects</Heading>
       <div className='flex flex-col'>
         {Object.keys(projects).map((key: any, index: number) => {
           const project = projects[key];
@@ -38,7 +37,7 @@ export default function Projects({
                 text={project.title}
                 editable={editableSection == project.id}
                 placeholder='Project name'
-                className='text-lg font-semibold text-gray-700'
+                className='text-md font-semibold text-gray-700'
                 onSave={(val) =>
                   saveWithPath(['projects', key], { ...project, title: val })
                 }
@@ -48,7 +47,7 @@ export default function Projects({
                 editable={editableSection == project.id}
                 placeholder='Tools/Technologies used'
                 style={{ color: `#${color1}` }}
-                className='my-2 font-mono text-sm font-semibold text-green-700'
+                className='font-mono text-sm font-semibold text-green-700'
                 onSave={(val) =>
                   saveWithPath(['projects', key], { ...project, tech: val })
                 }

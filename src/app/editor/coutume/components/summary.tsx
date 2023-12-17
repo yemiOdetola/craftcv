@@ -2,6 +2,7 @@ import React from 'react';
 import { InlineEdit } from '@/components/editor';
 import { useEditorActions } from '@/utils/useEditorActions';
 import { useResume } from '@/store';
+import Heading from './Heading';
 
 interface SummaryProps {
   editableSection: null | string;
@@ -19,9 +20,7 @@ export default function Summary({
   const { saveWithPath } = useEditorActions();
   return (
     <div className='py-3'>
-      <h2 className='font-poppins text-top-color text-lg font-bold'>
-        Executive Summary
-      </h2>
+      <Heading>Executive Summary</Heading>
       <div
         onClick={() => setEditableSectionId('about')}
         onBlur={(e) => editBlurEvent(e)}

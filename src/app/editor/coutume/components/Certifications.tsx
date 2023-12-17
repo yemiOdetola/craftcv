@@ -2,6 +2,7 @@ import React from 'react';
 import { useEditorActions } from '@/utils/useEditorActions';
 import { InlineEdit } from '@/components/editor';
 import { useResume } from '@/store';
+import Heading from './Heading';
 
 interface CertificationsProps {
   color1: string;
@@ -21,9 +22,7 @@ export default function Certifications({
   const certifications = resume.certifications;
   return (
     <div className='py-3'>
-      <h2 className='font-poppins text-top-color text-lg font-bold'>
-        Certifications
-      </h2>
+      <Heading>Certifications</Heading>
       <div className='flex flex-col space-y-1'>
         {certifications &&
           Object.keys(certifications).map((key: any, index: number) => {

@@ -2,6 +2,7 @@ import React from 'react';
 import { InlineEdit } from '@/components/editor';
 import { useEditorActions } from '@/utils/useEditorActions';
 import { useResume } from '@/store';
+import Heading from './Heading';
 
 interface ExperiencesProps {
   editableSection: null | string;
@@ -23,9 +24,7 @@ export default function Experiences({
   const experiences = resume.experiences;
   return (
     <div className='py-3'>
-      <h2 className='font-poppins text-top-color text-lg font-bold'>
-        Experience History
-      </h2>
+      <Heading>Experiences</Heading>
       <div className='flex flex-col'>
         {Object.keys(experiences).map((key: any, index: number) => {
           const exp = experiences[key];

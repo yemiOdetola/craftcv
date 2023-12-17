@@ -3,6 +3,7 @@ import { InlineEdit } from '@/components/editor';
 import { getIconByType } from '../../Icons';
 import { useEditorActions } from '@/utils/useEditorActions';
 import { useResume } from '@/store';
+import Heading from './Heading';
 
 interface ContactProps {
   color1: string;
@@ -22,9 +23,7 @@ export default function Contact({
   const publications = resume.publications;
   return (
     <div className='py-3'>
-      <h2 className='font-poppins text-top-color text-lg font-bold'>
-        Publications
-      </h2>
+      <Heading>Publications</Heading>
       <div className='my-1'>
         {publications &&
           Object.keys(publications).map((key, index) => {
@@ -78,7 +77,7 @@ export default function Contact({
                   text={publication?.description}
                   editable={editableSection == publication.id}
                   placeholder='Brief description'
-                  className='text-sm text-gray-700 font-light'
+                  className='text-sm font-light text-gray-700'
                   onSave={(val) =>
                     saveWithPath(['publications', key], {
                       ...publication,

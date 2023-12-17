@@ -3,6 +3,7 @@ import { InlineEdit } from '@/components/editor';
 import { getIconByType } from '../../Icons';
 import { useEditorActions } from '@/utils/useEditorActions';
 import { useResume } from '@/store';
+import Heading from './Heading';
 
 interface AwardsProps {
   editableSection: null | string;
@@ -23,7 +24,7 @@ export default function Awards({
 
   return (
     <div className='py-3'>
-      <h2 className='font-poppins text-top-color text-lg font-bold'>Awards</h2>
+      <Heading>Awards</Heading>
       <div className='my-1' onBlur={editBlurEvent}>
         {awards &&
           Object.keys(awards).map((key, index) => {
@@ -77,7 +78,7 @@ export default function Awards({
                   text={award?.description}
                   editable={editableSection == award.id}
                   placeholder='Brief description'
-                  className='text-sm text-gray-700 font-light'
+                  className='text-sm font-light text-gray-700'
                   onSave={(val) =>
                     saveWithPath(['awards', key], {
                       ...award,

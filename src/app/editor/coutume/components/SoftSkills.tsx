@@ -3,6 +3,7 @@ import { InlineEdit } from '@/components/editor';
 import { getIconByType } from '../../Icons';
 import { useEditorActions } from '@/utils/useEditorActions';
 import { useResume } from '@/store';
+import Heading from './Heading';
 
 interface SoftSkillsProps {
   editableSection: null | string;
@@ -20,9 +21,7 @@ export default function SoftSkills({
   const softSkills = resume['soft skills'];
   return (
     <div className='py-3'>
-      <h2 className='font-poppins text-top-color text-lg font-bold'>
-        Soft Skills
-      </h2>
+      <Heading>Soft Skills</Heading>
       <div
         className='my-1'
         onClick={() => setEditableSectionId(softSkills.id)}

@@ -3,6 +3,7 @@ import { InlineEdit } from '@/components/editor';
 import { getIconByType } from '../../Icons';
 import { useEditorActions } from '@/utils/useEditorActions';
 import { useResume } from '@/store';
+import Heading from './Heading';
 
 interface TechnicalSkillsProps {
   editableSection: null | string;
@@ -21,9 +22,7 @@ export default function TechnicalSkills({
 
   return (
     <div className='py-3'>
-      <h2 className='font-poppins text-top-color text-lg font-bold'>
-        Technical Skills
-      </h2>
+      <Heading>Technical Skills</Heading>
       <div
         className='my-1'
         onClick={() => setEditableSectionId('technicalSkills')}
@@ -41,7 +40,7 @@ export default function TechnicalSkills({
               <InlineEdit
                 text={skill}
                 editable={editableSection == 'technicalSkills'}
-                className='ml-2'
+                className='ml-2 text-sm'
                 elementPath={['technical skills', 'skillset', index]}
                 id={`skillset-${index}`}
                 dottedActive
