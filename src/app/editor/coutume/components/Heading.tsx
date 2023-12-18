@@ -1,24 +1,7 @@
 import React, { ReactNode, useState } from 'react';
 import { PiPlusBold } from 'react-icons/pi';
-import { basetemplate } from '@/store/basetemplate';
+import { basetemplate, ValidSections } from '@/store/basetemplate';
 import { useEditorActions } from '@/utils/useEditorActions';
-
-type ValidSections =
-  | 'user'
-  | 'about'
-  | 'contact'
-  | 'education'
-  | 'experiences'
-  | 'projects'
-  | 'certifications'
-  | 'achievements'
-  | 'awards'
-  | 'soft skills'
-  | 'technical skills'
-  | 'interests'
-  | 'languages'
-  | 'publications'
-  | 'references';
 
 type HeadingProps = {
   children: ReactNode;
@@ -35,8 +18,9 @@ const adder = [
   'publications',
   'references',
 ];
+
 export default function Heading({ children, id, className }: HeadingProps) {
-  const [allowNew, setAllowNew] = useState(adder.includes(id));
+  const [allowNew] = useState(adder.includes(id));
   const { saveWithPath } = useEditorActions();
 
   const getUniqueID = () => {
@@ -44,7 +28,7 @@ export default function Heading({ children, id, className }: HeadingProps) {
   };
 
   const addSection = () => {
-    let sectionData = basetemplate[id];
+    let sectionData: any = basetemplate[id];
     const uid = getUniqueID();
     sectionData = sectionData[Object.keys(sectionData)[0]];
     sectionData.id = uid;
@@ -54,10 +38,10 @@ export default function Heading({ children, id, className }: HeadingProps) {
   };
 
   return (
-    <div className='flex cursor-pointer items-center' onClick={addSection}>
+    <div className='flex cursor-pointer items-center'>
       <h2 className={`text-lg font-bold ${className}`}>{children}</h2>
       {allowNew ? (
-        <button className='p-2'>
+        <button className='p-2' onClick={addSection}>
           <PiPlusBold size={20} />
         </button>
       ) : null}

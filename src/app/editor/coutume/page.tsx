@@ -25,6 +25,7 @@ import {
   TechnicalSkills,
 } from './components';
 import Certifications from './components/Certifications';
+import { ValidSections } from '@/store/basetemplate';
 
 interface Experience {
   id: string;
@@ -61,180 +62,54 @@ export default function Coutume() {
     }
   };
 
-  const renderExperiences = () => {
-    console.log('rendering experiences');
-    return (
-      <Experiences
-        editableSection={editableSection}
-        editBlurEvent={(e) => editBlurEvent(e)}
-        setEditableSectionId={(id) => setEditableSectionId(id)}
-        color1={color1}
-        color2={color2}
-      />
-    );
-  };
-
-  const renderProjects = () => {
-    return (
-      <Projects
-        editableSection={editableSection}
-        editBlurEvent={(e) => editBlurEvent(e)}
-        setEditableSectionId={(id) => setEditableSectionId(id)}
-        color1={color1}
-      />
-    );
-  };
-
-  const renderSummary = () => {
-    return (
-      <Summary
-        editableSection={editableSection}
-        editBlurEvent={(e) => editBlurEvent(e)}
-        setEditableSectionId={(id) => setEditableSectionId(id)}
-      />
-    );
-  };
-
-  const renderEducation = () => {
-    console.log('education');
-    return (
-      <Education
-        color1={color1}
-        editableSection={editableSection}
-        editBlurEvent={(e) => editBlurEvent(e)}
-        setEditableSectionId={(id) => setEditableSectionId(id)}
-      />
-    );
-  };
-
-  const renderSoftSkills = () => {
-    return (
-      <SoftSkills
-        editableSection={editableSection}
-        editBlurEvent={(e) => editBlurEvent(e)}
-        setEditableSectionId={(id) => setEditableSectionId(id)}
-      />
-    );
-  };
-
-  const renderTechnicalSkills = () => {
-    return (
-      <TechnicalSkills
-        editableSection={editableSection}
-        editBlurEvent={(e) => editBlurEvent(e)}
-        setEditableSectionId={(id) => setEditableSectionId(id)}
-      />
-    );
-  };
-
-  const renderContactInfo = () => {
-    return (
-      <Contact
-        editableSection={editableSection}
-        editBlurEvent={(e) => editBlurEvent(e)}
-        setEditableSectionId={(id) => setEditableSectionId(id)}
-      />
-    );
-  };
-
-  const renderInterests = () => {
-    return (
-      <Interests
-        editableSection={editableSection}
-        editBlurEvent={(e) => editBlurEvent(e)}
-        setEditableSectionId={(id) => setEditableSectionId(id)}
-      />
-    );
-  };
-
-  const renderLanguages = () => {
-    return (
-      <Languages
-        editableSection={editableSection}
-        editBlurEvent={(e) => editBlurEvent(e)}
-        setEditableSectionId={(id) => setEditableSectionId(id)}
-      />
-    );
-  };
-
-  const renderAward = () => {
-    console.log('award');
-    return (
-      <Awards
-        color1={color1}
-        editableSection={editableSection}
-        editBlurEvent={(e) => editBlurEvent(e)}
-        setEditableSectionId={(id) => setEditableSectionId(id)}
-      />
-    );
-  };
-
-  const renderPublication = () => {
-    return (
-      <Publications
-        color1={color1}
-        editableSection={editableSection}
-        editBlurEvent={(e) => editBlurEvent(e)}
-        setEditableSectionId={(id) => setEditableSectionId(id)}
-      />
-    );
-  };
-
-  const renderCertifications = () => {
-    return (
-      <Certifications
-        color1={color1}
-        editableSection={editableSection}
-        editBlurEvent={(e) => editBlurEvent(e)}
-        setEditableSectionId={(id) => setEditableSectionId(id)}
-      />
-    );
-  };
-
-  const renderComponents = (componentNames: string[]) => {
+  const renderComponents = (componentNames: ValidSections[]) => {
     if (componentNames?.length > 0) {
-      return componentNames.map((componentName, index) => {
-        componentName = componentName.toLocaleLowerCase();
-        if (componentName == 'experiences') {
-          return renderExperiences();
-        }
-        if (componentName == 'technical skills') {
-          return renderTechnicalSkills();
-        }
-        if (componentName == 'projects') {
-          return renderProjects();
-        }
-        if (componentName == 'education') {
-          return renderEducation();
-        }
-        if (componentName == 'soft skills') {
-          return renderSoftSkills();
-        }
-        if (componentName == 'technical skills') {
-          return renderTechnicalSkills();
-        }
-        if (componentName == 'languages') {
-          return renderLanguages();
-        }
-        if (componentName == 'summary') {
-          return renderSummary();
-        }
-        if (componentName == 'interests') {
-          return renderInterests();
-        }
-        if (componentName == 'contact') {
-          return renderContactInfo();
-        }
-        if (componentName == 'awards') {
-          return renderAward();
-        }
-        if (componentName == 'publications') {
-          return renderPublication();
-        }
-        if (componentName == 'certifications') {
-          return renderCertifications();
-        }
-      });
+      return componentNames.map((componentName, index) => (
+        <div key={index}>{renderComponent(componentName)}</div>
+      ));
+    }
+    return null;
+  };
+
+  const renderComponent = (componentName: ValidSections) => {
+    const commonProps = {
+      editableSection,
+      editBlurEvent: (e: React.FocusEvent<HTMLDivElement, Element>) =>
+        editBlurEvent(e),
+      setEditableSectionId,
+      color1,
+      color2,
+    };
+
+    switch (componentName.toLowerCase()) {
+      case 'experiences':
+        return <Experiences {...commonProps} />;
+      case 'technical skills':
+        return <TechnicalSkills {...commonProps} />;
+      case 'projects':
+        return <Projects {...commonProps} />;
+      case 'education':
+        return <Education {...commonProps} />;
+      case 'soft skills':
+        return <SoftSkills {...commonProps} />;
+      case 'technical skills':
+        return <TechnicalSkills {...commonProps} />;
+      case 'languages':
+        return <Languages {...commonProps} />;
+      case 'summary':
+        return <Summary {...commonProps} />;
+      case 'interests':
+        return <Interests {...commonProps} />;
+      case 'contact':
+        return <Contact {...commonProps} />;
+      case 'awards':
+        return <Awards {...commonProps} />;
+      case 'publications':
+        return <Publications {...commonProps} />;
+      case 'certifications':
+        return <Certifications {...commonProps} />;
+      default:
+        return null;
     }
   };
 

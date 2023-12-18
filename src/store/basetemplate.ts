@@ -1,4 +1,21 @@
-export const basetemplate: any = {
+export type ValidSections =
+  | 'user'
+  | 'about'
+  | 'contact'
+  | 'education'
+  | 'experiences'
+  | 'projects'
+  | 'certifications'
+  | 'achievements'
+  | 'awards'
+  | 'soft skills'
+  | 'technical skills'
+  | 'interests'
+  | 'languages'
+  | 'publications'
+  | 'references';
+
+export const basetemplate = {
   user: {
     id: 'user',
     fullname: '',
