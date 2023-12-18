@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { PiTrashSimpleDuotone } from 'react-icons/pi';
 import { useResume } from '@/store';
 import { InlineEdit } from '@/components/editor';
@@ -18,6 +18,7 @@ export default function Contact({
   setEditableSectionId,
   color1,
 }: ContactProps) {
+  const [isHovered, setIsHovered] = useState(false);
   const { saveWithPath, removeFromPath } = useEditorActions();
   const resume = useResume();
   const publications = resume.publications;
@@ -35,14 +36,22 @@ export default function Contact({
             const publication = publications[key];
             return (
               <div
-                className='flex flex-col'
+                className='relative mb-6 flex flex-col'
                 key={`publication-${index}`}
                 onClick={() => setEditableSectionId(key)}
                 onBlur={editBlurEvent}
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
               >
-                <button className='p-2' onClick={() => removeSection(key)}>
-                  <PiTrashSimpleDuotone size={20} />
-                </button>
+                {isHovered ? (
+                  <button
+                    className='absolute right-4 inline-block p-2 opacity-0 transition-opacity duration-200'
+                    style={{ opacity: isHovered ? 1 : 0 }}
+                    onClick={() => removeSection(key)}
+                  >
+                    <PiTrashSimpleDuotone size={20} />
+                  </button>
+                ) : null}
                 <InlineEdit
                   text={publication?.type}
                   editable={editableSection == key}

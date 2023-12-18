@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { InlineEdit } from '@/components/editor';
 import { getIconByType } from '../../Icons';
 import { useEditorActions } from '@/utils/useEditorActions';
@@ -19,6 +19,7 @@ export default function Awards({
   setEditableSectionId,
   color1,
 }: AwardsProps) {
+  const [isHovered, setIsHovered] = useState(false);
   const { saveWithPath, removeFromPath } = useEditorActions();
   const resume = useResume();
   const awards = resume.awards;
@@ -36,14 +37,22 @@ export default function Awards({
             const award = awards[key];
             return (
               <div
-                className='flex flex-col'
+                className='relative mb-6 flex flex-col'
                 key={`award-${index}`}
                 onClick={() => setEditableSectionId(key)}
                 onBlur={editBlurEvent}
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
               >
-                <button className='p-2' onClick={() => removeSection(key)}>
-                  <PiTrashSimpleDuotone size={20} />
-                </button>
+                {isHovered ? (
+                  <button
+                    className='absolute right-4 inline-block p-2 opacity-0 transition-opacity duration-200'
+                    style={{ opacity: isHovered ? 1 : 0 }}
+                    onClick={() => removeSection(key)}
+                  >
+                    <PiTrashSimpleDuotone size={20} />
+                  </button>
+                ) : null}
                 <InlineEdit
                   text={award?.title}
                   editable={editableSection == key}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useEditorActions } from '@/utils/useEditorActions';
 import { InlineEdit } from '@/components/editor';
 import { useResume } from '@/store';
@@ -18,6 +18,7 @@ export default function Education({
   editBlurEvent,
   setEditableSectionId,
 }: EducationProps) {
+  const [isHovered, setIsHovered] = useState(false);
   const { saveWithPath, removeFromPath } = useEditorActions();
   const resume = useResume();
   const educationhistory = resume.education;
@@ -34,14 +35,22 @@ export default function Education({
             const edu = educationhistory[key];
             return (
               <div
-                className='flex flex-col'
+                className='relative mb-6 flex flex-col'
                 key={`resume-education-${index}`}
                 onClick={() => setEditableSectionId(key)}
                 onBlur={editBlurEvent}
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
               >
-                <button className='p-2' onClick={() => removeSection(key)}>
-                  <PiTrashSimpleDuotone size={20} />
-                </button>
+                {isHovered ? (
+                  <button
+                    className='absolute right-4 inline-block p-2 opacity-0 transition-opacity duration-200'
+                    style={{ opacity: isHovered ? 1 : 0 }}
+                    onClick={() => removeSection(key)}
+                  >
+                    <PiTrashSimpleDuotone size={20} />
+                  </button>
+                ) : null}
                 <InlineEdit
                   text={edu?.gradyear}
                   editable={editableSection == key}

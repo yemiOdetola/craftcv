@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { InlineEdit } from '@/components/editor';
 import { useEditorActions } from '@/utils/useEditorActions';
 import { useResume } from '@/store';
@@ -18,6 +18,7 @@ export default function Projects({
   editBlurEvent,
   setEditableSectionId,
 }: ProjectsProps) {
+  const [isHovered, setIsHovered] = useState(false);
   const { saveWithPath, removeFromPath } = useEditorActions();
   const resume = useResume();
   const projects = resume.projects;
@@ -34,14 +35,22 @@ export default function Projects({
             const project = projects[key];
             return (
               <div
-                className='mb-4 flex flex-col'
+                className='relative mb-6 flex flex-col'
                 key={`resume-project-${index}`}
                 onClick={() => setEditableSectionId(key)}
                 onBlur={editBlurEvent}
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
               >
-                <button className='p-2' onClick={() => removeSection(key)}>
-                  <PiTrashSimpleDuotone size={20} />
-                </button>
+                {isHovered ? (
+                  <button
+                    className='absolute right-4 inline-block p-2 opacity-0 transition-opacity duration-200'
+                    style={{ opacity: isHovered ? 1 : 0 }}
+                    onClick={() => removeSection(key)}
+                  >
+                    <PiTrashSimpleDuotone size={20} />
+                  </button>
+                ) : null}
                 <InlineEdit
                   text={project.title}
                   editable={editableSection == key}

@@ -29,7 +29,7 @@ export const useEditorActions = () => {
     if (!Array.isArray(pathArray) || pathArray.length === 0) {
       return cres;
     }
-    const updateRecursively = (obj: any, path: string[]) => {
+    const findRecursively = (obj: any, path: string[]) => {
       if (path.length === 1) {
         delete obj[path[0]];
         return;
@@ -37,9 +37,9 @@ export const useEditorActions = () => {
       if (!obj[path[0]]) {
         return;
       }
-      updateRecursively(obj[path[0]], path.slice(1));
+      findRecursively(obj[path[0]], path.slice(1));
     };
-    updateRecursively(cres, pathArray);
+    findRecursively(cres, pathArray);
     updateResume(cres);
   };
 
