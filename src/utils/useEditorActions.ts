@@ -7,7 +7,6 @@ export const useEditorActions = () => {
 
   const saveWithPath = (pathArray: any[], newValue: any) => {
     let cres = { ...resume };
-    console.log('cressssssssssssssssss', cres);
     if (!Array.isArray(pathArray) || pathArray.length === 0) {
       return cres;
     }
@@ -24,6 +23,26 @@ export const useEditorActions = () => {
     updateRecursively(cres, pathArray, newValue);
     updateResume(cres);
   };
+
+  const removeFromPath = (pathArray: any[]) => {
+    let cres = { ...resume };
+    if (!Array.isArray(pathArray) || pathArray.length === 0) {
+      return cres;
+    }
+    const updateRecursively = (obj: any, path: string[]) => {
+      if (path.length === 1) {
+        delete obj[path[0]];
+        return;
+      }
+      if (!obj[path[0]]) {
+        return;
+      }
+      updateRecursively(obj[path[0]], path.slice(1));
+    };
+    updateRecursively(cres, pathArray);
+    updateResume(cres);
+  };
+
   const addNewInputField = (pathArray: string[]) => {
     const pathArr = [...pathArray];
     pathArr.pop();
@@ -92,5 +111,6 @@ export const useEditorActions = () => {
     addNewInputField,
     removeInputField,
     handleSaveField,
+    removeFromPath,
   };
 };

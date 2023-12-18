@@ -3,6 +3,7 @@ import { useEditorActions } from '@/utils/useEditorActions';
 import { InlineEdit } from '@/components/editor';
 import { useResume } from '@/store';
 import Heading from './Heading';
+import { PiTrashSimpleDuotone } from 'react-icons/pi';
 
 interface ReferenceProps {
   color1: string;
@@ -17,9 +18,13 @@ export default function Reference({
   editBlurEvent,
   setEditableSectionId,
 }: ReferenceProps) {
-  const { saveWithPath } = useEditorActions();
+  const { saveWithPath, removeFromPath } = useEditorActions();
   const resume = useResume();
   const references = resume.references;
+  const removeSection = (key: string) => {
+    removeFromPath(['references', key]);
+  };
+
   return (
     <div className='py-3'>
       <Heading id='references'>References</Heading>
@@ -31,12 +36,15 @@ export default function Reference({
               <div
                 className='flex flex-col'
                 key={`resume-education-${index}`}
-                onClick={() => setEditableSectionId(reference.id)}
+                onClick={() => setEditableSectionId(key)}
                 onBlur={editBlurEvent}
               >
+                <button className='p-2' onClick={() => removeSection(key)}>
+                  <PiTrashSimpleDuotone size={20} />
+                </button>
                 <InlineEdit
                   text={reference?.name}
-                  editable={editableSection == reference.id}
+                  editable={editableSection == key}
                   className='text-xs font-semibold text-gray-700'
                   placeholder='Reference name (Position)'
                   dottedActive
@@ -49,7 +57,7 @@ export default function Reference({
                 />
                 <InlineEdit
                   text={reference?.relationship}
-                  editable={editableSection == reference.id}
+                  editable={editableSection == key}
                   className='text-sm font-bold text-green-700'
                   style={{ color: `#${color1}` }}
                   placeholder='Relationship'
@@ -62,7 +70,7 @@ export default function Reference({
                 />
                 <InlineEdit
                   text={reference?.contact}
-                  editable={editableSection == reference.id}
+                  editable={editableSection == key}
                   placeholder='Email address or Phone number'
                   className='text-sm font-medium text-gray-700'
                   onSave={(val) =>

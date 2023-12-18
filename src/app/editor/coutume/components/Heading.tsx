@@ -21,18 +21,20 @@ const adder = [
 
 export default function Heading({ children, id, className }: HeadingProps) {
   const [allowNew] = useState(adder.includes(id));
+  const [count, setCount] = useState<number>(1);
   const { saveWithPath } = useEditorActions();
 
-  const getUniqueID = () => {
-    return Math.random().toString(36).substring(2, 15);
-  };
+  // const getUniqueID = () => {
+  //   return Math.random().toString(36).substring(2, 15);
+  // };
 
   const addSection = () => {
     let sectionData: any = basetemplate[id];
-    const uid = getUniqueID();
     sectionData = sectionData[Object.keys(sectionData)[0]];
+    let uid = Math.random().toString(36).substring(2, 15);
     sectionData.id = uid;
-    if (typeof sectionData === 'object' && allowNew) {
+    if (allowNew) {
+      setCount(count + 1);
       saveWithPath([id, uid], sectionData);
     }
   };

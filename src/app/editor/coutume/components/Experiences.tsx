@@ -3,6 +3,7 @@ import { InlineEdit } from '@/components/editor';
 import { useEditorActions } from '@/utils/useEditorActions';
 import { useResume } from '@/store';
 import Heading from './Heading';
+import { PiTrashSimpleDuotone } from 'react-icons/pi';
 
 interface ExperiencesProps {
   editableSection: null | string;
@@ -19,9 +20,13 @@ export default function Experiences({
   setEditableSectionId,
   color1,
 }: ExperiencesProps) {
-  const { saveWithPath } = useEditorActions();
+  const { saveWithPath, removeFromPath } = useEditorActions();
   const resume = useResume();
   const experiences = resume.experiences;
+  const removeSection = (key: string) => {
+    removeFromPath(['experiences', key]);
+  };
+
   return (
     <div className='py-3'>
       <Heading id='experiences'>Experiences</Heading>
@@ -33,14 +38,17 @@ export default function Experiences({
               <div
                 className='mb-6 flex flex-col'
                 key={`experience-${index}`}
-                onClick={() => setEditableSectionId(exp.id)}
+                onClick={() => setEditableSectionId(key)}
                 onBlur={editBlurEvent}
               >
+                <button className='p-2' onClick={() => removeSection(key)}>
+                  <PiTrashSimpleDuotone size={20} />
+                </button>
                 <div className='flex items-center justify-normal'>
                   <InlineEdit
                     text={exp.company}
                     className='text-md font-bold text-gray-700'
-                    editable={editableSection == exp.id}
+                    editable={editableSection == key}
                     dottedActive
                     placeholder='Company'
                     onSave={(val) =>
@@ -54,7 +62,7 @@ export default function Experiences({
                   <InlineEdit
                     text={exp.position}
                     className='text-md font-bold text-gray-700'
-                    editable={editableSection == exp.id}
+                    editable={editableSection == key}
                     dottedActive
                     placeholder='Position/Title'
                     onSave={(val) =>
@@ -69,7 +77,7 @@ export default function Experiences({
                   <InlineEdit
                     text={exp.startDate}
                     className='my-1 font-mono text-sm font-semibold text-green-700'
-                    editable={editableSection == exp.id}
+                    editable={editableSection == key}
                     style={{ color: `#${color1}` }}
                     dottedActive
                     placeholder='Start date'
@@ -84,7 +92,7 @@ export default function Experiences({
                   <InlineEdit
                     text={exp.endDate}
                     className='my-1 font-mono text-sm font-semibold text-green-700'
-                    editable={editableSection == exp.id}
+                    editable={editableSection == key}
                     style={{ color: `#${color1}` }}
                     dottedActive
                     placeholder='End date'
@@ -106,7 +114,7 @@ export default function Experiences({
                         {' '}
                         <InlineEdit
                           text={responsibility}
-                          editable={editableSection == exp.id}
+                          editable={editableSection == key}
                           id={`responsibilities-${index}`}
                           placeholder='Task/Responsibility'
                           elementPath={[

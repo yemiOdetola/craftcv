@@ -1,4 +1,5 @@
 import React from 'react';
+import { PiTrashSimpleDuotone } from 'react-icons/pi';
 import { useEditorActions } from '@/utils/useEditorActions';
 import { InlineEdit } from '@/components/editor';
 import { useResume } from '@/store';
@@ -17,12 +18,17 @@ export default function Certifications({
   editBlurEvent,
   setEditableSectionId,
 }: CertificationsProps) {
-  const { saveWithPath } = useEditorActions();
+  const { saveWithPath, removeFromPath } = useEditorActions();
   const resume = useResume();
   const certifications = resume.certifications;
+
+  const removeSection = (key: string) => {
+    removeFromPath(['certifications', key]);
+  };
+
   return (
     <div className='py-3'>
-      <Heading id="certifications">Certifications</Heading>
+      <Heading id='certifications'>Certifications</Heading>
       <div className='flex flex-col space-y-1'>
         {certifications &&
           Object.keys(certifications).map((key: any, index: number) => {
@@ -31,12 +37,15 @@ export default function Certifications({
               <div
                 className='flex flex-col'
                 key={`resume-education-${index}`}
-                onClick={() => setEditableSectionId(certificate.id)}
+                onClick={() => setEditableSectionId(key)}
                 onBlur={editBlurEvent}
               >
+                <button className='p-2' onClick={() => removeSection(key)}>
+                  <PiTrashSimpleDuotone size={20} />
+                </button>
                 <InlineEdit
                   text={certificate?.name}
-                  editable={editableSection == certificate.id}
+                  editable={editableSection == key}
                   className='text-xs font-semibold text-gray-700'
                   placeholder='Certification name'
                   dottedActive
@@ -50,7 +59,7 @@ export default function Certifications({
                 <div className='flex items-center gap-x-1'>
                   <InlineEdit
                     text={certificate?.issued}
-                    editable={editableSection == certificate.id}
+                    editable={editableSection == key}
                     className='text-sm font-bold text-green-700'
                     style={{ color: `#${color1}` }}
                     placeholder='Date Issued'
@@ -64,7 +73,7 @@ export default function Certifications({
                   <div>-</div>
                   <InlineEdit
                     text={certificate?.expiry}
-                    editable={editableSection == certificate.id}
+                    editable={editableSection == key}
                     className='text-sm font-bold text-green-700'
                     style={{ color: `#${color1}` }}
                     placeholder='Expiry date'
@@ -78,7 +87,7 @@ export default function Certifications({
                 </div>
                 <InlineEdit
                   text={certificate?.description}
-                  editable={editableSection == certificate.id}
+                  editable={editableSection == key}
                   placeholder='Brief description'
                   className='text-sm font-medium text-gray-700'
                   onSave={(val) =>

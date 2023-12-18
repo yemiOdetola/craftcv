@@ -4,6 +4,7 @@ import { getIconByType } from '../../Icons';
 import { useEditorActions } from '@/utils/useEditorActions';
 import { useResume } from '@/store';
 import Heading from './Heading';
+import { PiTrashSimpleDuotone } from 'react-icons/pi';
 
 interface AwardsProps {
   editableSection: null | string;
@@ -18,9 +19,13 @@ export default function Awards({
   setEditableSectionId,
   color1,
 }: AwardsProps) {
-  const { saveWithPath } = useEditorActions();
+  const { saveWithPath, removeFromPath } = useEditorActions();
   const resume = useResume();
   const awards = resume.awards;
+
+  const removeSection = (key: string) => {
+    removeFromPath(['awards', key]);
+  };
 
   return (
     <div className='py-3'>
@@ -33,12 +38,15 @@ export default function Awards({
               <div
                 className='flex flex-col'
                 key={`award-${index}`}
-                onClick={() => setEditableSectionId(award.id)}
+                onClick={() => setEditableSectionId(key)}
                 onBlur={editBlurEvent}
               >
+                <button className='p-2' onClick={() => removeSection(key)}>
+                  <PiTrashSimpleDuotone size={20} />
+                </button>
                 <InlineEdit
                   text={award?.title}
-                  editable={editableSection == award.id}
+                  editable={editableSection == key}
                   className='text-xs font-light text-gray-700'
                   placeholder='Award Name/Title'
                   dottedActive
@@ -51,7 +59,7 @@ export default function Awards({
                 />
                 <InlineEdit
                   text={award?.year}
-                  editable={editableSection == award.id}
+                  editable={editableSection == key}
                   className='text-sm'
                   placeholder='Year awarded'
                   onSave={(val) =>
@@ -63,7 +71,7 @@ export default function Awards({
                 />
                 <InlineEdit
                   text={award?.institution}
-                  editable={editableSection == award.id}
+                  editable={editableSection == key}
                   placeholder='Institution the award is issued from'
                   className='text-sm font-bold text-green-700'
                   style={{ color: `#${color1}` }}
@@ -76,7 +84,7 @@ export default function Awards({
                 />
                 <InlineEdit
                   text={award?.description}
-                  editable={editableSection == award.id}
+                  editable={editableSection == key}
                   placeholder='Brief description'
                   className='text-sm font-light text-gray-700'
                   onSave={(val) =>
