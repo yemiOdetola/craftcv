@@ -23,6 +23,7 @@ import {
   SoftSkills,
   Summary,
   TechnicalSkills,
+  References,
 } from './components';
 import Certifications from './components/Certifications';
 import { ValidSections } from '@/store/basetemplate';
@@ -33,6 +34,21 @@ interface Experience {
   achievements: string;
   duration: string;
 }
+
+const components = {
+  experiences: Experiences,
+  projects: Projects,
+  contact: Contact,
+  education: Education,
+  certifications: Certifications,
+  awards: Awards,
+  interests: Interests,
+  languages: Languages,
+  publications: Publications,
+  references: References,
+  'soft skills': SoftSkills,
+  'technical skills': TechnicalSkills,
+};
 
 export default function Coutume() {
   const router = useRouter();
@@ -71,46 +87,17 @@ export default function Coutume() {
     return null;
   };
 
-  const renderComponent = (componentName: ValidSections) => {
+  const renderComponent = (name: ValidSections) => {
     const commonProps = {
-      editableSection,
-      editBlurEvent: (e: React.FocusEvent<HTMLDivElement, Element>) =>
-        editBlurEvent(e),
-      setEditableSectionId,
       color1,
       color2,
+      editableSection,
+      setEditableSectionId,
+      editBlurEvent: (e: React.FocusEvent<HTMLDivElement, Element>) =>
+        editBlurEvent(e),
     };
-
-    switch (componentName.toLowerCase()) {
-      case 'experiences':
-        return <Experiences {...commonProps} />;
-      case 'technical skills':
-        return <TechnicalSkills {...commonProps} />;
-      case 'projects':
-        return <Projects {...commonProps} />;
-      case 'education':
-        return <Education {...commonProps} />;
-      case 'soft skills':
-        return <SoftSkills {...commonProps} />;
-      case 'technical skills':
-        return <TechnicalSkills {...commonProps} />;
-      case 'languages':
-        return <Languages {...commonProps} />;
-      case 'summary':
-        return <Summary {...commonProps} />;
-      case 'interests':
-        return <Interests {...commonProps} />;
-      case 'contact':
-        return <Contact {...commonProps} />;
-      case 'awards':
-        return <Awards {...commonProps} />;
-      case 'publications':
-        return <Publications {...commonProps} />;
-      case 'certifications':
-        return <Certifications {...commonProps} />;
-      default:
-        return null;
-    }
+    const Component = components[name];
+    return <Component {...commonProps} />;
   };
 
   const renderedMainComponents = renderComponents(customLayout?.layout?.left);

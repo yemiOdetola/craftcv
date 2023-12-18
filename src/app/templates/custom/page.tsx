@@ -22,19 +22,19 @@ import { basetemplate } from '@/store/basetemplate';
 import { useMainStore } from '@/store';
 
 const sections: any = {
-  Education: <PiBookOpenText size={48} />,
-  Experiences: <PiPenDuotone size={48} />,
-  'Technical Skills': <PiShapesFill size={48} />,
-  Awards: <PiMedalDuotone size={48} />,
-  Interests: <PiParachuteDuotone size={48} />,
-  // Volunteers: <PiFlaskDuotone size={48} />,
-  Publications: <PiBooksDuotone size={48} />,
-  Projects: <PiSwatchesDuotone size={48} />,
-  'Soft skills': <PiArrowsInDuotone size={48} />,
-  Certifications: <PiCertificateDuotone size={48} />,
-  Languages: <PiCurrencyCnyDuotone size={48} />,
-  // Conferences: <PiCircleHalfBold size={48} />,
-  References: <PiDatabaseDuotone size={48} />,
+  education: <PiBookOpenText size={48} />,
+  experiences: <PiPenDuotone size={48} />,
+  awards: <PiMedalDuotone size={48} />,
+  interests: <PiParachuteDuotone size={48} />,
+  publications: <PiBooksDuotone size={48} />,
+  projects: <PiSwatchesDuotone size={48} />,
+  certifications: <PiCertificateDuotone size={48} />,
+  languages: <PiCurrencyCnyDuotone size={48} />,
+  references: <PiDatabaseDuotone size={48} />,
+  'technical skills': <PiShapesFill size={48} />,
+  'soft skills': <PiArrowsInDuotone size={48} />,
+  // volunteers: <PiFlaskDuotone size={48} />,
+  // conferences: <PiCircleHalfBold size={48} />,
 };
 
 interface DropColumnProps {
@@ -56,16 +56,12 @@ export default function CustomTemplate() {
   const dragToWidget = useRef<number>(0);
   const setLayout = (layout: string) => updateCustomLayout(layout);
 
-  // useEffect(() => {
-  //   updateResume({});
-  // }, [updateResume]);
-
   useEffect(() => {
-    setLWh(vh / leftWidgets.length - leftWidgets.length * 2.25);
+    setLWh(vh / leftWidgets.length);
   }, [lwh, leftWidgets]);
 
   useEffect(() => {
-    setRWh(vh / rightWidgets.length - rightWidgets.length * 2.25);
+    setRWh(vh / rightWidgets.length);
   }, [rwh, rightWidgets]);
 
   const handle0nDrag = (e: React.DragEvent, widgetType: string) => {
@@ -153,7 +149,7 @@ export default function CustomTemplate() {
       >
         {widgets.map((widget, index) => (
           <div
-            className={`relative mb-3 flex w-full items-center gap-x-2 border-2 border-dotted border-indigo-500 
+            className={`widget relative flex w-full items-center border-2 border-dotted border-indigo-500 
             p-2 transition-all duration-300 hover:cursor-move hover:bg-indigo-50`}
             style={{ height: position == 'left' ? `${lwh}px` : `${rwh}px` }}
             key={index}

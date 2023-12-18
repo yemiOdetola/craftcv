@@ -1,12 +1,12 @@
 export type ValidSections =
-  | 'user'
-  | 'about'
+  // | 'user'
+  // | 'about'
   | 'contact'
   | 'education'
   | 'experiences'
   | 'projects'
   | 'certifications'
-  | 'achievements'
+  // | 'achievements'
   | 'awards'
   | 'soft skills'
   | 'technical skills'
@@ -15,7 +15,7 @@ export type ValidSections =
   | 'publications'
   | 'references';
 
-export const basetemplate = {
+export const basetemplate: any = {
   user: {
     id: 'user',
     fullname: '',
@@ -71,14 +71,14 @@ export const basetemplate = {
       description: '',
     },
   },
-  achievements: {
-    achievements0: {
-      name: '',
-      from: '',
-      to: '',
-      description: '',
-    },
-  },
+  // achievements: {
+  //   achievements0: {
+  //     name: '',
+  //     from: '',
+  //     to: '',
+  //     description: '',
+  //   },
+  // },
   awards: {
     awards0: {
       id: 'awards0',
@@ -110,7 +110,7 @@ export const basetemplate = {
   references: {
     references0: {
       name: '',
-      reference: '',
+      relationship: '',
       contacts: [],
     },
   },
