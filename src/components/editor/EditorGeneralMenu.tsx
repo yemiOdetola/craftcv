@@ -1,6 +1,8 @@
+import { useRouter } from 'next/navigation';
 import { Popoverlay } from '../common';
 
 export function EditorGeneralMenu() {
+  const router = useRouter();
   const addRandomtheme = () => {
     console.log('add theme');
   };
@@ -11,6 +13,7 @@ export function EditorGeneralMenu() {
 
   const changeLaytout = () => {
     console.log('changeLaytout:');
+    router.push('/templates/custom');
   };
   const items = [
     {

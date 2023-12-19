@@ -1,5 +1,6 @@
 'use client';
 import React, { useEffect, useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import {
   PiBookOpenText,
   PiPenDuotone,
@@ -46,18 +47,20 @@ interface DropColumnProps {
 }
 const vh = 624;
 export default function CustomTemplate() {
+  const router = useRouter();
+  const customLayout = useCustomLayout();
   const { updateCustomLayout, updateLayoutDimension, updateResume } =
     useMainStore();
   const [leftWidgets, setLeftWidgets] = useState<string[]>([]);
   const [rightWidgets, setRightWidgets] = useState<string[]>([]);
   const [rwh, setRWh] = useState<any>(`[${vh}px]`);
   const [lwh, setLWh] = useState<any>(vh);
+  const [editInProgress, setEditInProgress] = useState(false);
   const [twoColumns, setTwoColumns] = useState<boolean>(true);
   const [populate, setPopulate] = useState<boolean>(false);
   const dragStartWidget = useRef<number>(0);
   const dragToWidget = useRef<number>(0);
   const setLayout = (layout: string) => updateCustomLayout(layout);
-  const customLayout = useCustomLayout();
 
   useEffect(() => {
     if (!isObjectEmpty(customLayout) && customLayout?.layout) {
@@ -67,8 +70,9 @@ export default function CustomTemplate() {
       if (customLayout?.layout?.right) {
         setRightWidgets(customLayout.layout.right);
       }
+      setEditInProgress(true);
     }
-  }, []);
+  }, [customLayout]);
 
   useEffect(() => {
     setLWh(vh / leftWidgets.length);
@@ -149,9 +153,11 @@ export default function CustomTemplate() {
     };
     updateResume({});
     setLayout(customOptions);
-    updateLayoutDimension(['w-6/12', 'w-6/12']);
-
+    if (!editInProgress) {
+      updateLayoutDimension(['w-6/12', 'w-6/12']);
+    }
     console.log('customOptions', customOptions);
+    router.push('/editor/coutume');
   };
 
   const DropColumn = ({ widgets, position }: DropColumnProps) => {
