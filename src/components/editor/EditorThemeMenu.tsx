@@ -24,8 +24,8 @@ export function EditorThemeMenu({
   return (
     <Popoverlay title='Change Theme'>
       <div className='relative grid bg-white px-2 py-4'>
-        <div className='mb-2 flex items-center justify-between border-b-2 p-2 text-gray-600'>
-          <h4 className='mb-2 text-lg font-semibold'>Choose pair</h4>
+        <div className='mb-2 flex items-center justify-between border-b-2 p-2 text-gray-700'>
+          <h4 className='mb-2 text-lg font-semibold'>Select your color combo</h4>
           {/* <button
             className='flex border-none bg-none p-2 text-sm text-gray-600'
             onClick={flipColors}

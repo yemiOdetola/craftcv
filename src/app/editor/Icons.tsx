@@ -25,26 +25,26 @@ export const getIconByType = (type: string) => {
   const lctype: any = type.toLowerCase();
   switch (true) {
     case lctype.includes('email'):
-      return <PiChatCenteredTextDuotone size={22} />;
+      return <PiChatCenteredTextDuotone size={16} />;
 
     case lctype.includes('phone'):
-      return <PiPhoneCallDuotone size={22} />;
+      return <PiPhoneCallDuotone size={16} />;
 
     case lctype.includes('linkedin'):
-      return <PiLinkedinLogoBold size={22} />;
+      return <PiLinkedinLogoBold size={16} />;
 
     case lctype.includes('website'):
-      return <PiGlobeSimple size={22} />;
+      return <PiGlobeSimple size={16} />;
 
     case lctype.includes('git'):
-      return <PiGithubLogoDuotone size={22} />;
+      return <PiGithubLogoDuotone size={16} />;
 
     case lctype.includes('html'):
-      return <PiFileHtmlDuotone size={22} />;
+      return <PiFileHtmlDuotone size={16} />;
 
     case lctype.includes('react'):
-      return <PiAtomDuotone size={22} />
+      return <PiAtomDuotone size={16} />
     default:
-      return <PiRecordBold size={22} />;
+      return <PiRecordBold size={16} />;
   }
 };

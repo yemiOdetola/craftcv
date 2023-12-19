@@ -45,7 +45,8 @@ interface DropColumnProps {
 }
 const vh = 624;
 export default function CustomTemplate() {
-  const { updateCustomLayout, updateResume } = useMainStore();
+  const { updateCustomLayout, updateLayoutDimension, updateResume } =
+    useMainStore();
   const [leftWidgets, setLeftWidgets] = useState<string[]>([]);
   const [rightWidgets, setRightWidgets] = useState<string[]>([]);
   const [rwh, setRWh] = useState<any>(`[${vh}px]`);
@@ -135,6 +136,8 @@ export default function CustomTemplate() {
     };
     updateResume({});
     setLayout(customOptions);
+    updateLayoutDimension(['w-6/12', 'w-6/12']);
+
     console.log('customOptions', customOptions);
   };
 

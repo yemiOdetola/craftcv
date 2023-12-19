@@ -2,7 +2,7 @@ import React from 'react';
 import { EditorFontMenu } from './EditorFontMenu';
 import { EditorSpacingMenu } from './EditorSpacingMenu';
 import { EditorThemeMenu } from './EditorThemeMenu';
-import { EditorMiscMenu } from './EditorMiscMenu';
+import { EditorGeneralMenu } from './EditorGeneralMenu';
 import { useFontFamily, useEditorTheme, useMainStore } from '@/store';
 
 export default function Menu() {
@@ -28,7 +28,7 @@ export default function Menu() {
                 editorTheme={editorTheme}
               />
               {/* <EditorSpacingMenu /> */}
-              <EditorMiscMenu />
+              <EditorGeneralMenu />
             </div>
           </div>
         </div>

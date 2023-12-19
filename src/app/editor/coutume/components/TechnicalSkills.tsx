@@ -6,6 +6,7 @@ import { useResume } from '@/store';
 import Heading from './Heading';
 
 interface TechnicalSkillsProps {
+  color1: string;
   editableSection: null | string;
   editBlurEvent: (e: any) => void;
   setEditableSectionId: (id: string) => void;
@@ -14,6 +15,7 @@ interface TechnicalSkillsProps {
 export default function TechnicalSkills({
   editableSection,
   editBlurEvent,
+  color1,
   setEditableSectionId,
 }: TechnicalSkillsProps) {
   const { saveWithPath } = useEditorActions();
@@ -35,13 +37,13 @@ export default function TechnicalSkills({
                 className='mb-1 flex items-center'
                 key={`resume-skills-${index}`}
               >
-                <a className='font-sm w-6 text-gray-700'>
+                <a className='text-gray-700' style={{ color: `#${color1}` }}>
                   {getIconByType(skill)}
                 </a>
                 <InlineEdit
                   text={skill}
                   editable={editableSection == 'technicalSkills'}
-                  className='ml-2 text-sm'
+                  className='text-sm'
                   elementPath={['technical skills', 'skillset', index]}
                   id={`skillset-${index}`}
                   dottedActive
