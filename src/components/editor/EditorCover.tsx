@@ -1,6 +1,7 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useState } from 'react';
 import { Menu } from '@/components/editor';
 import localFont from 'next/font/local';
+import { useCustomLayout, useMainStore } from '@/store';
 
 interface EditorCoverProps {
   children: ReactNode;
@@ -55,26 +56,47 @@ const sunnyspells: any = localFont({
   display: 'swap',
 });
 
+const splitSizes: any = {
+  0: ['w-4/12', 'w-8/12'],
+  1: ['w-5/12', 'w-7/12'],
+  2: ['w-6/12', 'w-6/12'],
+  3: ['w-7/12', 'w-5/12'],
+  4: ['w-8/12', 'w-4/12'],
+};
+
 export default function EditorCover({ className, children }: EditorCoverProps) {
+  const customLayout = useCustomLayout();
+  const { updateLayoutDimension } = useMainStore();
+  const [slidePosition, setSlidePosition] = useState<number | string>(2);
+
+  const handleSlider = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value;
+    setSlidePosition(val);
+    updateLayoutDimension(splitSizes[val]);
+  };
   return (
     <div className={`w-full bg-white py-32`}>
       <Menu />
       <div
         className={`editor-container mx-auto min-h-screen w-full rounded-lg p-8 shadow shadow-gray-300 lg:w-11/12 xl:w-4/6 
-          ${className} ${ubuntu.variable} ${cabin.variable} ${cfspaceship.variable} ${sparkystones.variable} ${glitchgoblin.variable} ${motleyforces.variable} ${ronysiswadi.variable} ${sunnyspells.variable}`}
+          ${className} ${ubuntu.variable} ${cabin.variable} ${cfspaceship.variable} ${sparkystones.variable} ${glitchgoblin.variable} 
+          ${motleyforces.variable} ${ronysiswadi.variable} ${sunnyspells.variable}`}
       >
         {children}
       </div>
-      <div className='range-slider'>
-        <input
-          type='range'
-          className='custom-range'
-          min='0'
-          max='4'
-          step='1'
-          list='markers'
-        />
-      </div>
+      {customLayout?.options?.twoColumns ? (
+        <div className='range-slider'>
+          <input
+            type='range'
+            className='custom-range'
+            min={0}
+            max={4}
+            step={1}
+            value={slidePosition}
+            onChange={(e) => handleSlider(e)}
+          />
+        </div>
+      ) : null}
     </div>
   );
 }

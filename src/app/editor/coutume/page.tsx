@@ -6,6 +6,7 @@ import {
   useCustomLayout,
   useEditorTheme,
   useFontFamily,
+  useLayoutDimension,
   useMainStore,
   useResume,
 } from '@/store';
@@ -55,6 +56,7 @@ export default function Coutume() {
   const fontFamily = useFontFamily();
   const customLayout = useCustomLayout();
   const editorTheme = useEditorTheme();
+  const layoutDimension = useLayoutDimension();
   const { updateResume } = useMainStore();
   const { saveWithPath } = useEditorActions();
   const [resume] = useState(useResume());
@@ -134,20 +136,23 @@ export default function Coutume() {
           </div>
           <div className='p-5'>
             <div
-              className={`gap-x-2 sm:mt-8 ${
-                customLayout?.options?.twoColumns && 'flex flex-col md:flex-row'
+              className={`sm:mt-8 ${
+                customLayout?.options?.twoColumns &&
+                'flex flex-col gap-x-2 md:flex-row'
               }`}
             >
               <div
-                className={`w-full ${
-                  customLayout?.options?.twoColumns && 'sm:w-2/4'
+                className={`${
+                  customLayout?.options?.twoColumns && `${layoutDimension[0]}`
                 }`}
               >
                 {renderedMainComponents}
               </div>
-              <div className='sm:w-2/4'>
-                {customLayout?.options?.twoColumns && renderedRightComponents}
-              </div>
+              {customLayout?.options?.twoColumns ? (
+                <div className={`${layoutDimension[1]}`}>
+                  {renderedRightComponents}
+                </div>
+              ) : null}
             </div>
           </div>
         </EditorCover>
