@@ -133,14 +133,20 @@ export default function Coutume() {
             </div>
           </div>
           <div className='p-5'>
-            <div className='flex flex-col sm:mt-10 sm:flex-row'>
-              <div className='flex flex-col sm:w-1/3'>
+            <div
+              className={`gap-x-2 sm:mt-8 ${
+                customLayout?.options?.twoColumns && 'flex flex-col md:flex-row'
+              }`}
+            >
+              <div
+                className={`w-full ${
+                  customLayout?.options?.twoColumns && 'sm:w-2/4'
+                }`}
+              >
                 {renderedMainComponents}
               </div>
-              <div className='order-first flex flex-col sm:order-none sm:-mt-10 sm:w-2/3'>
-                {customLayout?.options &&
-                  customLayout.options.twoColumns &&
-                  renderedRightComponents}
+              <div className='sm:w-2/4'>
+                {customLayout?.options?.twoColumns && renderedRightComponents}
               </div>
             </div>
           </div>

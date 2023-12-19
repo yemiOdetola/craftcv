@@ -32,7 +32,7 @@ export default function AmitPachange() {
 
   useEffect(() => {
     updateResume(amitpachange);
-  }, [updateResume]);
+  }, []);
 
   const renderContactInfo = () => {
     return (
@@ -277,6 +277,8 @@ export default function AmitPachange() {
       </div>
     );
   };
+
+  console.log('resumemememe', resume);
 
   const renderProjects = () => {
     return (

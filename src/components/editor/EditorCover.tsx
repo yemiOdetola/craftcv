@@ -60,10 +60,20 @@ export default function EditorCover({ className, children }: EditorCoverProps) {
     <div className={`w-full bg-white py-32`}>
       <Menu />
       <div
-        className={`editor-container mx-auto min-h-screen w-full rounded-lg p-8 shadow shadow-gray-400 lg:w-11/12 xl:w-4/6 
+        className={`editor-container mx-auto min-h-screen w-full rounded-lg p-8 shadow shadow-gray-300 lg:w-11/12 xl:w-4/6 
           ${className} ${ubuntu.variable} ${cabin.variable} ${cfspaceship.variable} ${sparkystones.variable} ${glitchgoblin.variable} ${motleyforces.variable} ${ronysiswadi.variable} ${sunnyspells.variable}`}
       >
         {children}
+      </div>
+      <div className='range-slider'>
+        <input
+          type='range'
+          className='custom-range'
+          min='0'
+          max='4'
+          step='1'
+          list='markers'
+        />
       </div>
     </div>
   );

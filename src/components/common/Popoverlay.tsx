@@ -18,7 +18,7 @@ export function Popoverlay({ children, title, className }: PopoverlayProps) {
             <Popover.Button
               className={`
                 ${open ? 'text-gray-900' : 'text-gray-400'}
-                group inline-flex items-center rounded px-3 py-2 text-base font-medium hover:text-gray-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600`}
+                group inline-flex items-center rounded px-3 py-2 text-xs font-medium hover:text-gray-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 lg:text-base`}
             >
               <span>{title}</span>
               <MdExpandMore
