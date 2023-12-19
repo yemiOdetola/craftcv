@@ -19,7 +19,8 @@ import {
 import { Button, Container, Toggle } from '@/components/common';
 import { BottomNavigation } from '@/components/templates';
 import { basetemplate } from '@/store/basetemplate';
-import { useMainStore } from '@/store';
+import { useCustomLayout, useMainStore } from '@/store';
+import { isObjectEmpty } from '@/utils/helper';
 
 const sections: any = {
   education: <PiBookOpenText size={48} />,
@@ -56,6 +57,18 @@ export default function CustomTemplate() {
   const dragStartWidget = useRef<number>(0);
   const dragToWidget = useRef<number>(0);
   const setLayout = (layout: string) => updateCustomLayout(layout);
+  const customLayout = useCustomLayout();
+
+  useEffect(() => {
+    if (!isObjectEmpty(customLayout) && customLayout?.layout) {
+      if (customLayout?.layout?.left) {
+        setLeftWidgets(customLayout.layout.left);
+      }
+      if (customLayout?.layout?.right) {
+        setRightWidgets(customLayout.layout.right);
+      }
+    }
+  }, []);
 
   useEffect(() => {
     setLWh(vh / leftWidgets.length);
