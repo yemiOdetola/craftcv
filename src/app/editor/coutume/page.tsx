@@ -66,10 +66,10 @@ export default function Coutume() {
   useEffect(() => {
     if (isObjectEmpty(customLayout) && isObjectEmpty(resume)) {
       router.push('/templates/custom');
-    } else {
-      if (isObjectEmpty(resume) && !isObjectEmpty(customLayout['base'])) {
-        updateResume(customLayout['base']);
-      }
+    } else if (isObjectEmpty(resume) && !isObjectEmpty(customLayout['base'])) {
+      updateResume(customLayout['base']);
+    } else if (!isObjectEmpty(resume)) {
+      // get all keys in customLayout, if it exists in resume (skip), else add it to resume! - DONE!
     }
   }, [customLayout, resume, router, updateResume]);
 
@@ -142,14 +142,14 @@ export default function Coutume() {
               }`}
             >
               <div
-                className={`${
+                className={`pr-4 ${
                   customLayout?.options?.twoColumns && `${layoutDimension[0]}`
                 }`}
               >
                 {renderedMainComponents}
               </div>
               {customLayout?.options?.twoColumns ? (
-                <div className={`${layoutDimension[1]}`}>
+                <div className={`pr-4 ${layoutDimension[1]}`}>
                   {renderedRightComponents}
                 </div>
               ) : null}

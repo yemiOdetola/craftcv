@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 import { Menu } from '@/components/editor';
 import localFont from 'next/font/local';
 import { useCustomLayout, useMainStore } from '@/store';
@@ -69,11 +69,16 @@ export default function EditorCover({ className, children }: EditorCoverProps) {
   const { updateLayoutDimension } = useMainStore();
   const [slidePosition, setSlidePosition] = useState<number | string>(2);
 
+  useEffect(() => {
+    // fix slider to normal position
+  }, []);
+
   const handleSlider = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
     setSlidePosition(val);
     updateLayoutDimension(splitSizes[val]);
   };
+
   return (
     <div className={`w-full bg-white py-32`}>
       <Menu />

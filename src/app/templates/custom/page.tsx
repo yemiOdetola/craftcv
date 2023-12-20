@@ -151,7 +151,7 @@ export default function CustomTemplate() {
       twoColumns: twoColumns,
       populate: populate,
     };
-    updateResume({});
+    // updateResume({});
     setLayout(customOptions);
     if (!editInProgress) {
       updateLayoutDimension(['w-6/12', 'w-6/12']);
