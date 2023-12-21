@@ -69,7 +69,17 @@ export default function Coutume() {
     } else if (isObjectEmpty(resume) && !isObjectEmpty(customLayout['base'])) {
       updateResume(customLayout['base']);
     } else if (!isObjectEmpty(resume)) {
-      // get all keys in customLayout, if it exists in resume (skip), else add it to resume! - DONE!
+      const layoutItems = [
+        ...customLayout?.layout?.left,
+        ...customLayout?.layout?.right,
+      ];
+      const cresume = { ...resume };
+      layoutItems.map((item) => {
+        if (!cresume[item]) {
+          cresume[item] = customLayout[item];
+        }
+      });
+      updateResume(cresume);
     }
   }, [customLayout, resume, router, updateResume]);
 

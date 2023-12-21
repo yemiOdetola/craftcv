@@ -1,7 +1,7 @@
 import React, { ReactNode, useEffect, useState } from 'react';
 import { Menu } from '@/components/editor';
 import localFont from 'next/font/local';
-import { useCustomLayout, useMainStore } from '@/store';
+import { useCustomLayout, useLayoutDimension, useMainStore } from '@/store';
 
 interface EditorCoverProps {
   children: ReactNode;
@@ -66,10 +66,18 @@ const splitSizes: any = {
 
 export default function EditorCover({ className, children }: EditorCoverProps) {
   const customLayout = useCustomLayout();
+  const layoutDimension = useLayoutDimension();
   const { updateLayoutDimension } = useMainStore();
   const [slidePosition, setSlidePosition] = useState<number | string>(2);
 
   useEffect(() => {
+    Object.keys(splitSizes).map((key: any) => {
+      if (JSON.stringify(splitSizes[key]) == JSON.stringify(layoutDimension)) {
+        console.log(key, typeof key);
+        setSlidePosition(key);
+        setSlidePosition(key);
+      }
+    });
     // fix slider to normal position
   }, []);
 
