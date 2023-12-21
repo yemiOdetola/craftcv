@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { Footer } from '@/components/common/Footer';
 import { Header } from '@/components/common/Header';
 import { Button } from '@/components/common/Button';
@@ -7,46 +8,68 @@ import { useMainStore } from '@/store';
 
 export default function Home() {
   const bullets: any = [
-    ['Cost', 'free.99'],
-    ['Download & share', 'word/PDF'],
-    ['Customization', 'unlimited'],
-    ['Stand out', 'with stylee'],
+    {
+      color: '#1ea446',
+      data: ['Cost', 'free.99'],
+    },
+    {
+      color: '#57b3f2',
+      data: ['Customization', 'unlimited'],
+    },
+    {
+      color: '#4c8df6',
+      data: ['Download & share', 'word/PDF'],
+    },
+    {
+      color: '#8f8f8f',
+      data: ['Stand out', 'with stylee'],
+    },
   ];
   return (
     <main className='flex min-h-screen flex-col justify-between bg-white'>
       <Header />
       <div className='relative bg-white py-10'>
-        <Container className='relative my-auto rounded bg-indigo-50 p-8 py-32'>
-          <div className='mx-auto max-w-2xl lg:max-w-4xl lg:px-12'>
-            <h1 className='font-display text-5xl font-bold tracking-tighter text-blue-600 sm:text-7xl'>
-              <span className='sr-only'>Craft CV - </span>
-              {/* Craft Your Perfect CV with Ease. */}
-              Your CV, Your Journey, Your Triumph.
-            </h1>
-            <div className='font-display mt-6 space-y-6 text-2xl tracking-tight text-blue-900'>
-              <p>
-                Break free from the ordinary, Unlock boundless opportunities
-                with personalized CV templates tailored just for you.
-              </p>
-              <p>
-                Tailor your story to captivate employers, Stand out from the
-                crowd with unique, visually stunning CVs, and elevate your
-                career to new heights.
-              </p>
-              <p>Your Journey, Your CV, Your Triumph.</p>
+        <Container>
+          <div className='relative flex min-h-[380px] items-center justify-between gap-x-8 rounded-2xl bg-[#e0faf8] p-16'>
+            <div className='w-full md:w-2/5'>
+              <Image
+                src='/images/undraw_design_sprint_re_tke3.svg'
+                alt='banner image'
+                width={270}
+                height={320}
+                className='hidden w-full md:block'
+              />
             </div>
-            <Button href='#' className='mt-10 w-full sm:hidden'>
-              Get your tickets
-            </Button>
+            <div className='w-full p-1 md:w-3/5'>
+              <span className='text-base font-light text-gray-700'>
+                Craft your resume with EASE!
+              </span>
+              <h1 className='mt-3 text-5xl font-semibold'>
+                Break free from the ordinary
+              </h1>
+              <p className='my-5 text-lg text-gray-700'>
+                Unlock boundless opportunities with personalized CV templates
+                tailored just for you. Stand out from the crowd with unique,
+                visually stunning CVs, and elevate your career to new heights.
+              </p>
+              <button className='text-md rounded-3xl border border-gray-800 px-6 py-3 text-gray-700 transition-all duration-300 hover:border-white hover:bg-gray-700 hover:text-white'>
+                Get started
+              </button>
+            </div>
+          </div>
+          <div className='mt-12'>
             <dl className='mt-10 grid grid-cols-2 gap-x-10 gap-y-6 sm:mt-16 sm:gap-x-16 sm:gap-y-10 sm:text-center lg:auto-cols-auto lg:grid-flow-col lg:grid-cols-none lg:justify-start lg:text-left'>
-              {bullets.map(([name, value]: any) => (
-                <div key={name}>
-                  <dt className='font-mono text-sm text-blue-600'>{name}</dt>
-                  <dd className='mt-0.5 text-2xl font-semibold tracking-tight text-blue-900'>
-                    {value}
-                  </dd>
-                </div>
-              ))}
+              {bullets.map((elm: any, index: number) => {
+                const [name, value] = elm.data;
+                return (
+                  <div style={{ color: `${elm.color}` }} key={index}>
+                    <dt className='font-mono text-sm text-gray-500'>{name}</dt>
+                    <dd className='mt-0.5 text-4xl font-bold tracking-tight'>
+                      {value}
+                    </dd>
+                  </div>
+                );
+              })}
             </dl>
           </div>
         </Container>

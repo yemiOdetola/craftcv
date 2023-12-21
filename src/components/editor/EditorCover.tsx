@@ -73,13 +73,11 @@ export default function EditorCover({ className, children }: EditorCoverProps) {
   useEffect(() => {
     Object.keys(splitSizes).map((key: any) => {
       if (JSON.stringify(splitSizes[key]) == JSON.stringify(layoutDimension)) {
-        console.log(key, typeof key);
-        setSlidePosition(key);
         setSlidePosition(key);
       }
     });
-    // fix slider to normal position
-  }, []);
+    //TODO: fix slider to position on init
+  }, [layoutDimension]);
 
   const handleSlider = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
