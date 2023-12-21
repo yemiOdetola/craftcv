@@ -5,6 +5,7 @@ import { Button } from '@/components/common/Button';
 import { Container } from '@/components/common/Container';
 import { useEffect } from 'react';
 import { useMainStore } from '@/store';
+import Link from 'next/link';
 
 export default function Home() {
   const bullets: any = [
@@ -30,8 +31,8 @@ export default function Home() {
       <Header />
       <div className='relative bg-white py-10'>
         <Container>
-          <div className='relative flex min-h-[380px] items-center justify-between gap-x-8 rounded-2xl bg-[#e0faf8] p-16'>
-            <div className='w-full md:w-2/5'>
+          <div className='relative flex min-h-[380px] items-center justify-between gap-x-8 rounded-2xl bg-[#e0faf8] p-6 md:p-12 lg:p-16'>
+            <div className='hidden md:block md:w-2/5'>
               <Image
                 src='/images/undraw_design_sprint_re_tke3.svg'
                 alt='banner image'
@@ -52,9 +53,12 @@ export default function Home() {
                 tailored just for you. Stand out from the crowd with unique,
                 visually stunning CVs, and elevate your career to new heights.
               </p>
-              <button className='text-md rounded-3xl border border-gray-800 px-6 py-3 text-gray-700 transition-all duration-300 hover:border-white hover:bg-gray-700 hover:text-white'>
+              <Link
+                href='/templates'
+                className='text-md rounded-3xl border border-gray-800 px-6 py-3 text-gray-700 transition-all duration-300 hover:border-white hover:bg-gray-700 hover:text-white'
+              >
                 Get started
-              </button>
+              </Link>
             </div>
           </div>
           <div className='mt-12'>
@@ -64,7 +68,7 @@ export default function Home() {
                 return (
                   <div style={{ color: `${elm.color}` }} key={index}>
                     <dt className='font-mono text-sm text-gray-500'>{name}</dt>
-                    <dd className='mt-0.5 text-4xl font-bold tracking-tight'>
+                    <dd className='mt-0.5 text-3xl font-bold tracking-tight'>
                       {value}
                     </dd>
                   </div>
