@@ -28,7 +28,7 @@ export default function Education({
 
   return (
     <div className='py-3'>
-      <Heading id='education'>Education History</Heading>
+      <Heading id='education'>Education Background</Heading>
       <div className='flex flex-col space-y-1'>
         {educationhistory &&
           Object.keys(educationhistory).map((key: any, index: number) => {

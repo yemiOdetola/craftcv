@@ -1,11 +1,8 @@
 import Image from 'next/image';
+import Link from 'next/link';
+import { Container } from '@/components/common/Container';
 import { Footer } from '@/components/common/Footer';
 import { Header } from '@/components/common/Header';
-import { Button } from '@/components/common/Button';
-import { Container } from '@/components/common/Container';
-import { useEffect } from 'react';
-import { useMainStore } from '@/store';
-import Link from 'next/link';
 
 export default function Home() {
   const bullets: any = [
@@ -43,10 +40,10 @@ export default function Home() {
             </div>
             <div className='w-full p-1 md:w-3/5'>
               <span className='text-base font-light text-gray-700'>
-                Craft your resume with EASE!
+                Break free from the ordinary.
               </span>
               <h1 className='mt-3 text-5xl font-semibold'>
-                Break free from the ordinary
+                Craft your resume with EASE!
               </h1>
               <p className='my-5 text-lg text-gray-700'>
                 Unlock boundless opportunities with personalized CV templates
@@ -55,7 +52,8 @@ export default function Home() {
               </p>
               <Link
                 href='/templates'
-                className='text-md rounded-3xl border border-gray-800 px-6 py-3 text-gray-700 transition-all duration-300 hover:border-white hover:bg-gray-700 hover:text-white'
+                className='text-md mt-2 inline-block rounded-3xl border border-gray-800 px-7 py-2.5 text-gray-700 transition-all duration-300 
+                hover:border-white hover:bg-gray-700 hover:text-white'
               >
                 Get started
               </Link>

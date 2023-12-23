@@ -9,5 +9,5 @@ export { default as SoftSkills } from './SoftSkills';
 export { default as TechnicalSkills } from './TechnicalSkills';
 export { default as Awards } from './Awards';
 export { default as Publications } from './Publications';
-export { default as Certification } from './Certifications';
+export { default as Certifications } from './Certifications';
 export { default as References } from './References';

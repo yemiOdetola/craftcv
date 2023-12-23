@@ -11,57 +11,31 @@ import {
   useResume,
 } from '@/store';
 import { getFontFamilyStyle, isObjectEmpty } from '@/utils/helper';
+import { useSectionRenderer } from '@/utils/SectionRenderer';
 import { useEditorActions } from '@/utils/useEditorActions';
-import {
-  Awards,
-  Contact,
-  Education,
-  Experiences,
-  Interests,
-  Languages,
-  Projects,
-  Publications,
-  SoftSkills,
-  Summary,
-  TechnicalSkills,
-  References,
-} from './components';
-import Certifications from './components/Certifications';
 import { ValidSections } from '@/store/basetemplate';
-
-interface Experience {
-  id: string;
-  title: string;
-  achievements: string;
-  duration: string;
-}
-
-const components = {
-  experiences: Experiences,
-  projects: Projects,
-  contact: Contact,
-  education: Education,
-  certifications: Certifications,
-  awards: Awards,
-  interests: Interests,
-  languages: Languages,
-  publications: Publications,
-  references: References,
-  'soft skills': SoftSkills,
-  'technical skills': TechnicalSkills,
-};
 
 export default function Coutume() {
   const router = useRouter();
   const fontFamily = useFontFamily();
   const customLayout = useCustomLayout();
   const editorTheme = useEditorTheme();
+  const { renderComponent } = useSectionRenderer();
   const layoutDimension = useLayoutDimension();
   const { updateResume } = useMainStore();
   const { saveWithPath } = useEditorActions();
   const [resume] = useState(useResume());
   const [color1, color2] = editorTheme;
   const [editableSection, setEditableSectionId] = useState<string | null>(null);
+
+  const commonProps = {
+    color1,
+    color2,
+    editableSection,
+    setEditableSectionId,
+    editBlurEvent: (e: React.FocusEvent<HTMLDivElement, Element>) =>
+      editBlurEvent(e),
+  };
 
   useEffect(() => {
     if (isObjectEmpty(customLayout) && isObjectEmpty(resume)) {
@@ -93,23 +67,10 @@ export default function Coutume() {
   const renderComponents = (componentNames: ValidSections[]) => {
     if (componentNames?.length > 0) {
       return componentNames.map((componentName, index) => (
-        <div key={index}>{renderComponent(componentName)}</div>
+        <div key={index}>{renderComponent(componentName, commonProps)}</div>
       ));
     }
     return null;
-  };
-
-  const renderComponent = (name: ValidSections) => {
-    const commonProps = {
-      color1,
-      color2,
-      editableSection,
-      setEditableSectionId,
-      editBlurEvent: (e: React.FocusEvent<HTMLDivElement, Element>) =>
-        editBlurEvent(e),
-    };
-    const Component = components[name];
-    return <Component {...commonProps} />;
   };
 
   const renderedMainComponents = renderComponents(customLayout?.layout?.left);

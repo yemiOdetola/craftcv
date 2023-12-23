@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { InlineEdit } from '@/components/editor';
-import { getIconByType } from '../../Icons';
 import { useEditorActions } from '@/utils/useEditorActions';
 import { useResume } from '@/store';
 import Heading from './Heading';

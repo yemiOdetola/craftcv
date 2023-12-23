@@ -1,18 +1,19 @@
 'use client';
+
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { EditorCover, InlineEdit } from '@/components/editor';
 import placeholder from '@/assets/images/placeholder/generator.png';
-import { getIconByType } from '../Icons';
 import {
   useEditorTheme,
   useFontFamily,
   useMainStore,
   useResume,
 } from '@/store';
-import { getFontFamilyStyle } from '@/utils/helper';
+import { getFontFamilyStyle, isObjectEmpty } from '@/utils/helper';
 import { useEditorActions } from '@/utils/useEditorActions';
 import { amitpachange } from '@/store/resume';
+import { useSectionRenderer } from '@/utils/SectionRenderer';
 
 interface Experience {
   id: string;
@@ -25,149 +26,48 @@ export default function AmitPachange() {
   const fontFamily = useFontFamily();
   const editorTheme = useEditorTheme();
   const { saveWithPath } = useEditorActions();
+  const { renderComponent } = useSectionRenderer();
   const { updateResume } = useMainStore();
   const [resume] = useState(useResume());
   const [color1, color2] = editorTheme;
   const [editableSection, setEditableSectionId] = useState<string | null>(null);
+  const secprops = {
+    color1,
+    color2,
+    editableSection,
+    setEditableSectionId,
+    editBlurEvent: (e: React.FocusEvent<HTMLDivElement, Element>) =>
+      editBlurEvent(e),
+  };
 
   useEffect(() => {
-    updateResume(amitpachange);
-  }, []);
+    if (isObjectEmpty(resume)) {
+      updateResume(amitpachange);
+    }
+  }, [resume, updateResume]);
 
   const renderContactInfo = () => {
-    return (
-      <div
-        className='my-1'
-        onClick={() => setEditableSectionId(resume?.contact?.id)}
-        onBlur={(e) => editBlurEvent(e)}
-      >
-        {resume.contact &&
-          Object.keys(resume.contact).map((key, index) => {
-            if (resume.contact[key] !== 'contact') {
-              return (
-                <div
-                  className='mb-1 flex items-center'
-                  key={`resume-contact-${index}`}
-                >
-                  <span className='font-sm w-6 text-gray-700'>
-                    {getIconByType(key)}
-                  </span>
-                  <InlineEdit
-                    text={resume.contact[key]}
-                    editable={resume?.contact?.id == editableSection}
-                    className='ml-2'
-                    dottedActive
-                    onSave={(val) => saveWithPath(['contact', key], val)}
-                  />
-                </div>
-              );
-            }
-          })}
-      </div>
-    );
+    return <>{renderComponent('contact', secprops)}</>;
   };
 
   const renderSkills = () => {
-    return (
-      <div
-        className='my-1'
-        onClick={() => setEditableSectionId(resume?.skills?.id)}
-        onBlur={(e) => editBlurEvent(e)}
-      >
-        {resume?.skills?.skillset.map((skill: string, index: number) => {
-          if (skill !== 'skills') {
-            return (
-              <div
-                className='mb-1 flex items-center'
-                key={`resume-skills-${index}`}
-              >
-                <a className='font-sm w-6 text-gray-700'>
-                  {getIconByType(skill)}
-                </a>
-                <InlineEdit
-                  text={skill}
-                  editable={resume?.skills?.id == editableSection}
-                  className='ml-2'
-                  elementPath={['skills', 'skillset', index]}
-                  id={`skillset-${index}`}
-                  dottedActive
-                  onSave={(val) =>
-                    saveWithPath(['skills', 'skillset', index], val)
-                  }
-                />
-              </div>
-            );
-          }
-        })}
-      </div>
-    );
+    return <>{renderComponent('technical skills', secprops)}</>;
   };
 
   const renderEducation = () => {
-    return (
-      <div className='flex flex-col space-y-1'>
-        {resume.education &&
-          Object.keys(resume.education).map((key: any, index: number) => {
-            const education = resume.education[key];
-            return (
-              <div
-                className='flex flex-col'
-                key={`resume-education-${index}`}
-                onClick={() => setEditableSectionId(education.id)}
-                onBlur={(e) => editBlurEvent(e)}
-              >
-                <InlineEdit
-                  text={education?.gradyear}
-                  editable={education.id == editableSection}
-                  className='text-xs font-semibold text-gray-700'
-                  dottedActive
-                  onSave={(val) =>
-                    saveWithPath(['education', key], {
-                      ...education,
-                      gradyear: val,
-                    })
-                  }
-                />
-                <InlineEdit
-                  text={education?.award}
-                  editable={education.id == editableSection}
-                  className='text-sm font-medium text-green-700'
-                  style={{ color: `#${color1}` }}
-                  onSave={(val) =>
-                    saveWithPath(['education', key], {
-                      ...education,
-                      award: val,
-                    })
-                  }
-                />
-                <InlineEdit
-                  text={education?.school}
-                  editable={education.id == editableSection}
-                  className='text-sm font-medium text-green-700'
-                  style={{ color: `#${color1}` }}
-                  onSave={(val) =>
-                    saveWithPath(['education', key], {
-                      ...education,
-                      school: val,
-                    })
-                  }
-                />
-              </div>
-            );
-          })}
-      </div>
-    );
+    return renderComponent('education', secprops);
   };
 
   const renderSummary = () => {
     return (
       <div
+        className='pb-6'
         onClick={() => setEditableSectionId(resume?.about?.id)}
         onBlur={(e) => editBlurEvent(e)}
       >
         <InlineEdit
-          text={resume?.about?.summary}
-          editable={resume?.about?.id == editableSection}
+          text={resume && resume?.about?.summary}
+          editable={resume && resume?.about?.id == editableSection}
           onSave={(val) => saveWithPath(['about', 'summary'], val)}
         />
       </div>
@@ -175,161 +75,16 @@ export default function AmitPachange() {
   };
 
   const renderExperiences = () => {
-    return (
-      <div className='flex flex-col'>
-        {Object.keys(resume.experiences).map((key: any, index: number) => {
-          const experience = resume.experiences[key];
-          return (
-            <div
-              className='mb-6 flex flex-col'
-              key={`resume-experience-${index}`}
-              onClick={() => setEditableSectionId(experience?.id)}
-              onBlur={(e) => editBlurEvent(e)}
-            >
-              <div className='flex items-center justify-normal'>
-                <InlineEdit
-                  text={experience.company}
-                  className='text-lg font-bold text-gray-700'
-                  editable={experience.id == editableSection}
-                  dottedActive
-                  onSave={(val) =>
-                    saveWithPath(['experiences', key], {
-                      ...experience,
-                      company: val,
-                    })
-                  }
-                />
-                <span> | </span>
-                <InlineEdit
-                  text={experience.position}
-                  className='text-lg font-bold text-gray-700'
-                  editable={experience.id == editableSection}
-                  dottedActive
-                  onSave={(val) =>
-                    saveWithPath(['experiences', key], {
-                      ...experience,
-                      position: val,
-                    })
-                  }
-                />
-              </div>
-              <div className='flex items-center justify-normal'>
-                <InlineEdit
-                  text={experience.startDate}
-                  className='my-1 font-mono text-sm font-semibold text-green-700'
-                  editable={experience.id == editableSection}
-                  style={{ color: `#${color1}` }}
-                  dottedActive
-                  onSave={(val) =>
-                    saveWithPath(['experiences', key], {
-                      ...experience,
-                      startDate: val,
-                    })
-                  }
-                />
-                <span> - </span>
-                <InlineEdit
-                  text={experience.endDate}
-                  className='my-1 font-mono text-sm font-semibold text-green-700'
-                  editable={experience.id == editableSection}
-                  style={{ color: `#${color1}` }}
-                  dottedActive
-                  onSave={(val) =>
-                    saveWithPath(['experiences', key], {
-                      ...experience,
-                      endDate: val,
-                    })
-                  }
-                />
-              </div>
-              <span className='mb-1 mt-2 text-sm font-semibold text-gray-700'>
-                Key Responsibilities
-              </span>
-              <ul className='list-disc space-y-1 pl-4 text-sm'>
-                {experience?.responsibilities.map(
-                  (responsibility: string, index: number) => (
-                    <li key={`exp-responsibility-${index}`}>
-                      {' '}
-                      <InlineEdit
-                        text={responsibility}
-                        editable={experience.id == editableSection}
-                        id={`responsibilities-${index}`}
-                        elementPath={[
-                          'experiences',
-                          key,
-                          'responsibilities',
-                          index,
-                        ]}
-                        onSave={(val) =>
-                          saveWithPath(
-                            ['experiences', key, 'responsibilities', index],
-                            val
-                          )
-                        }
-                      />
-                    </li>
-                  )
-                )}
-              </ul>
-            </div>
-          );
-        })}
-      </div>
-    );
+    return <>{renderComponent('experiences', secprops)}</>;
   };
 
-  console.log('resumemememe', resume);
-
   const renderProjects = () => {
-    return (
-      <div className='flex flex-col'>
-        {Object.keys(resume.projects).map((key: any, index: number) => {
-          const project = resume.projects[key];
-          return (
-            <div
-              className='mb-4 flex flex-col'
-              key={`resume-project-${index}`}
-              onClick={() => setEditableSectionId(project?.id)}
-              onBlur={(e) => editBlurEvent(e)}
-            >
-              <InlineEdit
-                text={project.title}
-                editable={project?.id == editableSection}
-                className='text-lg font-semibold text-gray-700'
-                onSave={(val) =>
-                  saveWithPath(['projects', key], { ...project, title: val })
-                }
-              />
-              <InlineEdit
-                text={project?.tech}
-                editable={project?.id == editableSection}
-                style={{ color: `#${color1}` }}
-                className='my-2 font-mono text-sm font-semibold text-green-700'
-                onSave={(val) =>
-                  saveWithPath(['projects', key], { ...project, tech: val })
-                }
-              />
-              <InlineEdit
-                text={project.description}
-                editable={project?.id == editableSection}
-                className='mb-1 pl-2 text-sm font-normal text-gray-700'
-                onSave={(val) =>
-                  saveWithPath(['projects', key], {
-                    ...project,
-                    description: val,
-                  })
-                }
-              />
-            </div>
-          );
-        })}
-      </div>
-    );
+    return <>{renderComponent('projects', secprops)}</>;
   };
 
   const renderUnderline = () => (
     <div
-      className='my-2 h-1 w-20 rounded'
+      className='w-[92%] rounded border border-purple-200'
       style={{ backgroundColor: `#${color2}` }}
     />
   );
@@ -383,25 +138,16 @@ export default function AmitPachange() {
           <div className='flex flex-col sm:mt-10 sm:flex-row'>
             <div className='flex flex-col sm:w-1/3'>
               <div className='order-3 py-3 sm:order-none'>
-                <h2 className='font-poppins text-top-color text-lg font-bold'>
-                  My Contact
-                </h2>
-                {renderUnderline()}
                 {renderContactInfo()}
+                {renderUnderline()}
               </div>
               <div className='order-2 py-3 sm:order-none'>
-                <h2 className='font-poppins text-top-color text-lg font-bold'>
-                  Skills
-                </h2>
-                {renderUnderline()}
                 {renderSkills()}
+                {renderUnderline()}
               </div>
               <div className='order-1 py-3 sm:order-none'>
-                <h2 className='font-poppins text-top-color text-lg font-bold'>
-                  Education Background
-                </h2>
-                {renderUnderline()}
                 {renderEducation()}
+                {renderUnderline()}
               </div>
             </div>
             <div className='order-first flex flex-col sm:order-none sm:-mt-10 sm:w-2/3'>
@@ -409,22 +155,16 @@ export default function AmitPachange() {
                 <h2 className='font-poppins text-top-color text-lg font-bold'>
                   About Me
                 </h2>
-                {renderUnderline()}
                 {renderSummary()}
+                {renderUnderline()}
               </div>
               <div className='py-3'>
-                <h2 className='font-poppins text-top-color text-lg font-bold'>
-                  Professional Experience
-                </h2>
-                {renderUnderline()}
                 {renderExperiences()}
+                {renderUnderline()}
               </div>
               <div className='py-3'>
-                <h2 className='font-poppins text-top-color text-lg font-bold'>
-                  Projects
-                </h2>
-                {renderUnderline()}
                 {renderProjects()}
+                {renderUnderline()}
               </div>
             </div>
           </div>

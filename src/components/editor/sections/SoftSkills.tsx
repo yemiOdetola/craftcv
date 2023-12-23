@@ -1,37 +1,36 @@
 import React from 'react';
 import { InlineEdit } from '@/components/editor';
-import { getIconByType } from '../../Icons';
 import { useEditorActions } from '@/utils/useEditorActions';
 import { useResume } from '@/store';
 import Heading from './Heading';
+import { getIconByType } from '../../common';
 
-interface TechnicalSkillsProps {
+interface SoftSkillsProps {
   color1: string;
   editableSection: null | string;
   editBlurEvent: (e: any) => void;
   setEditableSectionId: (id: string) => void;
 }
 
-export default function TechnicalSkills({
+export default function SoftSkills({
   editableSection,
   editBlurEvent,
-  color1,
   setEditableSectionId,
-}: TechnicalSkillsProps) {
+  color1,
+}: SoftSkillsProps) {
   const { saveWithPath } = useEditorActions();
   const resume = useResume();
-  const technicalSkills = resume['technical skills'];
-
+  const softSkills = resume['soft skills'];
   return (
     <div className='py-3'>
-      <Heading id='technical skills'>Technical Skills</Heading>
+      <Heading id='soft skills'>Soft Skills</Heading>
       <div
         className='my-1'
-        onClick={() => setEditableSectionId('technicalSkills')}
+        onClick={() => setEditableSectionId(softSkills.id)}
         onBlur={editBlurEvent}
       >
-        {technicalSkills &&
-          technicalSkills?.skillset.map((skill: string, index: number) => {
+        {softSkills &&
+          softSkills?.skillset.map((skill: string, index: number) => {
             return (
               <div
                 className='mb-1 flex items-center'
@@ -42,13 +41,12 @@ export default function TechnicalSkills({
                 </a>
                 <InlineEdit
                   text={skill}
-                  editable={editableSection == 'technicalSkills'}
-                  className='text-sm'
-                  elementPath={['technical skills', 'skillset', index]}
+                  editable={editableSection == softSkills.id}
+                  elementPath={['soft skills', 'skillset', index]}
                   id={`skillset-${index}`}
                   dottedActive
                   onSave={(val) =>
-                    saveWithPath(['technical skills', 'skillset', index], val)
+                    saveWithPath(['soft skills', 'skillset', index], val)
                   }
                 />
               </div>

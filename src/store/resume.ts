@@ -97,7 +97,7 @@ export const amitpachange = {
       tech: 'Javascript, HTML, SCSS, Browsify',
     },
   },
-  skills: {
+  'technical skills': {
     id: 'skills',
     skillset: ['React', 'HTML, CSS, Javascript', 'Tailwind CSS', 'Git'],
   },

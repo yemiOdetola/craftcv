@@ -24,6 +24,7 @@ export default function Experiences({
   const { saveWithPath, removeFromPath } = useEditorActions();
   const resume = useResume();
   const experiences = resume.experiences;
+
   const removeSection = (key: string) => {
     removeFromPath(['experiences', key]);
   };

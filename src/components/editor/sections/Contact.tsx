@@ -1,9 +1,9 @@
 import React from 'react';
 import { InlineEdit } from '@/components/editor';
-import { getIconByType } from '../../Icons';
 import { useEditorActions } from '@/utils/useEditorActions';
 import { useResume } from '@/store';
 import Heading from './Heading';
+import { getIconByType } from '../../common';
 
 interface ContactProps {
   editableSection: null | string;
@@ -21,7 +21,7 @@ export default function Contact({
   const contact = resume.contact;
   return (
     <div className='py-3'>
-      <Heading id="contact">Contact</Heading>
+      <Heading id='contact'>Contact</Heading>
       <div
         className='my-1'
         onClick={() => setEditableSectionId('contact')}
