@@ -20,7 +20,7 @@ export default function Experiences({
   setEditableSectionId,
   color1,
 }: ExperiencesProps) {
-  const [isHovered, setIsHovered] = useState(false);
+  const [isHovered, setIsHovered] = useState(null);
   const { saveWithPath, removeFromPath } = useEditorActions();
   const resume = useResume();
   const experiences = resume.experiences;
@@ -42,10 +42,10 @@ export default function Experiences({
                 key={`experience-${index}`}
                 onClick={() => setEditableSectionId(key)}
                 onBlur={editBlurEvent}
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
+                onMouseEnter={() => setIsHovered(key)}
+                onMouseLeave={() => setIsHovered(null)}
               >
-                {isHovered ? (
+                {isHovered == key ? (
                   <button
                     className='absolute right-4 inline-block p-2 opacity-0 transition-opacity duration-200'
                     style={{ opacity: isHovered ? 1 : 0 }}

@@ -41,6 +41,8 @@ export default function Contact({
                   <InlineEdit
                     text={contact[key]}
                     editable={editableSection == 'contact'}
+                    elementPath={['contact', index]}
+                    id={`contact-${index}`}
                     className='ml-2'
                     dottedActive
                     onSave={(val) => saveWithPath(['contact', key], val)}

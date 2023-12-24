@@ -6,7 +6,7 @@ import {
   useMainStore,
   useResume,
 } from '@/store';
-import { amitpachange } from '@/store/resume';
+import { amitpachange, tlh } from '@/store/resume';
 import { useSectionRenderer } from '@/utils/SectionRenderer';
 import { getFontFamilyStyle, getInitials, isObjectEmpty } from '@/utils/helper';
 import { useEditorActions } from '@/utils/useEditorActions';
@@ -14,10 +14,9 @@ import React, { useEffect, useState } from 'react';
 import { getIconByType } from '../Icons';
 import { PiTrashSimpleDuotone } from 'react-icons/pi';
 
-export default function Thb() {
+export default function OdetolaAzeez() {
   const fontFamily = useFontFamily();
   const editorTheme = useEditorTheme();
-  const { renderComponent } = useSectionRenderer();
   const { saveWithPath, removeFromPath } = useEditorActions();
   const [isHovered, setIsHovered] = useState('');
   const { updateResume } = useMainStore();
@@ -35,7 +34,7 @@ export default function Thb() {
 
   useEffect(() => {
     if (isObjectEmpty(resume)) {
-      updateResume(amitpachange);
+      updateResume(tlh);
     }
   }, [resume, updateResume]);
 
@@ -58,52 +57,65 @@ export default function Thb() {
     <EditorCover className={`${getFontFamilyStyle(fontFamily)}`}>
       <main className='mx-auto my-auto p-2'>
         {resume?.user ? (
-          <header className='mb-2 inline-flex w-full items-baseline justify-between border-b-4 border-gray-200 align-top'>
+          <header className='inline-flex w-full items-center justify-center pb-3'>
             <section
-              className='block'
               onClick={() => setEditableSectionId(resume?.user?.id)}
               onBlur={(e: any) => editBlurEvent(e)}
             >
               <InlineEdit
-                text={resume.user.fullname}
+                // text={resume.user.fullname}
+                text="Odetola Azeez Opeyemi"
                 editable={resume.user.id == editableSection}
                 onSave={(val) => saveWithPath(['user', 'fullname'], val)}
-                className='mb-2 text-5xl font-bold text-gray-800'
+                className='text-center text-2xl font-bold text-gray-800'
                 dottedActive
               />
-              <InlineEdit
-                text={resume.user.title}
-                editable={resume.user.id == editableSection}
-                onSave={(val) => saveWithPath(['user', 'title'], val)}
-                className='ml-1 text-2xl font-semibold leading-snug text-gray-700'
-                dottedActive
-              />
-              <InlineEdit
-                text={resume.user.location}
-                editable={resume.user.id == editableSection}
-                onSave={(val) => saveWithPath(['user', 'location'], val)}
-                className='text-md ml-1 mt-2 font-semibold leading-snug text-gray-500'
-                dottedActive
-              />
-            </section>
-            <section className='mb-5 mt-0 justify-between bg-gray-800 px-3 py-2 text-4xl font-black text-white'>
-              {resume.user?.fullname &&
-                getInitials(resume.user?.fullname)
-                  .split('')
-                  .map((al, index) => (
-                    <span
-                      key={index}
-                      className='block text-center font-semibold'
-                    >
-                      {al}
-                    </span>
-                  ))}
+              <ul className='mx-auto flex w-full list-inside flex-wrap gap-x-2 lg:w-3/5'>
+                {resume?.contact &&
+                  Object.keys(resume.contact).map((key, index) => {
+                    if (resume?.contact[key] !== 'contact') {
+                      const value = resume.contact[key];
+                      const link = /^http(s)?:\/\//.test(value)
+                        ? value
+                        : `https://${value}`;
+                      return (
+                        <li
+                          className='mt-1 flex items-center text-gray-600'
+                          key={`resume-contact-${index}`}
+                        >
+                          <span className='font-sm w-6 text-gray-700'>
+                            {getIconByType(key)}
+                          </span>
+                          <InlineEdit
+                            text={value}
+                            editable={editableSection == 'contact'}
+                            className='inline-block text-sm text-gray-600'
+                            dottedActive
+                            onSave={(val) =>
+                              saveWithPath(['contact', key], val)
+                            }
+                          />
+                          <a
+                            className='group ml-1'
+                            target='_blank'
+                            href={link}
+                            rel='noopener noreferrer'
+                          >
+                            <span className='inline-block text-gray-500'>
+                              ↗
+                            </span>
+                          </a>
+                        </li>
+                      );
+                    }
+                  })}
+              </ul>
             </section>
           </header>
         ) : null}
         <section className='flex flex-col pt-5 md:flex-row'>
           <section className='w-full pr-4 lg:w-2/5'>
-            <section
+            {/* <section
               className='mb-4 break-inside-avoid border-b-4 border-gray-300 pb-4'
               onClick={() => setEditableSectionId(resume?.contact?.id)}
               onBlur={editBlurEvent}
@@ -152,7 +164,7 @@ export default function Thb() {
                     }
                   })}
               </ul>
-            </section>
+            </section> */}
             <section
               className='break-inside-avoid border-b-4 border-gray-300 pb-4 first:mt-0'
               onClick={() => setEditableSectionId(resume?.about?.id)}
@@ -236,20 +248,20 @@ export default function Thb() {
                 })}
             </section>
             <section className='mb-4 mt-0 break-inside-avoid border-b-4 border-gray-300 pb-6 first:mt-0'>
-              <h2 className='mb-2 text-lg font-bold tracking-widest text-gray-700 print:font-normal'>
+              <h2 className='mb-2 pt-2 text-lg font-bold tracking-widest text-gray-700 print:font-normal'>
                 SKILLS
               </h2>
               <section className='mb-0 break-inside-avoid'>
                 <section
                   className='mt-1 last:pb-1'
                   onClick={() =>
-                    setEditableSectionId(resume?.technicalSkills?.id)
+                    setEditableSectionId(resume['technical skills']?.id)
                   }
                   onBlur={editBlurEvent}
                 >
                   <ul className='text-md -mb-1 -mr-1.5 flex flex-wrap font-bold leading-relaxed'>
-                    {resume?.skills &&
-                      resume.skills?.skillset.map(
+                    {resume['technical skills'] &&
+                      resume['technical skills']?.skillset.map(
                         (skill: string, index: number) => {
                           return (
                             <li
@@ -259,7 +271,8 @@ export default function Thb() {
                               <InlineEdit
                                 text={skill}
                                 editable={
-                                  editableSection == resume?.technicalSkills?.id
+                                  editableSection ==
+                                  resume['technical skills']?.id
                                 }
                                 className='text-sm'
                                 elementPath={[

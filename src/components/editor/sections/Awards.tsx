@@ -18,7 +18,7 @@ export default function Awards({
   setEditableSectionId,
   color1,
 }: AwardsProps) {
-  const [isHovered, setIsHovered] = useState(false);
+  const [isHovered, setIsHovered] = useState<string | null>(null);
   const { saveWithPath, removeFromPath } = useEditorActions();
   const resume = useResume();
   const awards = resume.awards;
@@ -40,10 +40,10 @@ export default function Awards({
                 key={`award-${index}`}
                 onClick={() => setEditableSectionId(key)}
                 onBlur={editBlurEvent}
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
+                onMouseEnter={() => setIsHovered(key)}
+                onMouseLeave={() => setIsHovered(null)}
               >
-                {isHovered ? (
+                {isHovered == 'key' ? (
                   <button
                     className='absolute right-4 inline-block p-2 opacity-0 transition-opacity duration-200'
                     style={{ opacity: isHovered ? 1 : 0 }}
