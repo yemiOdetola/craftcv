@@ -56,16 +56,19 @@ export default function Thb() {
 
   return (
     <EditorCover className={`${getFontFamilyStyle(fontFamily)}`}>
-      <main className='mx-auto my-auto p-3 md:p-8'>
+      <main className='mx-auto my-auto p-2'>
         {resume?.user ? (
           <header className='mb-2 inline-flex w-full items-baseline justify-between border-b-4 border-gray-200 align-top'>
-            <section className='block'>
+            <section
+              className='block'
+              onClick={() => setEditableSectionId(resume?.user?.id)}
+              onBlur={(e: any) => editBlurEvent(e)}
+            >
               <InlineEdit
                 text={resume.user.fullname}
                 editable={resume.user.id == editableSection}
                 onSave={(val) => saveWithPath(['user', 'fullname'], val)}
                 className='mb-2 text-5xl font-bold text-gray-800'
-                style={{ color: `#${color2}` }}
                 dottedActive
               />
               <InlineEdit
@@ -73,7 +76,6 @@ export default function Thb() {
                 editable={resume.user.id == editableSection}
                 onSave={(val) => saveWithPath(['user', 'title'], val)}
                 className='ml-1 text-2xl font-semibold leading-snug text-gray-700'
-                style={{ color: `#${color2}` }}
                 dottedActive
               />
               <InlineEdit
@@ -81,7 +83,6 @@ export default function Thb() {
                 editable={resume.user.id == editableSection}
                 onSave={(val) => saveWithPath(['user', 'location'], val)}
                 className='text-md ml-1 mt-2 font-semibold leading-snug text-gray-500'
-                style={{ color: `#${color2}` }}
                 dottedActive
               />
             </section>
@@ -100,9 +101,13 @@ export default function Thb() {
             </section>
           </header>
         ) : null}
-        <section className='flex flex-col md:flex-row'>
+        <section className='flex flex-col pt-5 md:flex-row'>
           <section className='w-full pr-4 lg:w-2/5'>
-            <section className='mb-4 break-inside-avoid border-b-4 border-gray-300 pb-4'>
+            <section
+              className='mb-4 break-inside-avoid border-b-4 border-gray-300 pb-4'
+              onClick={() => setEditableSectionId(resume?.contact?.id)}
+              onBlur={editBlurEvent}
+            >
               <h2 className='mb-2 text-xl font-bold uppercase tracking-widest text-gray-700'>
                 Contact
               </h2>
@@ -111,6 +116,10 @@ export default function Thb() {
                 {resume?.contact &&
                   Object.keys(resume.contact).map((key, index) => {
                     if (resume?.contact[key] !== 'contact') {
+                      const value = resume.contact[key];
+                      const link = /^http(s)?:\/\//.test(value)
+                        ? value
+                        : `https://${value}`;
                       return (
                         <li
                           className='mt-1 flex items-center text-gray-600'
@@ -119,16 +128,21 @@ export default function Thb() {
                           <span className='font-sm w-6 text-gray-700'>
                             {getIconByType(key)}
                           </span>
-                          <a className='group' href={resume.contact[key]}>
-                            <InlineEdit
-                              text={resume.contact[key]}
-                              editable={editableSection == 'contact'}
-                              className='inline-block text-sm text-gray-600'
-                              dottedActive
-                              onSave={(val) =>
-                                saveWithPath(['contact', key], val)
-                              }
-                            />
+                          <InlineEdit
+                            text={value}
+                            editable={editableSection == 'contact'}
+                            className='inline-block text-sm text-gray-600'
+                            dottedActive
+                            onSave={(val) =>
+                              saveWithPath(['contact', key], val)
+                            }
+                          />
+                          <a
+                            className='group ml-1'
+                            target='_blank'
+                            href={link}
+                            rel='noopener noreferrer'
+                          >
                             <span className='inline-block text-gray-500'>
                               ↗
                             </span>
@@ -139,7 +153,11 @@ export default function Thb() {
                   })}
               </ul>
             </section>
-            <section className='break-inside-avoid border-b-4 border-gray-300 pb-4 first:mt-0'>
+            <section
+              className='break-inside-avoid border-b-4 border-gray-300 pb-4 first:mt-0'
+              onClick={() => setEditableSectionId(resume?.about?.id)}
+              onBlur={(e: any) => editBlurEvent(e)}
+            >
               <h2 className='mb-2 text-xl font-bold uppercase tracking-widest text-gray-700 print:font-normal'>
                 Summary
               </h2>
@@ -160,14 +178,14 @@ export default function Thb() {
                   const edu = resume.education[key];
                   return (
                     <div
-                      className='relative mb-6 flex flex-col'
+                      className='relative mb-2 flex flex-col'
                       key={`resume-education-${index}`}
                       onClick={() => setEditableSectionId(key)}
                       onBlur={editBlurEvent}
-                      onMouseEnter={() => setIsHovered('education')}
+                      onMouseEnter={() => setIsHovered(key)}
                       onMouseLeave={() => setIsHovered('')}
                     >
-                      {isHovered == 'education' ? (
+                      {isHovered == key ? (
                         <button
                           className='absolute right-4 inline-block p-2 opacity-0 transition-opacity duration-200'
                           style={{ opacity: isHovered ? 1 : 0 }}
@@ -180,7 +198,7 @@ export default function Thb() {
                         text={edu?.school}
                         editable={editableSection == key}
                         placeholder='Institution/University Attended'
-                        className='text-lg font-semibold leading-snug text-gray-700'
+                        className='-mb-0.5 text-sm font-semibold leading-snug text-gray-700'
                         onSave={(val) =>
                           saveWithPath(['education', key], {
                             ...edu,
@@ -191,7 +209,7 @@ export default function Thb() {
                       <InlineEdit
                         text={edu?.award}
                         editable={editableSection == key}
-                        className='text-md -mt-2 leading-normal text-gray-500'
+                        className='-mb-0.5 text-xs leading-normal text-gray-500'
                         placeholder='Academic Degree (Program)'
                         onSave={(val) =>
                           saveWithPath(['education', key], {
@@ -203,7 +221,7 @@ export default function Thb() {
                       <InlineEdit
                         text={edu?.gradyear}
                         editable={editableSection == key}
-                        className='text-md -mt-1 font-semibold'
+                        className='text-sm font-semibold'
                         placeholder='Year of Completion'
                         dottedActive
                         onSave={(val) =>
@@ -218,53 +236,57 @@ export default function Thb() {
                 })}
             </section>
             <section className='mb-4 mt-0 break-inside-avoid border-b-4 border-gray-300 pb-6 first:mt-0'>
-              <section className='break-inside-avoid'>
-                <h2 className='mb-2 text-lg font-bold tracking-widest text-gray-700 print:font-normal'>
-                  SKILLS
-                </h2>
-                <section className='mb-0 break-inside-avoid'>
-                  <section className='mt-1 last:pb-1'>
-                    <ul className='text-md -mb-1 -mr-1.5 flex flex-wrap font-bold leading-relaxed'>
-                      {resume?.skills &&
-                        resume.skills?.skillset.map(
-                          (skill: string, index: number) => {
-                            return (
-                              <li
-                                className='print:border-inset mb-1 mr-1.5 bg-gray-800 p-1.5 leading-relaxed text-white print:bg-white'
-                                key={`resume-skills-${index}`}
-                              >
-                                <InlineEdit
-                                  text={skill}
-                                  editable={
-                                    editableSection == 'technical skills'
-                                  }
-                                  className='text-sm'
-                                  elementPath={[
-                                    'technical skills',
-                                    'skillset',
-                                    index,
-                                  ]}
-                                  id={`skillset-${index}`}
-                                  dottedActive
-                                  onSave={(val) =>
-                                    saveWithPath(
-                                      ['technical skills', 'skillset', index],
-                                      val
-                                    )
-                                  }
-                                />
-                              </li>
-                            );
-                          }
-                        )}
-                    </ul>
-                  </section>
+              <h2 className='mb-2 text-lg font-bold tracking-widest text-gray-700 print:font-normal'>
+                SKILLS
+              </h2>
+              <section className='mb-0 break-inside-avoid'>
+                <section
+                  className='mt-1 last:pb-1'
+                  onClick={() =>
+                    setEditableSectionId(resume?.technicalSkills?.id)
+                  }
+                  onBlur={editBlurEvent}
+                >
+                  <ul className='text-md -mb-1 -mr-1.5 flex flex-wrap font-bold leading-relaxed'>
+                    {resume?.skills &&
+                      resume.skills?.skillset.map(
+                        (skill: string, index: number) => {
+                          return (
+                            <li
+                              className='print:border-inset mb-1 mr-1.5 bg-gray-800 p-1.5 leading-relaxed text-white print:bg-white'
+                              key={`resume-skills-${index}`}
+                            >
+                              <InlineEdit
+                                text={skill}
+                                editable={
+                                  editableSection == resume?.technicalSkills?.id
+                                }
+                                className='text-sm'
+                                elementPath={[
+                                  'technical skills',
+                                  'skillset',
+                                  index,
+                                ]}
+                                id={`skillset-${index}`}
+                                dottedActive
+                                onSave={(val) =>
+                                  saveWithPath(
+                                    ['technical skills', 'skillset', index],
+                                    val
+                                  )
+                                }
+                              />
+                            </li>
+                          );
+                        }
+                      )}
+                  </ul>
                 </section>
               </section>
             </section>
           </section>
 
-          <section className='mt-4 w-full break-inside-avoid border-b-4 border-gray-300 pb-2 first:mt-0 lg:w-3/5'>
+          <section className='w-full break-inside-avoid border-b-4 border-gray-300 pb-2 pl-4 first:mt-0 lg:w-3/5'>
             <h2 className='mb-2 text-xl font-black tracking-widest text-gray-800 print:font-normal'>
               EXPERIENCE
             </h2>
@@ -273,14 +295,14 @@ export default function Thb() {
                 const exp = resume?.experiences[key];
                 return (
                   <div
-                    className='relative mb-6 flex break-inside-avoid flex-col border-b-2 border-gray-300 pb-4'
+                    className='relative mb-6 flex break-inside-avoid flex-col pb-4'
                     key={`experience-${index}`}
                     onClick={() => setEditableSectionId(key)}
                     onBlur={editBlurEvent}
-                    onMouseEnter={() => setIsHovered('experiences')}
+                    onMouseEnter={() => setIsHovered(key)}
                     onMouseLeave={() => setIsHovered('')}
                   >
-                    {isHovered == 'experiences' ? (
+                    {isHovered == key ? (
                       <button
                         className='absolute right-4 inline-block p-2 opacity-0 transition-opacity duration-200'
                         style={{ opacity: isHovered ? 1 : 0 }}
@@ -307,7 +329,7 @@ export default function Thb() {
                         <div className='flex items-center justify-normal'>
                           <InlineEdit
                             text={exp.startDate}
-                            className='text-sm leading-normal text-gray-500'
+                            className='text-xs leading-normal text-gray-500'
                             editable={editableSection == key}
                             dottedActive
                             placeholder='Start date'
@@ -321,7 +343,7 @@ export default function Thb() {
                           <span> - </span>
                           <InlineEdit
                             text={exp.endDate}
-                            className='text-sm leading-normal text-gray-500'
+                            className='text-xs leading-normal text-gray-500'
                             editable={editableSection == key}
                             dottedActive
                             placeholder='End date'
@@ -336,7 +358,7 @@ export default function Thb() {
                         <span> | </span>
                         <InlineEdit
                           text={exp.position}
-                          className='text-md font-bold text-gray-700'
+                          className='text-xs font-bold text-gray-700'
                           editable={editableSection == key}
                           dottedActive
                           placeholder='Position/Title'
@@ -350,9 +372,6 @@ export default function Thb() {
                       </div>
                     </div>
 
-                    <span className='mb-1 mt-2 text-sm font-semibold text-gray-700'>
-                      Key Responsibilities
-                    </span>
                     <ul className='list-disc space-y-1 pl-4 text-sm'>
                       {exp?.responsibilities.map(
                         (responsibility: string, index: number) => (
