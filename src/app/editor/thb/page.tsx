@@ -1,0 +1,395 @@
+'use client';
+import { EditorCover, InlineEdit } from '@/components/editor';
+import {
+  useFontFamily,
+  useEditorTheme,
+  useMainStore,
+  useResume,
+} from '@/store';
+import { amitpachange } from '@/store/resume';
+import { useSectionRenderer } from '@/utils/SectionRenderer';
+import { getFontFamilyStyle, getInitials, isObjectEmpty } from '@/utils/helper';
+import { useEditorActions } from '@/utils/useEditorActions';
+import React, { useEffect, useState } from 'react';
+import { getIconByType } from '../Icons';
+import { PiTrashSimpleDuotone } from 'react-icons/pi';
+
+export default function Thb() {
+  const fontFamily = useFontFamily();
+  const editorTheme = useEditorTheme();
+  const { renderComponent } = useSectionRenderer();
+  const { saveWithPath, removeFromPath } = useEditorActions();
+  const [isHovered, setIsHovered] = useState('');
+  const { updateResume } = useMainStore();
+  const [resume] = useState(useResume());
+  const [color1, color2] = editorTheme;
+  const [editableSection, setEditableSectionId] = useState<string | null>(null);
+  const secprops = {
+    color1,
+    color2,
+    editableSection,
+    setEditableSectionId,
+    editBlurEvent: (e: React.FocusEvent<HTMLDivElement, Element>) =>
+      editBlurEvent(e),
+  };
+
+  useEffect(() => {
+    if (isObjectEmpty(resume)) {
+      updateResume(amitpachange);
+    }
+  }, [resume, updateResume]);
+
+  const editBlurEvent = (e: React.FocusEvent<HTMLDivElement, Element>) => {
+    // TODO: Check if the related target is null or undefined
+    if (e.relatedTarget === null) {
+      setEditableSectionId(null);
+    }
+  };
+
+  const removeEduSection = (key: string) => {
+    removeFromPath(['education', key]);
+  };
+
+  const removeExpSection = (key: string) => {
+    removeFromPath(['experiences', key]);
+  };
+
+  return (
+    <EditorCover className={`${getFontFamilyStyle(fontFamily)}`}>
+      <main className='mx-auto my-auto p-3 md:p-8'>
+        {resume?.user ? (
+          <header className='mb-2 inline-flex w-full items-baseline justify-between border-b-4 border-gray-200 align-top'>
+            <section className='block'>
+              <InlineEdit
+                text={resume.user.fullname}
+                editable={resume.user.id == editableSection}
+                onSave={(val) => saveWithPath(['user', 'fullname'], val)}
+                className='mb-2 text-5xl font-bold text-gray-800'
+                style={{ color: `#${color2}` }}
+                dottedActive
+              />
+              <InlineEdit
+                text={resume.user.title}
+                editable={resume.user.id == editableSection}
+                onSave={(val) => saveWithPath(['user', 'title'], val)}
+                className='ml-1 text-2xl font-semibold leading-snug text-gray-700'
+                style={{ color: `#${color2}` }}
+                dottedActive
+              />
+              <InlineEdit
+                text={resume.user.location}
+                editable={resume.user.id == editableSection}
+                onSave={(val) => saveWithPath(['user', 'location'], val)}
+                className='text-md ml-1 mt-2 font-semibold leading-snug text-gray-500'
+                style={{ color: `#${color2}` }}
+                dottedActive
+              />
+            </section>
+            <section className='mb-5 mt-0 justify-between bg-gray-800 px-3 py-2 text-4xl font-black text-white'>
+              {resume.user?.fullname &&
+                getInitials(resume.user?.fullname)
+                  .split('')
+                  .map((al, index) => (
+                    <span
+                      key={index}
+                      className='block text-center font-semibold'
+                    >
+                      {al}
+                    </span>
+                  ))}
+            </section>
+          </header>
+        ) : null}
+        <section className='flex flex-col md:flex-row'>
+          <section className='w-full pr-4 lg:w-2/5'>
+            <section className='mb-4 break-inside-avoid border-b-4 border-gray-300 pb-4'>
+              <h2 className='mb-2 text-xl font-bold uppercase tracking-widest text-gray-700'>
+                Contact
+              </h2>
+
+              <ul className='list-inside pr-7'>
+                {resume?.contact &&
+                  Object.keys(resume.contact).map((key, index) => {
+                    if (resume?.contact[key] !== 'contact') {
+                      return (
+                        <li
+                          className='mt-1 flex items-center text-gray-600'
+                          key={`resume-contact-${index}`}
+                        >
+                          <span className='font-sm w-6 text-gray-700'>
+                            {getIconByType(key)}
+                          </span>
+                          <a className='group' href={resume.contact[key]}>
+                            <InlineEdit
+                              text={resume.contact[key]}
+                              editable={editableSection == 'contact'}
+                              className='inline-block text-sm text-gray-600'
+                              dottedActive
+                              onSave={(val) =>
+                                saveWithPath(['contact', key], val)
+                              }
+                            />
+                            <span className='inline-block text-gray-500'>
+                              ↗
+                            </span>
+                          </a>
+                        </li>
+                      );
+                    }
+                  })}
+              </ul>
+            </section>
+            <section className='break-inside-avoid border-b-4 border-gray-300 pb-4 first:mt-0'>
+              <h2 className='mb-2 text-xl font-bold uppercase tracking-widest text-gray-700 print:font-normal'>
+                Summary
+              </h2>
+              <InlineEdit
+                text={resume && resume?.about?.summary}
+                editable={resume && resume?.about?.id == editableSection}
+                className='text-[14px]'
+                onSave={(val) => saveWithPath(['about', 'summary'], val)}
+              />
+            </section>
+            <section className='mt-2 break-inside-avoid border-b-4 border-gray-300 first:mt-0'>
+              <h2 className='mb-2 text-lg font-bold tracking-widest text-gray-700 print:font-normal'>
+                EDUCATION
+              </h2>
+
+              {resume?.education &&
+                Object.keys(resume.education).map((key: any, index: number) => {
+                  const edu = resume.education[key];
+                  return (
+                    <div
+                      className='relative mb-6 flex flex-col'
+                      key={`resume-education-${index}`}
+                      onClick={() => setEditableSectionId(key)}
+                      onBlur={editBlurEvent}
+                      onMouseEnter={() => setIsHovered('education')}
+                      onMouseLeave={() => setIsHovered('')}
+                    >
+                      {isHovered == 'education' ? (
+                        <button
+                          className='absolute right-4 inline-block p-2 opacity-0 transition-opacity duration-200'
+                          style={{ opacity: isHovered ? 1 : 0 }}
+                          onClick={() => removeEduSection(key)}
+                        >
+                          <PiTrashSimpleDuotone size={20} />
+                        </button>
+                      ) : null}
+                      <InlineEdit
+                        text={edu?.school}
+                        editable={editableSection == key}
+                        placeholder='Institution/University Attended'
+                        className='text-lg font-semibold leading-snug text-gray-700'
+                        onSave={(val) =>
+                          saveWithPath(['education', key], {
+                            ...edu,
+                            school: val,
+                          })
+                        }
+                      />
+                      <InlineEdit
+                        text={edu?.award}
+                        editable={editableSection == key}
+                        className='text-md -mt-2 leading-normal text-gray-500'
+                        placeholder='Academic Degree (Program)'
+                        onSave={(val) =>
+                          saveWithPath(['education', key], {
+                            ...edu,
+                            award: val,
+                          })
+                        }
+                      />
+                      <InlineEdit
+                        text={edu?.gradyear}
+                        editable={editableSection == key}
+                        className='text-md -mt-1 font-semibold'
+                        placeholder='Year of Completion'
+                        dottedActive
+                        onSave={(val) =>
+                          saveWithPath(['education', key], {
+                            ...edu,
+                            gradyear: val,
+                          })
+                        }
+                      />
+                    </div>
+                  );
+                })}
+            </section>
+            <section className='mb-4 mt-0 break-inside-avoid border-b-4 border-gray-300 pb-6 first:mt-0'>
+              <section className='break-inside-avoid'>
+                <h2 className='mb-2 text-lg font-bold tracking-widest text-gray-700 print:font-normal'>
+                  SKILLS
+                </h2>
+                <section className='mb-0 break-inside-avoid'>
+                  <section className='mt-1 last:pb-1'>
+                    <ul className='text-md -mb-1 -mr-1.5 flex flex-wrap font-bold leading-relaxed'>
+                      {resume?.skills &&
+                        resume.skills?.skillset.map(
+                          (skill: string, index: number) => {
+                            return (
+                              <li
+                                className='print:border-inset mb-1 mr-1.5 bg-gray-800 p-1.5 leading-relaxed text-white print:bg-white'
+                                key={`resume-skills-${index}`}
+                              >
+                                <InlineEdit
+                                  text={skill}
+                                  editable={
+                                    editableSection == 'technical skills'
+                                  }
+                                  className='text-sm'
+                                  elementPath={[
+                                    'technical skills',
+                                    'skillset',
+                                    index,
+                                  ]}
+                                  id={`skillset-${index}`}
+                                  dottedActive
+                                  onSave={(val) =>
+                                    saveWithPath(
+                                      ['technical skills', 'skillset', index],
+                                      val
+                                    )
+                                  }
+                                />
+                              </li>
+                            );
+                          }
+                        )}
+                    </ul>
+                  </section>
+                </section>
+              </section>
+            </section>
+          </section>
+
+          <section className='mt-4 w-full break-inside-avoid border-b-4 border-gray-300 pb-2 first:mt-0 lg:w-3/5'>
+            <h2 className='mb-2 text-xl font-black tracking-widest text-gray-800 print:font-normal'>
+              EXPERIENCE
+            </h2>
+            {resume?.experiences &&
+              Object.keys(resume.experiences).map((key: any, index: number) => {
+                const exp = resume?.experiences[key];
+                return (
+                  <div
+                    className='relative mb-6 flex break-inside-avoid flex-col border-b-2 border-gray-300 pb-4'
+                    key={`experience-${index}`}
+                    onClick={() => setEditableSectionId(key)}
+                    onBlur={editBlurEvent}
+                    onMouseEnter={() => setIsHovered('experiences')}
+                    onMouseLeave={() => setIsHovered('')}
+                  >
+                    {isHovered == 'experiences' ? (
+                      <button
+                        className='absolute right-4 inline-block p-2 opacity-0 transition-opacity duration-200'
+                        style={{ opacity: isHovered ? 1 : 0 }}
+                        onClick={() => removeExpSection(key)}
+                      >
+                        <PiTrashSimpleDuotone size={20} />
+                      </button>
+                    ) : null}
+                    <InlineEdit
+                      text={exp.company}
+                      className='text-md font-semibold leading-snug text-gray-800'
+                      editable={editableSection == key}
+                      dottedActive
+                      placeholder='Company'
+                      onSave={(val) =>
+                        saveWithPath(['experiences', key], {
+                          ...exp,
+                          company: val,
+                        })
+                      }
+                    />
+                    <div className='flex items-center justify-normal'>
+                      <div className='flex items-center'>
+                        <div className='flex items-center justify-normal'>
+                          <InlineEdit
+                            text={exp.startDate}
+                            className='text-sm leading-normal text-gray-500'
+                            editable={editableSection == key}
+                            dottedActive
+                            placeholder='Start date'
+                            onSave={(val) =>
+                              saveWithPath(['experiences', key], {
+                                ...exp,
+                                startDate: val,
+                              })
+                            }
+                          />
+                          <span> - </span>
+                          <InlineEdit
+                            text={exp.endDate}
+                            className='text-sm leading-normal text-gray-500'
+                            editable={editableSection == key}
+                            dottedActive
+                            placeholder='End date'
+                            onSave={(val) =>
+                              saveWithPath(['experiences', key], {
+                                ...exp,
+                                endDate: val,
+                              })
+                            }
+                          />
+                        </div>
+                        <span> | </span>
+                        <InlineEdit
+                          text={exp.position}
+                          className='text-md font-bold text-gray-700'
+                          editable={editableSection == key}
+                          dottedActive
+                          placeholder='Position/Title'
+                          onSave={(val) =>
+                            saveWithPath(['experiences', key], {
+                              ...exp,
+                              position: val,
+                            })
+                          }
+                        />
+                      </div>
+                    </div>
+
+                    <span className='mb-1 mt-2 text-sm font-semibold text-gray-700'>
+                      Key Responsibilities
+                    </span>
+                    <ul className='list-disc space-y-1 pl-4 text-sm'>
+                      {exp?.responsibilities.map(
+                        (responsibility: string, index: number) => (
+                          <li key={`responsibility-${index}`}>
+                            <InlineEdit
+                              text={responsibility}
+                              editable={editableSection == key}
+                              id={`responsibilities-${index}`}
+                              placeholder='Task/Responsibility'
+                              elementPath={[
+                                'experiences',
+                                key,
+                                'responsibilities',
+                                index,
+                              ]}
+                              onSave={(val) =>
+                                saveWithPath(
+                                  [
+                                    'experiences',
+                                    key,
+                                    'responsibilities',
+                                    index,
+                                  ],
+                                  val
+                                )
+                              }
+                            />
+                          </li>
+                        )
+                      )}
+                    </ul>
+                  </div>
+                );
+              })}
+          </section>
+        </section>
+      </main>
+    </EditorCover>
+  );
+}

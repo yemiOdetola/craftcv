@@ -82,12 +82,12 @@ export default function AmitPachange() {
     return <>{renderComponent('projects', secprops)}</>;
   };
 
-  const renderUnderline = () => (
-    <div
-      className='w-[92%] rounded border border-purple-200'
-      style={{ backgroundColor: `#${color2}` }}
-    />
-  );
+  // const renderUnderline = () => (
+  //   <div
+  //     className='w-[92%] rounded border border-purple-200'
+  //     style={{ backgroundColor: `#${color2}` }}
+  //   />
+  // );
 
   const editBlurEvent = (e: React.FocusEvent<HTMLDivElement, Element>) => {
     // TODO: Check if the related target is null or undefined
@@ -121,7 +121,7 @@ export default function AmitPachange() {
               text={resume?.user?.fullname}
               editable={resume?.user?.id == editableSection}
               onSave={(val) => saveWithPath(['user', 'fullname'], val)}
-              className='font-poppins text-heading text-2xl font-bold sm:text-4xl'
+              className='text-heading text-2xl font-bold sm:text-4xl'
               style={{ color: `#${color2}` }}
               dottedActive
             />
@@ -139,33 +139,19 @@ export default function AmitPachange() {
             <div className='flex flex-col sm:w-1/3'>
               <div className='order-3 py-3 sm:order-none'>
                 {renderContactInfo()}
-                {renderUnderline()}
               </div>
-              <div className='order-2 py-3 sm:order-none'>
-                {renderSkills()}
-                {renderUnderline()}
-              </div>
+              <div className='order-2 py-3 sm:order-none'>{renderSkills()}</div>
               <div className='order-1 py-3 sm:order-none'>
                 {renderEducation()}
-                {renderUnderline()}
               </div>
             </div>
             <div className='order-first flex flex-col sm:order-none sm:-mt-10 sm:w-2/3'>
               <div className='py-3'>
-                <h2 className='font-poppins text-top-color text-lg font-bold'>
-                  About Me
-                </h2>
+                <h2 className='text-top-color text-lg font-bold'>About Me</h2>
                 {renderSummary()}
-                {renderUnderline()}
               </div>
-              <div className='py-3'>
-                {renderExperiences()}
-                {renderUnderline()}
-              </div>
-              <div className='py-3'>
-                {renderProjects()}
-                {renderUnderline()}
-              </div>
+              <div className='py-3'>{renderExperiences()}</div>
+              <div className='py-3'>{renderProjects()}</div>
             </div>
           </div>
         </div>

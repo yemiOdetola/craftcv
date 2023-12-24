@@ -165,3 +165,9 @@ export const arraysEqual = (arrayA: string[], arrayB: string[]) => {
 export const isObjectEmpty = (obj: any) => {
   return Object.keys(obj).length === 0;
 };
+
+export const getInitials = (fullName: string): string => {
+  const names = fullName.split(' ');
+  const initials = names.map((name) => name.charAt(0).toUpperCase());
+  return initials.join('');
+};
