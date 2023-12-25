@@ -22,10 +22,10 @@ export default function Template({
       className='cursor-pointer transition duration-300'
       onClick={select}
     >
-      <div className='rounded-4xl group relative h-[21rem] transform overflow-hidden'>
+      <div className='rounded-4xl group relative h-[21.5rem] transform overflow-hidden'>
         <div
-          className={`inset-0 rounded ${
-            selected && 'border-2 border-l-4 border-blue-600'
+          className={`inset-0 border border-gray-300 rounded ${
+            selected && 'border-4 border-blue-600'
           }`}
         >
           <Image
