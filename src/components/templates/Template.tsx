@@ -3,33 +3,31 @@ import Image from 'next/image';
 
 interface TemplateProps {
   template: any;
-  templateIndex: number;
+  index: number;
   selected?: boolean;
-  select?: () => void;
+  select: () => void;
 }
 
 export default function Template({
   template,
-  templateIndex,
+  index,
   select,
   selected,
 }: TemplateProps) {
-  const id = useId();
-  console.log('selected', selected);
   return (
     <div
-      key={templateIndex}
+      key={index}
       className='cursor-pointer transition duration-300'
       onClick={select}
     >
-      <div className='rounded-4xl group relative h-[21.5rem] transform overflow-hidden'>
+      <div className='rounded-4xl group relative h-[17rem] overflow-hidden'>
         <div
-          className={`inset-0 border border-gray-300 rounded ${
-            selected && 'border-4 border-blue-600'
+          className={`inset-0 h-full rounded border ${
+            selected && 'border-2 border-blue-600'
           }`}
         >
           <Image
-            className='inset-0 h-full w-full object-cover transition group-hover:outline-blue-600'
+            className='inset-0 h-full w-full object-contain transition group-hover:outline-blue-600'
             src={template.image}
             alt='template preview'
             priority

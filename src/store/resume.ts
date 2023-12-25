@@ -191,7 +191,7 @@ export const dahyeji = {
   },
 };
 
-export const tlh = {
+export const thomashighbaugh = {
   user: {
     id: 'user',
     fullname: 'Thomas Leon Highbaugh',
@@ -303,6 +303,120 @@ export const tlh = {
 };
 
 export const jakeryan = {
+  user: {
+    id: 'user',
+    fullname: 'Thomas Leon Highbaugh',
+    location: 'San Francisco, California',
+    title: 'Senior analyst',
+  },
+  about: {
+    id: 'about',
+    title: 'About me',
+    summary:
+      "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.",
+  },
+  contact: {
+    id: 'contact',
+    email: 'jane.doe@example.com',
+    phone: '+123 456 7890',
+    website: 'www.johndoe.com',
+    linkedin: 'linkedin.com/in/janedoe',
+    github: 'github.com/johndoe',
+  },
+  education: {
+    education0: {
+      id: 'education-0',
+      award: 'MSc digital marketing',
+      location: 'Georgetown, TX',
+      school: 'North and South University',
+      gradyear: '2023',
+      gp: 4.33,
+    },
+    education1: {
+      id: 'education-1',
+      award: 'Bsc Analog Marketing',
+      location: 'Georgetown, TX',
+      school: 'West and East University',
+      gradyear: '2020',
+      gp: 4.33,
+    },
+    education2: {
+      id: 'education-2',
+      award: 'Bsc Hybrid Marketing',
+      location: 'Georgetown, TX',
+      school: 'Longitude & Latitude University',
+      gradyear: '2020',
+      gp: 4.33,
+    },
+  },
+  experiences: {
+    experience0: {
+      id: 'experience-0',
+      position: 'Job title',
+      company: 'Company name',
+      startDate: 'June 2020',
+      location: 'location',
+      endDate: 'Present',
+      responsibilities: [
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In placerat, justo et sagittis rutrum, libero leo aliquet libero, vel iaculis quam massa interdum dui. Sed lobortis volutpat ornare.',
+        'Quisque vulputate pretium neque tincidunt commodo. Pellentesque tristique dui sed ultrices fringilla. Sed pulvinar lectus eget bibendum tristique',
+        'Integer vel felis posuere erat scelerisque luctus vitae id eros. Nunc ipsum felis, posuere sit amet lacus molestie, facilisis pulvinar dui. Duis sit amet arcu at nisi rhoncus dictum. Donec pellentesque porta ligula a sagittis.',
+      ],
+    },
+    experience1: {
+      id: 'experience-1',
+      position: 'Job title 2',
+      company: 'Company name 2',
+      startDate: 'June 2020',
+      location: 'location',
+      endDate: 'Present',
+      responsibilities: [
+        'Sed eu lobortis felis. Vestibulum rhoncus nibh at augue maximus, et consequat diam sagittis. Etiam semper sem sem, quis tristique ex tincidunt quis.',
+        'Donec finibus lobortis massa. Mauris sed cursus urna. Suspendisse consequat metus interdum, dignissim lectus eu, mollis enim.',
+        'Maecenas id sagittis mi. Phasellus condimentum lorem in odio condimentum, a imperdiet risus interdum. Suspendisse eget facilisis quam. Cras quis ante neque.',
+        'am semper libero eros, vitae mattis velit consequat vitae. Curabitur ac velit sed mauris mattis maximus quis non nisi. Proin auctor congue nunc, a tempus massa pharetra nec. Suspendisse potenti. Quisque tincidunt sapien vitae commodo accumsan.',
+      ],
+    },
+    experience2: {
+      id: 'experience-2',
+      position: 'Job title 3',
+      company: 'Company name 3',
+      startDate: 'June 2020',
+      location: 'location',
+      endDate: 'Present',
+      responsibilities: [
+        'Sed eu lobortis felis. Vestibulum rhoncus nibh at augue maximus, et consequat diam sagittis. Etiam semper sem sem, quis tristique ex tincidunt quis.',
+        'Donec finibus lobortis massa. Mauris sed cursus urna. Suspendisse consequat metus interdum, dignissim lectus eu, mollis enim.',
+        'Maecenas id sagittis mi. Phasellus condimentum lorem in odio condimentum, a imperdiet risus interdum. Suspendisse eget facilisis quam. Cras quis ante neque.',
+        'am semper libero eros, vitae mattis velit consequat vitae. Curabitur ac velit sed mauris mattis maximus quis non nisi. Proin auctor congue nunc, a tempus massa pharetra nec. Suspendisse potenti. Quisque tincidunt sapien vitae commodo accumsan.',
+      ],
+    },
+  },
+  projects: {
+    project0: {
+      id: 'project-1',
+      title: 'Project One',
+      description:
+        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita delectus labore enim in minus quod vero dignissimos et, ratione obcaecati quis maiores? Voluptatem, natus cupiditate perferendis omnis ex hic incidunt! Earum dolore cupiditate sed et maxime distinctio iure fugiat aspernatur at veniam laudantium eveniet corporis dicta reiciendis quod consequatur, labore perferendis dolorum velit quibusdam minus iste dolorem! Officiis, obcaecati maxime',
+      url: 'https://google.com',
+      tech: ['Javascript, HTML, SCSS, Browsify'],
+    },
+    project1: {
+      id: 'project-1',
+      title: 'Project One',
+      description:
+        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita delectus labore enim in minus quod vero dignissimos et, ratione obcaecati quis maiores? Voluptatem, natus cupiditate perferendis omnis ex hic incidunt! Earum dolore cupiditate sed et maxime distinctio iure fugiat aspernatur at veniam laudantium eveniet corporis dicta reiciendis quod consequatur, labore perferendis dolorum velit quibusdam minus iste dolorem! Officiis, obcaecati maxime',
+      url: 'https://google.com',
+      tech: ['Javascript, HTML, SCSS, Browsify'],
+    },
+  },
+  'technical skills': {
+    id: 'technical skills',
+    skillset: ['React', 'HTML, CSS, Javascript', 'Tailwind CSS', 'Git'],
+  },
+};
+
+export const odetolaazeez = {
   user: {
     id: 'user',
     fullname: 'Thomas Leon Highbaugh',

@@ -1,11 +1,18 @@
 'use client';
-import { useEffect, useId, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Tab } from '@headlessui/react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { Footer } from '@/components/common/Footer';
 import { Button, Container } from '@/components/common';
-import placeholder from '@/assets/images/placeholder/generator.png';
 import { BottomNavigation, Template } from '@/components/templates';
-import Link from 'next/link';
+import {
+  amitpachange,
+  thomashighbaugh,
+  jakeryan,
+  odetolaazeez,
+} from '@/store/resume';
+import { useMainStore } from '@/store';
 
 const templates: any = [
   {
@@ -15,18 +22,26 @@ const templates: any = [
       {
         name: 'Amit Pachange',
         image: '/images/amit.png',
+        href: '/editor/amit-pachange',
+        base: amitpachange,
       },
       {
         name: 'Jake Ryan',
         image: '/images/jake.png',
+        href: '/editor/jake-ryan',
+        base: jakeryan,
       },
       {
         name: 'Thomas Highbaugh',
         image: '/images/thomas.png',
+        href: '/editor/thomas-highbaugh',
+        base: thomashighbaugh,
       },
       {
         name: 'Odetola Azeez',
         image: '/images/azeez.png',
+        href: '/editor/odetola-azeez',
+        base: odetolaazeez,
       },
     ],
   },
@@ -35,46 +50,38 @@ const templates: any = [
     hits: '5239 hits',
     templates: [
       {
-        name: 'Amit Pachange',
-        image: '/images/amit.png',
-      },
-      {
-        name: 'Jake Ryan',
-        image: '/images/jake.png',
-      },
-      {
         name: 'Thomas Highbaugh',
         image: '/images/thomas.png',
+        href: '/editor/thomas-highbaugh',
+        base: thomashighbaugh,
+      },
+      {
+        name: 'Amit Pachange',
+        image: '/images/amit.png',
+        href: '/editor/amit-pachange',
+        base: amitpachange,
       },
       {
         name: 'Odetola Azeez',
         image: '/images/azeez.png',
+        href: '/editor/odetola-azeez',
+        base: odetolaazeez,
+      },
+      {
+        name: 'Jake Ryan',
+        image: '/images/jake.png',
+        href: '/editor/jake-ryan',
+        base: jakeryan,
       },
     ],
   },
-  // {
-  //   name: 'All',
-  //   hits: '18310 hits',
-  //   templates: [
-  //     {
-  //       name: 'Drakula Montenegro',
-  //       image: placeholder,
-  //     },
-  //     {
-  //       name: 'Jake "pluto" Paul',
-  //       image: placeholder,
-  //     },
-  //     {
-  //       name: 'Jake "pluto" Paul',
-  //       image: placeholder,
-  //     },
-  //   ],
-  // },
 ];
 
 export default function Templates() {
-  let [tabOrientation, setTabOrientation] = useState('horizontal');
-  const [selectedTemplate, selectTemplate] = useState<null | number>(null);
+  const { updateResume } = useMainStore();
+  const router = useRouter();
+  const [tabOrientation, setTabOrientation] = useState('horizontal');
+  const [selectedTemplate, selectTemplate] = useState<any>(null);
   useEffect(() => {
     let lgMediaQuery = window.matchMedia('(min-width: 1024px)');
 
@@ -90,10 +97,14 @@ export default function Templates() {
     };
   }, []);
 
+  const gotoTemplate = () => {
+    updateResume(selectedTemplate.base);
+    router.push(selectedTemplate.href);
+  };
+
   return (
     <main className='bg-white'>
       <Container className='min-h-screen bg-white'>
-        {/* <Navbar /> */}
         <div className='mx-auto max-w-2xl pt-12 lg:mx-0'>
           <h2 className='font-display text-2xl font-medium tracking-tighter text-blue-600 sm:text-3xl'>
             Choose a template
@@ -149,16 +160,14 @@ export default function Templates() {
                 className='grid grid-cols-1 gap-x-8 gap-y-10 outline-none sm:grid-cols-2 sm:gap-y-16 md:grid-cols-3'
                 unmount={false}
               >
-                {template.templates.map(
-                  (template: any, templateIndex: number) => (
-                    <Template
-                      selected={selectedTemplate == templateIndex}
-                      select={() => selectTemplate(templateIndex)}
-                      key={templateIndex}
-                      {...{ template, templateIndex }}
-                    />
-                  )
-                )}
+                {template.templates.map((template: any, index: number) => (
+                  <Template
+                    selected={selectedTemplate?.name == template.name}
+                    select={() => selectTemplate(template)}
+                    key={index}
+                    {...{ template, index }}
+                  />
+                ))}
               </Tab.Panel>
             ))}
           </Tab.Panels>
@@ -166,12 +175,11 @@ export default function Templates() {
       </Container>
       <Link href='/templates/custom'>Drag and drop bitch!</Link>
 
-      {/* @TODO */}
       <BottomNavigation>
         <Button href='/' className='bg-gray-300 px-8 py-3 text-gray-500'>
           Cancel
         </Button>
-        <Button href='/editor/amit-pachange' className='px-8 py-3'>
+        <Button onClick={gotoTemplate} className='px-8 py-3'>
           Continue
         </Button>
       </BottomNavigation>
