@@ -106,7 +106,7 @@ export default function Templates() {
     <main className='bg-white'>
       <Container className='min-h-screen bg-white pb-32'>
         <div className='mx-auto flex items-baseline gap-x-4 pt-24 lg:mx-0'>
-          <h2 className='font-display text-4xl font-medium tracking-tighter text-blue-600 sm:text-5xl'>
+          <h2 className='font-display text-4xl font-medium tracking-tighter text-blue-600 md:text-5xl'>
             Choose a template
           </h2>
           <Link

@@ -199,7 +199,7 @@ export default function CustomTemplate() {
     <main className='bg-white'>
       <Container className='min-h-screen bg-white'>
         <div className='mx-auto max-w-2xl pt-12 lg:mx-0 lg:mb-6'>
-          <h2 className='font-display text-2xl font-medium tracking-tighter text-blue-600 sm:text-3xl'>
+          <h2 className='font-display text-4xl font-medium tracking-tighter text-blue-600 mb-8 sm:text-4xl'>
             Create a custom template
           </h2>
           {/* <p>This is the order your resume template is going to display</p> */}
