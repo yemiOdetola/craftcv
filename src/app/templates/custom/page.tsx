@@ -45,7 +45,7 @@ interface DropColumnProps {
   // onDrop: (e: any) => void;
   // handleReorder: (e: any) => void;
 }
-const vh = 624;
+const vh = 648;
 export default function CustomTemplate() {
   const router = useRouter();
   const customLayout = useCustomLayout();
@@ -75,11 +75,11 @@ export default function CustomTemplate() {
   }, [customLayout]);
 
   useEffect(() => {
-    setLWh(vh / leftWidgets.length);
+    setLWh(vh / leftWidgets.length - 2);
   }, [lwh, leftWidgets]);
 
   useEffect(() => {
-    setRWh(vh / rightWidgets.length);
+    setRWh(vh / rightWidgets.length - 2);
   }, [rwh, rightWidgets]);
 
   const handle0nDrag = (e: React.DragEvent, widgetType: string) => {

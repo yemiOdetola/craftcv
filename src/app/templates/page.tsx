@@ -104,16 +104,21 @@ export default function Templates() {
 
   return (
     <main className='bg-white'>
-      <Container className='min-h-screen bg-white'>
-        <div className='mx-auto max-w-2xl pt-12 lg:mx-0'>
-          <h2 className='font-display text-2xl font-medium tracking-tighter text-blue-600 sm:text-3xl'>
+      <Container className='min-h-screen bg-white pb-32'>
+        <div className='mx-auto flex items-baseline gap-x-4 pt-24 lg:mx-0'>
+          <h2 className='font-display text-4xl font-medium tracking-tighter text-blue-600 sm:text-5xl'>
             Choose a template
           </h2>
+          <Link
+            href='/templates/custom'
+            className='text-xl font-medium text-gray-700 underline'
+          >
+            or customize a layout
+          </Link>
         </div>
-
         <Tab.Group
           as='div'
-          className='mt-14 grid grid-cols-1 items-start gap-x-8 gap-y-8 sm:mt-16 sm:gap-y-16 lg:mt-24 lg:grid-cols-4'
+          className='mt-14 grid grid-cols-1 items-start gap-x-8 gap-y-8 sm:mt-16 sm:gap-y-16 lg:mt-12 lg:grid-cols-4'
           vertical={tabOrientation === 'vertical'}
         >
           <div className='relative -mx-4 flex overflow-x-auto pb-4 sm:mx-0 sm:block sm:overflow-visible sm:pb-0'>
@@ -123,15 +128,7 @@ export default function Templates() {
                 templates.map((template: any, dayIndex: number) => (
                   <div key={template.name} className='relative lg:pl-8'>
                     <div className='relative'>
-                      <div
-                        className={`
-                          font-mono text-sm
-                          ${
-                            dayIndex === selectedIndex
-                              ? 'text-blue-600'
-                              : 'text-slate-500'
-                          }`}
-                      >
+                      <div className='font-mono text-sm text-gray-500'>
                         <Tab className='focus:outline-none'>
                           <span className='absolute inset-0' />
                           {template.hits}
@@ -141,7 +138,7 @@ export default function Templates() {
                         className={`mt-1.5 block text-2xl font-semibold tracking-tight 
                       ${
                         dayIndex === selectedIndex
-                          ? 'text-blue-800'
+                          ? 'text-blue-700'
                           : 'text-slate-600'
                       }`}
                       >
@@ -173,17 +170,17 @@ export default function Templates() {
           </Tab.Panels>
         </Tab.Group>
       </Container>
-      <Link href='/templates/custom'>Drag and drop bitch!</Link>
+      {/* <Link href='/templates/custom'>Drag and drop bitch!</Link> */}
 
       <BottomNavigation>
-        <Button href='/' className='bg-gray-300 px-8 py-3 text-gray-500'>
+        <Button href='-1' className='bg-gray-300 px-8 py-3 text-gray-500'>
           Cancel
         </Button>
         <Button onClick={gotoTemplate} className='px-8 py-3'>
           Continue
         </Button>
       </BottomNavigation>
-      <Footer />
+      {/* <Footer /> */}
     </main>
   );
 }
