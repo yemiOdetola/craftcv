@@ -13,16 +13,20 @@ const templates: any = [
     hits: '12090 hits',
     templates: [
       {
-        name: 'Drakula Montenegro',
-        image: placeholder,
+        name: 'Amit Pachange',
+        image: '/images/amit.png',
       },
       {
-        name: 'Jake "pluto" Paul',
-        image: placeholder,
+        name: 'Jake Ryan',
+        image: '/images/jake.png',
       },
       {
-        name: 'Jake "pluto" Paul',
-        image: placeholder,
+        name: 'Thomas Highbaugh',
+        image: '/images/thomas.png',
+      },
+      {
+        name: 'Odetola Azeez',
+        image: '/images/azeez.png',
       },
     ],
   },
@@ -31,37 +35,41 @@ const templates: any = [
     hits: '5239 hits',
     templates: [
       {
-        name: 'Drakula Montenegro',
-        image: placeholder,
+        name: 'Amit Pachange',
+        image: '/images/amit.png',
       },
       {
-        name: 'Jake "pluto" Paul',
-        image: placeholder,
+        name: 'Jake Ryan',
+        image: '/images/jake.png',
       },
       {
-        name: 'Jake "pluto" Paul',
-        image: placeholder,
+        name: 'Thomas Highbaugh',
+        image: '/images/thomas.png',
+      },
+      {
+        name: 'Odetola Azeez',
+        image: '/images/azeez.png',
       },
     ],
   },
-  {
-    name: 'All',
-    hits: '18310 hits',
-    templates: [
-      {
-        name: 'Drakula Montenegro',
-        image: placeholder,
-      },
-      {
-        name: 'Jake "pluto" Paul',
-        image: placeholder,
-      },
-      {
-        name: 'Jake "pluto" Paul',
-        image: placeholder,
-      },
-    ],
-  },
+  // {
+  //   name: 'All',
+  //   hits: '18310 hits',
+  //   templates: [
+  //     {
+  //       name: 'Drakula Montenegro',
+  //       image: placeholder,
+  //     },
+  //     {
+  //       name: 'Jake "pluto" Paul',
+  //       image: placeholder,
+  //     },
+  //     {
+  //       name: 'Jake "pluto" Paul',
+  //       image: placeholder,
+  //     },
+  //   ],
+  // },
 ];
 
 export default function Templates() {
