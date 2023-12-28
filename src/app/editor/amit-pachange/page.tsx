@@ -99,62 +99,66 @@ export default function AmitPachange() {
   return (
     <>
       <EditorCover className={`${getFontFamilyStyle(fontFamily)}`}>
-        <div className='bg-top-color flex w-full rounded-t-lg sm:px-2'>
-          <div
-            className={`left-5 top-10 overflow-hidden p-3 sm:relative sm:rounded-full sm:p-0`}
-            style={{ border: `3px solid #${color1}` }}
-          >
-            <Image
-              src={placeholder}
-              alt='Profile'
-              className='mx-auto h-32 w-32 rounded-full'
-              width={280}
-              height={280}
-            />
-          </div>
-          <div
-            className='mt-10 w-2/3 pl-5 text-start sm:text-center'
-            onClick={() => setEditableSectionId(resume?.user?.id)}
-            onBlur={(e) => editBlurEvent(e)}
-          >
-            <InlineEdit
-              text={resume?.user?.fullname}
-              editable={resume?.user?.id == editableSection}
-              onSave={(val) => saveWithPath(['user', 'fullname'], val)}
-              className='text-heading text-2xl font-bold sm:text-4xl'
-              style={{ color: `#${color2}` }}
-              dottedActive
-            />
-            <InlineEdit
-              className='text-heading'
-              editable={resume?.user?.id == editableSection}
-              text={resume?.user?.title}
-              onSave={(val) => saveWithPath(['user', 'title'], val)}
-              dottedActive
-            />
-          </div>
-        </div>
-        <div className='p-5'>
-          <div className='flex flex-col sm:mt-10 sm:flex-row'>
-            <div className='flex flex-col sm:w-1/3'>
-              <div className='order-3 py-3 sm:order-none'>
-                {renderContactInfo()}
-              </div>
-              <div className='order-2 py-3 sm:order-none'>{renderSkills()}</div>
-              <div className='order-1 py-3 sm:order-none'>
-                {renderEducation()}
-              </div>
+        <main className='is-printable'>
+          <div className='bg-top-color flex w-full rounded-t-lg sm:px-2'>
+            <div
+              className={`left-5 top-10 overflow-hidden p-3 sm:relative sm:rounded-full sm:p-0`}
+              style={{ border: `3px solid #${color1}` }}
+            >
+              <Image
+                src={placeholder}
+                alt='Profile'
+                className='mx-auto h-32 w-32 rounded-full'
+                width={280}
+                height={280}
+              />
             </div>
-            <div className='order-first flex flex-col sm:order-none sm:-mt-10 sm:w-2/3'>
-              <div className='py-3'>
-                <h2 className='text-top-color text-lg font-bold'>About Me</h2>
-                {renderSummary()}
-              </div>
-              <div className='py-3'>{renderExperiences()}</div>
-              <div className='py-3'>{renderProjects()}</div>
+            <div
+              className='mt-10 w-2/3 pl-5 text-start sm:text-center'
+              onClick={() => setEditableSectionId(resume?.user?.id)}
+              onBlur={(e) => editBlurEvent(e)}
+            >
+              <InlineEdit
+                text={resume?.user?.fullname}
+                editable={resume?.user?.id == editableSection}
+                onSave={(val) => saveWithPath(['user', 'fullname'], val)}
+                className='text-heading text-2xl font-bold sm:text-4xl'
+                style={{ color: `#${color2}` }}
+                dottedActive
+              />
+              <InlineEdit
+                className='text-heading'
+                editable={resume?.user?.id == editableSection}
+                text={resume?.user?.title}
+                onSave={(val) => saveWithPath(['user', 'title'], val)}
+                dottedActive
+              />
             </div>
           </div>
-        </div>
+          <div className='p-5'>
+            <div className='flex flex-col sm:mt-10 sm:flex-row'>
+              <div className='flex flex-col sm:w-1/3'>
+                <div className='order-3 py-3 sm:order-none'>
+                  {renderContactInfo()}
+                </div>
+                <div className='order-2 py-3 sm:order-none'>
+                  {renderSkills()}
+                </div>
+                <div className='order-1 py-3 sm:order-none'>
+                  {renderEducation()}
+                </div>
+              </div>
+              <div className='order-first flex flex-col sm:order-none sm:-mt-10 sm:w-2/3'>
+                <div className='py-3'>
+                  <h2 className='text-top-color text-lg font-bold'>About Me</h2>
+                  {renderSummary()}
+                </div>
+                <div className='py-3'>{renderExperiences()}</div>
+                <div className='py-3'>{renderProjects()}</div>
+              </div>
+            </div>
+          </div>
+        </main>
       </EditorCover>
     </>
   );

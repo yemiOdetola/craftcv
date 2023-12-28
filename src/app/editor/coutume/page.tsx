@@ -80,52 +80,54 @@ export default function Coutume() {
     <>
       {!isObjectEmpty(customLayout) ? (
         <EditorCover className={`${getFontFamilyStyle(fontFamily)}`}>
-          <div className='bg-top-color flex w-full rounded-t-lg sm:px-2'>
-            <div
-              className='w-full pl-5 text-center'
-              onClick={() => setEditableSectionId('user')}
-              onBlur={(e) => editBlurEvent(e)}
-            >
-              <InlineEdit
-                text={resume?.user?.fullname}
-                editable={editableSection == 'user'}
-                placeholder='Name in Full'
-                onSave={(val) => saveWithPath(['user', 'fullname'], val)}
-                className='font-poppins text-heading text-2xl font-bold sm:text-4xl'
-                style={{ color: `#${color2}` }}
-                dottedActive
-              />
-              <InlineEdit
-                className='text-heading'
-                placeholder='Professional Title'
-                editable={editableSection == 'user'}
-                text={resume?.user?.title}
-                onSave={(val) => saveWithPath(['user', 'title'], val)}
-                dottedActive
-              />
-            </div>
-          </div>
-          <div className='p-5'>
-            <div
-              className={`sm:mt-8 ${
-                customLayout?.options?.twoColumns &&
-                'flex flex-col gap-x-2 md:flex-row'
-              }`}
-            >
+          <main className='is-printable'>
+            <div className='bg-top-color flex w-full rounded-t-lg sm:px-2'>
               <div
-                className={`pr-4 ${
-                  customLayout?.options?.twoColumns && `${layoutDimension[0]}`
+                className='w-full pl-5 text-center'
+                onClick={() => setEditableSectionId('user')}
+                onBlur={(e) => editBlurEvent(e)}
+              >
+                <InlineEdit
+                  text={resume?.user?.fullname}
+                  editable={editableSection == 'user'}
+                  placeholder='Name in Full'
+                  onSave={(val) => saveWithPath(['user', 'fullname'], val)}
+                  className='font-poppins text-heading text-2xl font-bold sm:text-4xl'
+                  style={{ color: `#${color2}` }}
+                  dottedActive
+                />
+                <InlineEdit
+                  className='text-heading'
+                  placeholder='Professional Title'
+                  editable={editableSection == 'user'}
+                  text={resume?.user?.title}
+                  onSave={(val) => saveWithPath(['user', 'title'], val)}
+                  dottedActive
+                />
+              </div>
+            </div>
+            <div className='p-5'>
+              <div
+                className={`sm:mt-8 ${
+                  customLayout?.options?.twoColumns &&
+                  'flex flex-col gap-x-2 md:flex-row'
                 }`}
               >
-                {renderedMainComponents}
-              </div>
-              {customLayout?.options?.twoColumns ? (
-                <div className={`pr-4 ${layoutDimension[1]}`}>
-                  {renderedRightComponents}
+                <div
+                  className={`pr-4 ${
+                    customLayout?.options?.twoColumns && `${layoutDimension[0]}`
+                  }`}
+                >
+                  {renderedMainComponents}
                 </div>
-              ) : null}
+                {customLayout?.options?.twoColumns ? (
+                  <div className={`pr-4 ${layoutDimension[1]}`}>
+                    {renderedRightComponents}
+                  </div>
+                ) : null}
+              </div>
             </div>
-          </div>
+          </main>
         </EditorCover>
       ) : null}
     </>

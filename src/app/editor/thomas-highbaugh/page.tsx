@@ -46,7 +46,7 @@ export default function ThomasHighbaugh() {
 
   return (
     <EditorCover className={`${getFontFamilyStyle(fontFamily)}`}>
-      <main className='mx-auto my-auto p-2'>
+      <main className='is-printable mx-auto my-auto p-2'>
         {resume?.user ? (
           <header className='inline-flex w-full items-baseline justify-between border-b-4 border-gray-100 pb-3 align-top'>
             <section

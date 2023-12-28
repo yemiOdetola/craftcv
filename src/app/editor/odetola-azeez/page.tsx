@@ -46,7 +46,7 @@ export default function OdetolaAzeez() {
 
   return (
     <EditorCover className={`${getFontFamilyStyle(fontFamily)}`}>
-      <main className='mx-auto my-auto p-2'>
+      <main className='is-printable mx-auto my-auto p-2'>
         {resume?.user ? (
           <header className='inline-flex w-full items-center justify-center pb-3'>
             <section
