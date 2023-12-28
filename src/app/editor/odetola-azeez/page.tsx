@@ -104,10 +104,10 @@ export default function OdetolaAzeez() {
             </section>
           </header>
         ) : null}
-        <section className='flex flex-col pt-5 md:flex-row'>
-          <section className='w-full pr-4 lg:w-2/5'>
+        <section className='flex flex-col pt-5 sm:flex-row'>
+          <section className='w-full pr-4 sm:w-2/5'>
             {/* <section
-              className='mb-4 break-inside-avoid border-b-4 border-gray-300 pb-4'
+              className='mb-4 border-b-4 border-gray-300 pb-4'
               onClick={() => setEditableSectionId(resume?.contact?.id)}
               onBlur={editBlurEvent}
             >
@@ -157,7 +157,7 @@ export default function OdetolaAzeez() {
               </ul>
             </section> */}
             <section
-              className='break-inside-avoid border-b-4 border-gray-300 pb-4 first:mt-0'
+              className=' border-b-4 border-gray-300 pb-4 first:mt-0'
               onClick={() => setEditableSectionId(resume?.about?.id)}
               onBlur={(e: any) => editBlurEvent(e)}
             >
@@ -171,7 +171,7 @@ export default function OdetolaAzeez() {
                 onSave={(val) => saveWithPath(['about', 'summary'], val)}
               />
             </section>
-            <section className='mt-2 break-inside-avoid border-b-4 border-gray-300 first:mt-0'>
+            <section className='mt-2  border-b-4 border-gray-300 first:mt-0'>
               <h2 className='mb-2 text-lg font-bold tracking-widest text-gray-700 print:font-normal'>
                 EDUCATION
               </h2>
@@ -238,11 +238,11 @@ export default function OdetolaAzeez() {
                   );
                 })}
             </section>
-            <section className='mb-4 mt-0 break-inside-avoid border-b-4 border-gray-300 pb-6 first:mt-0'>
+            <section className='mb-4 mt-0  border-b-4 border-gray-300 pb-6 first:mt-0'>
               <h2 className='mb-2 pt-2 text-lg font-bold tracking-widest text-gray-700 print:font-normal'>
                 SKILLS
               </h2>
-              <section className='mb-0 break-inside-avoid'>
+              <section className='mb-0 '>
                 <section
                   className='mt-1 last:pb-1'
                   onClick={() =>
@@ -290,7 +290,7 @@ export default function OdetolaAzeez() {
             </section>
           </section>
 
-          <section className='w-full break-inside-avoid border-b-4 border-gray-300 pb-2 pl-4 first:mt-0 lg:w-3/5'>
+          <section className='w-full border-b-4 border-gray-300 pb-2 pl-4 first:mt-0 sm:w-3/5'>
             <h2 className='mb-2 text-xl font-black tracking-widest text-gray-800 print:font-normal'>
               EXPERIENCE
             </h2>
@@ -299,7 +299,7 @@ export default function OdetolaAzeez() {
                 const exp = resume?.experiences[key];
                 return (
                   <div
-                    className='relative mb-6 flex break-inside-avoid flex-col pb-4'
+                    className='relative mb-6 flex  flex-col pb-4'
                     key={`experience-${index}`}
                     onClick={() => setEditableSectionId(key)}
                     onBlur={editBlurEvent}
