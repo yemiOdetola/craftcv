@@ -53,7 +53,7 @@ export default function JakeRyan() {
 
   return (
     <EditorCover className={`${getFontFamilyStyle(fontFamily)}`}>
-      <main className='is-printable mx-auto my-auto p-2'>
+      <main className='is-printable'>
         {resume?.user ? (
           <header className='inline-flex w-full items-center justify-center pb-3'>
             <section
@@ -108,7 +108,7 @@ export default function JakeRyan() {
           </header>
         ) : null}
 
-        <section className='mt-2 w-full break-inside-avoid'>
+        <section className='mt-2 w-full'>
           <h2 className='mb-2 border-b border-gray-700 text-lg font-bold tracking-widest text-gray-700 print:font-normal'>
             EDUCATION
           </h2>
@@ -190,7 +190,7 @@ export default function JakeRyan() {
               );
             })}
         </section>
-        <section className='w-full break-inside-avoid pb-2 first:mt-0'>
+        <section className='w-full pb-2 first:mt-0'>
           <h2 className='mb-2 border-b border-gray-700 text-lg font-bold tracking-widest text-gray-700 print:font-normal'>
             EXPERIENCE
           </h2>
@@ -199,7 +199,7 @@ export default function JakeRyan() {
               const exp = resume?.experiences[key];
               return (
                 <div
-                  className='relative mb-2 flex break-inside-avoid flex-col pb-4'
+                  className='relative mb-2 flex flex-col pb-4'
                   key={`experience-${index}`}
                   onClick={() => setEditableSectionId(key)}
                   onBlur={editBlurEvent}
@@ -323,7 +323,7 @@ export default function JakeRyan() {
               );
             })}
         </section>
-        <section className='w-full break-inside-avoid pb-2 first:mt-0'>
+        <section className='w-full pb-2 first:mt-0'>
           <h2 className='mb-2 border-b border-gray-700 text-lg font-bold tracking-widest text-gray-700 print:font-normal'>
             Projects
           </h2>
@@ -332,7 +332,7 @@ export default function JakeRyan() {
               const project = resume?.projects[key];
               return (
                 <div
-                  className='relative mb-2 flex break-inside-avoid flex-col pb-4'
+                  className='relative mb-2 flex flex-col pb-4'
                   key={`experience-${index}`}
                   onClick={() => setEditableSectionId(key)}
                   onBlur={editBlurEvent}
@@ -414,11 +414,11 @@ export default function JakeRyan() {
               );
             })}
         </section>
-        <section className='mb-4 mt-0 break-inside-avoid pb-6 first:mt-0'>
+        <section className='mb-4 mt-0 pb-6 first:mt-0'>
           <h2 className='mb-2 border-b border-gray-700 text-lg font-bold tracking-widest text-gray-700 print:font-normal'>
             SKILLS
           </h2>
-          <section className='mb-0 break-inside-avoid'>
+          <section className='mb-0'>
             <section
               className='mt-1 last:pb-1'
               onClick={() =>
