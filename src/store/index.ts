@@ -19,10 +19,12 @@ interface State {
   customLayout: any;
   layoutDimension: string[];
   resume: any;
+  loading: any;
   changeFontFamily: (e: any) => void;
   changeEditorTheme: (e: any) => void;
   updateResume: (e: any) => void;
   updateCustomLayout: (e: any) => void;
+  setLoading: (e: boolean) => void;
   updateLayoutDimension: (e: any) => void;
   actions: Actions;
 }
@@ -35,11 +37,13 @@ export const useMainStore = create<State>()(
       editorTheme: ['7D4B82', 'B54A71'],
       resume: {},
       customLayout: {},
+      loading: false,
       layoutDimension: ['6/12', '6/12'],
       changeFontFamily: (fontFamily: string) => set(() => ({ fontFamily })),
       changeEditorTheme: (theme: string[]) =>
         set(() => ({ editorTheme: theme })),
       updateResume: (resume: string) => set(() => ({ resume })),
+      setLoading: (loading: boolean) => set(() => ({ loading })),
       updateCustomLayout: (customLayout: any) => set(() => ({ customLayout })),
       updateLayoutDimension: (layoutDimension: any) =>
         set(() => ({ layoutDimension })),
@@ -62,6 +66,7 @@ export const useEditorTheme = () =>
   useMainStore((state: State) => state.editorTheme);
 
 export const useResume = () => useMainStore((state: State) => state.resume);
+export const useLoading = () => useMainStore((state: State) => state.loading);
 export const useCustomLayout = () =>
   useMainStore((state: State) => state.customLayout);
 

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, MutableRefObject } from 'react';
 import { useEditorActions } from '@/utils/useEditorActions';
+import { useMainStore } from '@/store';
 
 interface InlineEditProps {
   text: string;
@@ -31,6 +32,7 @@ const InlineEdit = ({
 }: InlineEditProps) => {
   const [isEditing, setEditing] = useState(false);
   const [editedText, setEditedText] = useState(text);
+  const { setLoading } = useMainStore();
   const { addNewInputField, removeInputField } = useEditorActions();
   const inputRef: MutableRefObject<any> = useRef(null);
 
@@ -53,6 +55,7 @@ const InlineEdit = ({
     setEditing(false);
     onBlurEv && onBlurEv();
     onSave(editedText);
+    setLoading(false);
   };
 
   const handleKeyDown = (e: any) => {
@@ -68,8 +71,10 @@ const InlineEdit = ({
         removeInputField([...elementPath]);
       }
     } else {
+      setLoading(true);
       setTimeout(() => {
         const innerText = e.target.innerText;
+        // TODO: Create a fix
         // if (useNumber || /^\d+$/.test(innerText)) {
         //   setEditedText(innerText);
         // }

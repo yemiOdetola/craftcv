@@ -1,13 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { EditorFontMenu } from './EditorFontMenu';
 import { EditorSpacingMenu } from './EditorSpacingMenu';
 import { EditorThemeMenu } from './EditorThemeMenu';
 import { EditorGeneralMenu } from './EditorGeneralMenu';
-import { useFontFamily, useEditorTheme, useMainStore } from '@/store';
+import {
+  useFontFamily,
+  useEditorTheme,
+  useMainStore,
+  useLoading,
+} from '@/store';
 
 export default function Menu() {
   const { changeEditorTheme, changeFontFamily } = useMainStore();
   const fontFamily = useFontFamily();
+  const loading = useLoading();
   const editorTheme = useEditorTheme();
   const setFontFamily = (fontFamily: string) => changeFontFamily(fontFamily);
   const setEditorTheme = (theme: string[]) => changeEditorTheme(theme);
@@ -45,7 +51,7 @@ export default function Menu() {
           Preview
         </button>
         <button className='flex items-center gap-x-2 rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-600'>
-          <div className='kinetic'></div>
+          {loading ? <div className='loading-box' /> : null}
           <span className='block'>Save</span>
         </button>
       </div>
