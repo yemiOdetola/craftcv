@@ -68,6 +68,7 @@ export default function AmitPachange() {
         <InlineEdit
           text={resume && resume?.about?.summary}
           editable={resume && resume?.about?.id == editableSection}
+          className='text-sm'
           onSave={(val) => saveWithPath(['about', 'summary'], val)}
         />
       </div>
@@ -136,7 +137,7 @@ export default function AmitPachange() {
             </div>
           </div>
           <div className='p-5'>
-            <div className='flex flex-col sm:mt-10 sm:flex-row'>
+            <div className='print:max-w-letter print:max-h-letter flex flex-col print:mx-0 print:my-0 sm:mt-10 sm:flex-row '>
               <div className='flex flex-col sm:w-1/3'>
                 <div className='order-3 py-3 sm:order-none'>
                   {renderContactInfo()}

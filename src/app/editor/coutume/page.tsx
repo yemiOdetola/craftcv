@@ -80,8 +80,8 @@ export default function Coutume() {
     <>
       {!isObjectEmpty(customLayout) ? (
         <EditorCover className={`${getFontFamilyStyle(fontFamily)}`}>
-          <main className='is-printable'>
-            <div className='bg-top-color flex w-full rounded-t-lg sm:px-2'>
+          <main>
+            <header className='bg-top-color flex w-full rounded-t-lg sm:px-2'>
               <div
                 className='w-full pl-5 text-center'
                 onClick={() => setEditableSectionId('user')}
@@ -105,12 +105,12 @@ export default function Coutume() {
                   dottedActive
                 />
               </div>
-            </div>
+            </header>
             <div className='p-5'>
               <div
                 className={`sm:mt-8 ${
                   customLayout?.options?.twoColumns &&
-                  'flex flex-col gap-x-2 md:flex-row'
+                  'flex flex-col gap-x-2 sm:flex-row'
                 }`}
               >
                 <div

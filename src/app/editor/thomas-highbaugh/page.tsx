@@ -46,7 +46,7 @@ export default function ThomasHighbaugh() {
 
   return (
     <EditorCover className={`${getFontFamilyStyle(fontFamily)}`}>
-      <main className='is-printable'>
+      <main className=''>
         {resume?.user ? (
           <header className='inline-flex w-full items-baseline justify-between border-b-4 border-gray-100 pb-3 align-top'>
             <section
@@ -97,7 +97,7 @@ export default function ThomasHighbaugh() {
               onClick={() => setEditableSectionId(resume?.contact?.id)}
               onBlur={editBlurEvent}
             >
-              <h2 className='mb-2 text-xl font-bold uppercase tracking-widest text-gray-700'>
+              <h2 className='mb-2 text-xl font-bold uppercase text-gray-700'>
                 Contact
               </h2>
 
@@ -147,18 +147,18 @@ export default function ThomasHighbaugh() {
               onClick={() => setEditableSectionId(resume?.about?.id)}
               onBlur={(e: any) => editBlurEvent(e)}
             >
-              <h2 className='mb-2 text-xl font-bold uppercase tracking-widest text-gray-700'>
+              <h2 className='mb-2 text-xl font-bold uppercase text-gray-700'>
                 Summary
               </h2>
               <InlineEdit
                 text={resume && resume?.about?.summary}
+                className='text-sm'
                 editable={resume && resume?.about?.id == editableSection}
-                className='text-[14px]'
                 onSave={(val) => saveWithPath(['about', 'summary'], val)}
               />
             </section>
             <section className='mt-2  border-b-4 border-gray-300 first:mt-0'>
-              <h2 className='mb-2 text-lg font-bold tracking-widest text-gray-700'>
+              <h2 className='mb-2 text-lg font-bold text-gray-700'>
                 EDUCATION
               </h2>
 
@@ -225,7 +225,7 @@ export default function ThomasHighbaugh() {
                 })}
             </section>
             <section className='mb-4 mt-0  border-b-4 border-gray-300 pb-6 first:mt-0'>
-              <h2 className='mb-2 pt-2 text-lg font-bold tracking-widest text-gray-700'>
+              <h2 className='mb-2 pt-2 text-lg font-bold text-gray-700'>
                 SKILLS
               </h2>
               <section className='mb-0 '>
@@ -277,7 +277,7 @@ export default function ThomasHighbaugh() {
           </section>
 
           <section className='border-b-4 border-gray-300 pb-2 pl-4 first:mt-0 sm:w-3/5'>
-            <h2 className='mb-2 text-xl font-black tracking-widest text-gray-800'>
+            <h2 className='mb-2 text-xl font-black text-gray-800'>
               EXPERIENCE
             </h2>
             {resume?.experiences &&

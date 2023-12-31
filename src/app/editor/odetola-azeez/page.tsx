@@ -46,7 +46,7 @@ export default function OdetolaAzeez() {
 
   return (
     <EditorCover className={`${getFontFamilyStyle(fontFamily)}`}>
-      <main className='is-printable mx-auto my-auto p-2'>
+      <main className='w-full'>
         {resume?.user ? (
           <header className='inline-flex w-full items-center justify-center pb-3'>
             <section
@@ -61,7 +61,7 @@ export default function OdetolaAzeez() {
                 className='text-center text-2xl font-bold text-gray-800'
                 dottedActive
               />
-              <ul className='mx-auto flex w-full list-inside flex-wrap gap-x-2 lg:w-3/5'>
+              <ul className='mx-auto flex w-full list-inside flex-wrap justify-center gap-x-2 sm:w-[70%]'>
                 {resume?.contact &&
                   Object.keys(resume.contact).map((key, index) => {
                     if (resume?.contact[key] !== 'contact') {
@@ -167,7 +167,7 @@ export default function OdetolaAzeez() {
               <InlineEdit
                 text={resume && resume?.about?.summary}
                 editable={resume && resume?.about?.id == editableSection}
-                className='text-[14px]'
+                className='text-sm'
                 onSave={(val) => saveWithPath(['about', 'summary'], val)}
               />
             </section>
