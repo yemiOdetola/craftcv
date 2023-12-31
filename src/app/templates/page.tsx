@@ -78,10 +78,12 @@ const templates: any = [
 ];
 
 export default function Templates() {
-  const { updateResume } = useMainStore();
+  const { updateResume, updateCustomLayout } = useMainStore();
   const router = useRouter();
   const [tabOrientation, setTabOrientation] = useState('horizontal');
   const [selectedTemplate, selectTemplate] = useState<any>(null);
+  const setLayout = (layout: any) => updateCustomLayout(layout);
+
   useEffect(() => {
     let lgMediaQuery = window.matchMedia('(min-width: 1024px)');
 
@@ -98,6 +100,9 @@ export default function Templates() {
   }, []);
 
   const gotoTemplate = () => {
+    const customOptions: any = {};
+    customOptions.custom = false;
+    setLayout(customOptions);
     updateResume(selectedTemplate.base);
     router.push(selectedTemplate.href);
   };

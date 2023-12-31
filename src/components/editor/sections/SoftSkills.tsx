@@ -43,6 +43,7 @@ export default function SoftSkills({
                   text={skill}
                   editable={editableSection == softSkills.id}
                   elementPath={['soft skills', 'skillset', index]}
+                  className='text-sm'
                   id={`skillset-${index}`}
                   dottedActive
                   onSave={(val) =>

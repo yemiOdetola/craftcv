@@ -106,7 +106,7 @@ export default function Coutume() {
                 />
               </div>
             </header>
-            <div className='p-5'>
+            <div className='p-2'>
               <div
                 className={`sm:mt-8 ${
                   customLayout?.options?.twoColumns &&
