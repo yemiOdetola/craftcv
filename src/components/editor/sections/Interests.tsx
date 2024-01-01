@@ -29,13 +29,16 @@ export default function Interests({
         {interests &&
           interests.map((interest, index) => {
             return (
-              <div className='mb-1 flex items-center' key={`interest-${index}`}>
+              <div
+                className='flex items-center space-y-1.5'
+                key={`interest-${index}`}
+              >
                 <InlineEdit
                   text={interest}
                   editable={editableSection == 'interests'}
-                  className='ml-2'
+                  className='ml-2 text-xs'
                   dottedActive
-                  placeholder='Interest'
+                  placeholder='Add interest'
                   elementPath={['interests', index]}
                   id={`interests-${index}`}
                   onSave={(val) => saveWithPath(['interests', index], val)}

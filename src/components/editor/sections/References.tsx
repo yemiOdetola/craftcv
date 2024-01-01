@@ -22,7 +22,7 @@ export default function Reference({
   const { saveWithPath, removeFromPath } = useEditorActions();
   const resume = useResume();
   const references = resume.references;
-  
+
   const removeSection = (key: string) => {
     removeFromPath(['references', key]);
   };
@@ -30,13 +30,13 @@ export default function Reference({
   return (
     <div className='py-3'>
       <Heading id='references'>References</Heading>
-      <div className='flex flex-col space-y-2'>
+      <div className='space-y-2'>
         {references &&
           Object.keys(references).map((key: any, index: number) => {
             const reference = references[key];
             return (
               <div
-                className='relative flex flex-col'
+                className='relative space-y-0.5 text-sm'
                 key={`resume-education-${index}`}
                 onClick={() => setEditableSectionId(key)}
                 onBlur={editBlurEvent}
@@ -55,7 +55,7 @@ export default function Reference({
                 <InlineEdit
                   text={reference?.name}
                   editable={editableSection == key}
-                  className='text-xs -mb-1 font-semibold text-gray-700'
+                  className='font-semibold'
                   placeholder='Reference name (Position)'
                   dottedActive
                   onSave={(val) =>
@@ -68,7 +68,7 @@ export default function Reference({
                 <InlineEdit
                   text={reference?.relationship}
                   editable={editableSection == key}
-                  className='text-sm -mb-1 font-bold text-green-700'
+                  className='font-bold text-green-700'
                   style={{ color: `#${color1}` }}
                   placeholder='Relationship'
                   onSave={(val) =>
@@ -82,7 +82,7 @@ export default function Reference({
                   text={reference?.contact}
                   editable={editableSection == key}
                   placeholder='Email address or Phone number'
-                  className='text-sm font-medium text-gray-700'
+                  className='font-medium'
                   onSave={(val) =>
                     saveWithPath(['references', key], {
                       ...reference,

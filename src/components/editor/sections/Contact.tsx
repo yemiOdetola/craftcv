@@ -43,7 +43,7 @@ export default function Contact({
                     editable={editableSection == 'contact'}
                     elementPath={['contact', index]}
                     id={`contact-${index}`}
-                    className='ml-2'
+                    className='ml-1 text-xs'
                     dottedActive
                     onSave={(val) => saveWithPath(['contact', key], val)}
                   />

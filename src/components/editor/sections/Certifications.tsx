@@ -30,13 +30,13 @@ export default function Certifications({
   return (
     <div className='py-3'>
       <Heading id='certifications'>Certifications</Heading>
-      <div className='flex flex-col space-y-1'>
+      <div className='space-y-2'>
         {certifications &&
           Object.keys(certifications).map((key: any, index: number) => {
             const certificate = certifications[key];
             return (
               <div
-                className='relative mb-6 flex flex-col'
+                className='relative space-y-0.5 text-sm'
                 key={`certification-${index}`}
                 onClick={() => setEditableSectionId(key)}
                 onBlur={editBlurEvent}
@@ -55,7 +55,7 @@ export default function Certifications({
                 <InlineEdit
                   text={certificate?.name}
                   editable={editableSection == key}
-                  className='text-xs font-semibold text-gray-700'
+                  className='font-semibold'
                   placeholder='Certification name'
                   dottedActive
                   onSave={(val) =>
@@ -65,11 +65,10 @@ export default function Certifications({
                     })
                   }
                 />
-                <div className='flex items-center gap-x-1'>
+                <div className='flex items-center gap-x-2 text-xs font-bold text-green-700'>
                   <InlineEdit
                     text={certificate?.issued}
                     editable={editableSection == key}
-                    className='text-sm font-bold text-green-700'
                     style={{ color: `#${color1}` }}
                     placeholder='Date Issued'
                     onSave={(val) =>
@@ -83,7 +82,6 @@ export default function Certifications({
                   <InlineEdit
                     text={certificate?.expiry}
                     editable={editableSection == key}
-                    className='text-sm font-bold text-green-700'
                     style={{ color: `#${color1}` }}
                     placeholder='Expiry date'
                     onSave={(val) =>
@@ -98,7 +96,7 @@ export default function Certifications({
                   text={certificate?.description}
                   editable={editableSection == key}
                   placeholder='Brief description'
-                  className='text-sm font-medium text-gray-700'
+                  className='font-medium'
                   onSave={(val) =>
                     saveWithPath(['certifications', key], {
                       ...certificate,

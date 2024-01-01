@@ -36,14 +36,13 @@ export default function SoftSkills({
                 className='mb-1 flex items-center'
                 key={`resume-skills-${index}`}
               >
-                <a className='text-gray-700' style={{ color: `#${color1}` }}>
-                  {getIconByType(skill)}
-                </a>
+                <a style={{ color: `#${color1}` }}>{getIconByType(skill)}</a>
                 <InlineEdit
                   text={skill}
                   editable={editableSection == softSkills.id}
                   elementPath={['soft skills', 'skillset', index]}
-                  className='text-sm'
+                  className='text-xs'
+                  placeholder='Add skill'
                   id={`skillset-${index}`}
                   dottedActive
                   onSave={(val) =>

@@ -85,14 +85,14 @@ const InlineEdit = ({
 
   return (
     <div
-      className={`pseudo-element p-1 outline-none ${className} 
+      className={`pseudo-element outline-none ${className} 
       ${editable && !dottedActive && 'border-b border-gray-600 py-1'}
       ${
         editable &&
         dottedActive &&
         'underline decoration-dashed decoration-2 underline-offset-4'
       }`}
-      placeholder={placeholder || 'Type'}
+      placeholder={placeholder || 'Type here...'}
       style={style}
       ref={inputRef}
       onClick={handleClick}

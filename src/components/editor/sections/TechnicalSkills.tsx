@@ -43,7 +43,8 @@ export default function TechnicalSkills({
                 <InlineEdit
                   text={skill}
                   editable={editableSection == 'technicalSkills'}
-                  className='text-sm'
+                  className='text-xs'
+                  placeholder='Add skill'
                   elementPath={['technical skills', 'skillset', index]}
                   id={`skillset-${index}`}
                   dottedActive

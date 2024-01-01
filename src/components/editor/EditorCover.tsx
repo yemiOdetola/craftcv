@@ -1,7 +1,13 @@
 import React, { ReactNode, useEffect, useState } from 'react';
 import { Menu } from '@/components/editor';
 import localFont from 'next/font/local';
-import { useCustomLayout, useLayoutDimension, useMainStore } from '@/store';
+import {
+  useCustomLayout,
+  useIsCustom,
+  useLayoutDimension,
+  useMainStore,
+} from '@/store';
+import { usePathname } from 'next/navigation';
 
 interface EditorCoverProps {
   children: ReactNode;
@@ -67,8 +73,20 @@ const splitSizes: any = {
 export default function EditorCover({ className, children }: EditorCoverProps) {
   const customLayout = useCustomLayout();
   const layoutDimension = useLayoutDimension();
-  const { updateLayoutDimension } = useMainStore();
+  const { updateLayoutDimension, setIsCustom } = useMainStore();
   const [slidePosition, setSlidePosition] = useState<number | string>(2);
+
+  const pathname = usePathname();
+  const isCustom = useIsCustom();
+
+  useEffect(() => {
+    const setCustom = (isCustom: boolean) => setIsCustom(isCustom);
+    if (pathname.includes('coutume')) {
+      setCustom(true);
+    } else {
+      setCustom(false);
+    }
+  }, [pathname, setIsCustom]);
 
   useEffect(() => {
     Object.keys(splitSizes).map((key: any) => {
@@ -89,13 +107,13 @@ export default function EditorCover({ className, children }: EditorCoverProps) {
     <div className={`w-full bg-white py-32`}>
       <Menu />
       <div
-        className={`is-printable editor-container print:w-5xl mx-auto my-auto min-h-screen w-full max-w-4xl rounded-lg shadow shadow-gray-300 print:shadow-none sm:max-w-5xl sm:p-9
+        className={`is-printable editor-container print:w-5xl mx-auto my-auto min-h-screen w-full max-w-4xl rounded-lg text-gray-700 shadow shadow-gray-300 print:shadow-none sm:max-w-5xl sm:p-9
           ${className} ${ubuntu.variable} ${cabin.variable} ${cfspaceship.variable} ${sparkystones.variable} ${glitchgoblin.variable} 
           ${motleyforces.variable} ${ronysiswadi.variable} ${sunnyspells.variable}`}
       >
         {children}
       </div>
-      {customLayout?.custom && customLayout?.options?.twoColumns ? (
+      {isCustom && customLayout?.options?.twoColumns ? (
         <div className='range-slider'>
           <input
             type='range'

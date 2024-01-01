@@ -26,21 +26,25 @@ export default function Languages({
         onClick={() => setEditableSectionId('languages')}
         onBlur={editBlurEvent}
       >
-        {languages && languages.map((language, index) => {
-          return (
-            <div className='mb-1 flex items-center' key={`language-${index}`}>
-              <InlineEdit
-                text={language}
-                editable={editableSection == 'languages'}
-                className='ml-2'
-                dottedActive
-                elementPath={['languages', index]}
-                id={`languages-${index}`}
-                onSave={(val) => saveWithPath(['languages', index], val)}
-              />
-            </div>
-          );
-        })}
+        {languages &&
+          languages.map((language, index) => {
+            return (
+              <div
+                className='flex items-center space-y-1.5'
+                key={`language-${index}`}
+              >
+                <InlineEdit
+                  text={language}
+                  editable={editableSection == 'languages'}
+                  className='text-xs'
+                  dottedActive
+                  elementPath={['languages', index]}
+                  id={`languages-${index}`}
+                  onSave={(val) => saveWithPath(['languages', index], val)}
+                />
+              </div>
+            );
+          })}
       </div>
     </div>
   );

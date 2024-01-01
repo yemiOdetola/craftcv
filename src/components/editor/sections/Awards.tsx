@@ -28,15 +28,15 @@ export default function Awards({
   };
 
   return (
-    <div className='py-3'>
+    <div className='py-2'>
       <Heading id='awards'>Awards</Heading>
-      <div className='my-1' onBlur={editBlurEvent}>
+      <div className='space-y-2' onBlur={editBlurEvent}>
         {awards &&
           Object.keys(awards).map((key, index) => {
             const award = awards[key];
             return (
               <div
-                className='relative mb-6 flex flex-col'
+                className='relative space-y-0.5 text-sm'
                 key={`award-${index}`}
                 onClick={() => setEditableSectionId(key)}
                 onBlur={editBlurEvent}
@@ -55,7 +55,7 @@ export default function Awards({
                 <InlineEdit
                   text={award?.title}
                   editable={editableSection == key}
-                  className='text-xs font-light text-gray-700'
+                  className='font-light'
                   placeholder='Award Name/Title'
                   dottedActive
                   onSave={(val) =>
@@ -68,7 +68,6 @@ export default function Awards({
                 <InlineEdit
                   text={award?.year}
                   editable={editableSection == key}
-                  className='text-sm'
                   placeholder='Year awarded'
                   onSave={(val) =>
                     saveWithPath(['awards', key], {
@@ -81,7 +80,7 @@ export default function Awards({
                   text={award?.institution}
                   editable={editableSection == key}
                   placeholder='Institution the award is issued from'
-                  className='text-sm font-bold text-green-700'
+                  className='text-xs font-bold text-green-700'
                   style={{ color: `#${color1}` }}
                   onSave={(val) =>
                     saveWithPath(['awards', key], {
@@ -94,7 +93,7 @@ export default function Awards({
                   text={award?.description}
                   editable={editableSection == key}
                   placeholder='Brief description'
-                  className='text-sm font-light text-gray-700'
+                  className='font-light'
                   onSave={(val) =>
                     saveWithPath(['awards', key], {
                       ...award,

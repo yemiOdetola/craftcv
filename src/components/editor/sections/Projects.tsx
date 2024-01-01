@@ -29,13 +29,13 @@ export default function Projects({
   return (
     <div className='py-3'>
       <Heading id='projects'>Projects</Heading>
-      <div className='flex flex-col'>
+      <div className='space-y-2'>
         {projects &&
           Object.keys(projects).map((key: any, index: number) => {
             const project = projects[key];
             return (
               <div
-                className='relative mb-6 flex flex-col'
+                className='relative space-y-0.5 text-sm'
                 key={`resume-project-${index}`}
                 onClick={() => setEditableSectionId(key)}
                 onBlur={editBlurEvent}
@@ -44,7 +44,7 @@ export default function Projects({
               >
                 {isHovered == key ? (
                   <button
-                    className='absolute right-4 inline-block p-2 opacity-0 transition-opacity duration-200'
+                    className='absolute right-4 inline-block p-1 opacity-0 transition-all duration-200'
                     style={{ opacity: isHovered ? 1 : 0 }}
                     onClick={() => removeSection(key)}
                   >
@@ -55,7 +55,7 @@ export default function Projects({
                   text={project.title}
                   editable={editableSection == key}
                   placeholder='Project name'
-                  className='text-md font-semibold text-gray-700'
+                  className='font-semibold'
                   onSave={(val) =>
                     saveWithPath(['projects', key], { ...project, title: val })
                   }
@@ -65,7 +65,7 @@ export default function Projects({
                   editable={editableSection == key}
                   placeholder='Tools/Technologies used'
                   style={{ color: `#${color1}` }}
-                  className='font-mono text-sm font-semibold text-green-700'
+                  className='font-semibold text-green-700'
                   onSave={(val) =>
                     saveWithPath(['projects', key], { ...project, tech: val })
                   }
@@ -74,7 +74,6 @@ export default function Projects({
                   text={project.description}
                   placeholder='Description of achievements'
                   editable={editableSection == key}
-                  className='mb-1 pl-2 text-sm font-normal text-gray-700'
                   onSave={(val) =>
                     saveWithPath(['projects', key], {
                       ...project,

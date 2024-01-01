@@ -111,6 +111,7 @@ body {
   display: block;
   /* font-style: italic; */
   font-size: 13px;
+  line-height: 16px;
   font-weight: 300;
   pointer-events: none;
 }

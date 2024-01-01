@@ -30,13 +30,13 @@ export default function Contact({
   return (
     <div className='py-3'>
       <Heading id='publications'>Publications</Heading>
-      <div className='my-1'>
+      <div className='my-1 space-y-2'>
         {publications &&
           Object.keys(publications).map((key, index) => {
             const publication = publications[key];
             return (
               <div
-                className='relative mb-6 flex flex-col'
+                className='relative space-y-0.5 text-sm'
                 key={`publication-${index}`}
                 onClick={() => setEditableSectionId(key)}
                 onBlur={editBlurEvent}
@@ -55,7 +55,7 @@ export default function Contact({
                 <InlineEdit
                   text={publication?.type}
                   editable={editableSection == key}
-                  className='text-xs font-light text-gray-700'
+                  className='font-light'
                   placeholder='Publication (Publisher, Issues, Pages)'
                   dottedActive
                   onSave={(val) =>
@@ -68,7 +68,6 @@ export default function Contact({
                 <InlineEdit
                   text={publication?.title}
                   editable={editableSection == key}
-                  className='text-sm'
                   style={{ color: `#${color1}` }}
                   placeholder='Publication title'
                   onSave={(val) =>
@@ -82,7 +81,7 @@ export default function Contact({
                   text={publication?.institution}
                   editable={editableSection == key}
                   placeholder='List of authors'
-                  className='text-xs font-medium'
+                  className='font-medium'
                   onSave={(val) =>
                     saveWithPath(['publications', key], {
                       ...publication,
@@ -94,7 +93,7 @@ export default function Contact({
                   text={publication?.description}
                   editable={editableSection == key}
                   placeholder='Brief description'
-                  className='text-sm font-light text-gray-700'
+                  className='font-light'
                   onSave={(val) =>
                     saveWithPath(['publications', key], {
                       ...publication,

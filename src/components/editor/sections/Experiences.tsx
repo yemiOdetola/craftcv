@@ -32,13 +32,13 @@ export default function Experiences({
   return (
     <div className='py-3'>
       <Heading id='experiences'>Experiences</Heading>
-      <div className='flex flex-col'>
+      <div className='space-y-2'>
         {experiences &&
           Object.keys(experiences).map((key: any, index: number) => {
             const exp = experiences[key];
             return (
               <div
-                className='relative mb-6 flex flex-col'
+                className='relative space-y-0.5 text-sm'
                 key={`experience-${index}`}
                 onClick={() => setEditableSectionId(key)}
                 onBlur={editBlurEvent}
@@ -57,7 +57,7 @@ export default function Experiences({
                 <div className='flex items-center justify-normal'>
                   <InlineEdit
                     text={exp.company}
-                    className='text-md font-bold text-gray-700'
+                    className='font-medium'
                     editable={editableSection == key}
                     dottedActive
                     placeholder='Company'
@@ -71,7 +71,7 @@ export default function Experiences({
                   <span> | </span>
                   <InlineEdit
                     text={exp.position}
-                    className='text-md font-bold text-gray-700'
+                    className='font-medium'
                     editable={editableSection == key}
                     dottedActive
                     placeholder='Position/Title'
@@ -86,7 +86,7 @@ export default function Experiences({
                 <div className='flex items-center justify-normal'>
                   <InlineEdit
                     text={exp.startDate}
-                    className='my-1 font-mono text-sm font-semibold text-green-700'
+                    className='my-1 font-semibold text-green-700'
                     editable={editableSection == key}
                     style={{ color: `#${color1}` }}
                     dottedActive
@@ -101,7 +101,7 @@ export default function Experiences({
                   <span> - </span>
                   <InlineEdit
                     text={exp.endDate}
-                    className='my-1 font-mono text-sm font-semibold text-green-700'
+                    className='my-1 font-semibold text-green-700'
                     editable={editableSection == key}
                     style={{ color: `#${color1}` }}
                     dottedActive
@@ -114,10 +114,8 @@ export default function Experiences({
                     }
                   />
                 </div>
-                <span className='mb-1 mt-2 text-sm font-semibold text-gray-700'>
-                  Key Responsibilities
-                </span>
-                <ul className='list-disc space-y-1 pl-4 text-sm'>
+                <span className='my-2 font-semibold'>Key Responsibilities</span>
+                <ul className='list-disc space-y-1 pl-4 text-xs'>
                   {exp?.responsibilities.map(
                     (responsibility: string, index: number) => (
                       <li key={`responsibility-${index}`}>
