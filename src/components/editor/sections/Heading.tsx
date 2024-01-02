@@ -31,8 +31,10 @@ export default function Heading({ children, id, className }: HeadingProps) {
     sectionData = sectionData[Object.keys(sectionData)[0]];
     sectionData.id = uid;
     if (allowNew) {
+      // setTimeout(() => {
       setCount(count + 1);
       saveWithPath([id, uid], sectionData);
+      // }, 100);
     }
   };
 

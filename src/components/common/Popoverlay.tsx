@@ -20,11 +20,10 @@ export function Popoverlay({ children, title, className }: PopoverlayProps) {
                 ${open ? 'text-gray-900' : 'text-gray-400'}
                 group inline-flex items-center rounded px-3 py-2 text-xs font-medium hover:text-gray-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 lg:text-base`}
             >
-              <span>{title}</span>
+              <span className='text-sm'>{title}</span>
               <MdExpandMore
-                className={`${open ? 'text-blue-600' : 'text-gray-400'}
-                  ml-2 h-5 w-5 transition duration-150 ease-in-out group-hover:text-blue-600/80`}
                 aria-hidden='true'
+                className='ml-2 h-5 w-5 transition duration-150 ease-in-out group-hover:text-blue-600/80'
               />
             </Popover.Button>
             <Transition

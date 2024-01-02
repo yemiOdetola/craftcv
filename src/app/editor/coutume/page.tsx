@@ -83,7 +83,7 @@ export default function Coutume() {
           <main>
             <header className='bg-top-color flex w-full rounded-t-lg sm:px-2'>
               <div
-                className='w-full pl-5 text-center'
+                className='w-full text-center'
                 onClick={() => setEditableSectionId('user')}
                 onBlur={(e) => editBlurEvent(e)}
               >
@@ -92,7 +92,7 @@ export default function Coutume() {
                   editable={editableSection == 'user'}
                   placeholder='Name in Full'
                   onSave={(val) => saveWithPath(['user', 'fullname'], val)}
-                  className='font-poppins text-heading text-2xl font-bold sm:text-4xl'
+                  className='text-heading text-2xl font-bold sm:text-4xl'
                   style={{ color: `#${color2}` }}
                   dottedActive
                 />
@@ -108,20 +108,20 @@ export default function Coutume() {
             </header>
             <div className='p-2'>
               <div
-                className={`sm:mt-8 ${
+                className={`sm:mt-1 ${
                   customLayout?.options?.twoColumns &&
-                  'flex flex-col gap-x-2 sm:flex-row'
+                  'flex flex-col gap-x-4 sm:flex-row'
                 }`}
               >
                 <div
-                  className={`pr-4 ${
+                  className={`${
                     customLayout?.options?.twoColumns && `${layoutDimension[0]}`
                   }`}
                 >
                   {renderedMainComponents}
                 </div>
                 {customLayout?.options?.twoColumns ? (
-                  <div className={`pr-4 ${layoutDimension[1]}`}>
+                  <div className={`${layoutDimension[1]}`}>
                     {renderedRightComponents}
                   </div>
                 ) : null}

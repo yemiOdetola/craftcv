@@ -17,10 +17,10 @@ import {
   PiMedalDuotone,
   PiTrashDuotone,
 } from 'react-icons/pi';
-import { Button, Container, Toggle } from '@/components/common';
+import { Button, Container, Loading, Toggle } from '@/components/common';
 import { BottomNavigation } from '@/components/templates';
 import { basetemplate } from '@/store/basetemplate';
-import { useCustomLayout, useMainStore } from '@/store';
+import { useCustomLayout, useLoading, useMainStore } from '@/store';
 import { isObjectEmpty } from '@/utils/helper';
 
 const sections: any = {
@@ -49,7 +49,12 @@ const vh = 648;
 export default function CustomTemplate() {
   const router = useRouter();
   const customLayout = useCustomLayout();
-  const { updateCustomLayout, updateLayoutDimension } = useMainStore();
+  const {
+    updateCustomLayout,
+    updateLayoutDimension,
+    setLoading,
+    updateResume,
+  } = useMainStore();
   const [leftWidgets, setLeftWidgets] = useState<string[]>([]);
   const [rightWidgets, setRightWidgets] = useState<string[]>([]);
   const [rwh, setRWh] = useState<any>(`[${vh}px]`);
@@ -59,6 +64,7 @@ export default function CustomTemplate() {
   const [populate, setPopulate] = useState<boolean>(false);
   const dragStartWidget = useRef<number>(0);
   const dragToWidget = useRef<number>(0);
+  const loading = useLoading();
   const setLayout = (layout: string) => updateCustomLayout(layout);
 
   useEffect(() => {
@@ -133,6 +139,7 @@ export default function CustomTemplate() {
   };
 
   const prepareTemplate = () => {
+    setLoading(true);
     const customOptions: any = {};
     customOptions['base'] = {};
     const allSections = [...leftWidgets, ...rightWidgets];
@@ -155,7 +162,9 @@ export default function CustomTemplate() {
     if (!editInProgress) {
       updateLayoutDimension(['w-6/12', 'w-6/12']);
     }
-    console.log('customOptions', customOptions);
+    if (window.confirm('Do you want to clear your saved resume?')) {
+      updateResume({});
+    }
     router.push('/editor/coutume');
   };
 
@@ -199,7 +208,7 @@ export default function CustomTemplate() {
       <Container className='min-h-screen bg-white'>
         <div className='mx-auto max-w-2xl pt-12 lg:mx-0 lg:mb-6'>
           <h2 className='font-display mb-8 text-4xl font-medium tracking-tighter text-blue-600 sm:text-4xl'>
-            Create a custom template
+            Create a custom template 🧱
           </h2>
           {/* <p>This is the order your resume template is going to display</p> */}
         </div>
@@ -252,8 +261,13 @@ export default function CustomTemplate() {
         <Button href='/' className='bg-gray-300 px-8 py-3 text-gray-500'>
           Cancel
         </Button>
-        <Button onClick={prepareTemplate} className='px-8 py-3'>
-          Continue
+        <Button
+          onClick={prepareTemplate}
+          className='w-36 px-2 py-3 transition-all duration-300'
+          disabled={loading}
+        >
+          {loading ? <Loading className='h-4 w-4' /> : null}
+          <span className='ml-2'>Continue</span>
         </Button>
       </BottomNavigation>
     </main>

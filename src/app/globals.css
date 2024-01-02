@@ -133,10 +133,10 @@ body {
 }
 
 .loading-box {
-  height: 24px;
-  width: 24px;
+  height: 20px;
+  width: 20px;
   border-radius: 50%;
-  border: 3px solid;
+  border: 2px solid;
   border-color: #fff transparent;
   animation: spin 1s infinite ease-out;
 }

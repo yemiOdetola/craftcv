@@ -37,6 +37,7 @@ export default function Languages({
                   text={language}
                   editable={editableSection == 'languages'}
                   className='text-xs'
+                  placeholder='Add language...'
                   dottedActive
                   elementPath={['languages', index]}
                   id={`languages-${index}`}

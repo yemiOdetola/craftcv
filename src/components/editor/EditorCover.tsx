@@ -73,11 +73,15 @@ const splitSizes: any = {
 export default function EditorCover({ className, children }: EditorCoverProps) {
   const customLayout = useCustomLayout();
   const layoutDimension = useLayoutDimension();
-  const { updateLayoutDimension, setIsCustom } = useMainStore();
+  const { updateLayoutDimension, setIsCustom, setLoading } = useMainStore();
   const [slidePosition, setSlidePosition] = useState<number | string>(2);
 
   const pathname = usePathname();
   const isCustom = useIsCustom();
+
+  useEffect(() => {
+    setLoading(false);
+  }, [setLoading]);
 
   useEffect(() => {
     const setCustom = (isCustom: boolean) => setIsCustom(isCustom);

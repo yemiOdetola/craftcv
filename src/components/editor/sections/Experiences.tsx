@@ -81,7 +81,7 @@ export default function Experiences({
                   }
                 />
               </div>
-              <div className='my-1 flex items-center space-x-4 justify-normal font-mono text-xs text-green-700'>
+              <div className='my-1 flex items-center space-x-4 justify-normal font-semibold font-mono text-xs text-green-700'>
                 <InlineEdit
                   text={exp.startDate}
                   editable={editableSection == key}

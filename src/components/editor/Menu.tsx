@@ -8,18 +8,24 @@ import {
   useEditorTheme,
   useMainStore,
   useLoading,
+  useIsCustom,
 } from '@/store';
+import { Loading } from '../common';
+import Link from 'next/link';
 
 export default function Menu() {
   const { changeEditorTheme, changeFontFamily } = useMainStore();
   const fontFamily = useFontFamily();
   const loading = useLoading();
   const editorTheme = useEditorTheme();
+  const isCustom = useIsCustom();
   const setFontFamily = (fontFamily: string) => changeFontFamily(fontFamily);
   const setEditorTheme = (theme: string[]) => changeEditorTheme(theme);
 
   const printDocument = () => {
-    window.print();
+    if (!loading) {
+      window.print();
+    }
   };
 
   return (
@@ -27,7 +33,9 @@ export default function Menu() {
       <div className='mx-auto w-1/2 rounded p-4'>
         <div className='flex items-center justify-between'>
           <div className='flex items-center'>
-            <span className='text-xl font-bold'>Resume Editor</span>
+            <Link href='/templates' className='text-xl font-bold'>
+              Editor ✍️
+            </Link>
             <div className='ml-4 flex items-center gap-x-4'>
               <EditorFontMenu
                 changeFont={setFontFamily}
@@ -37,22 +45,19 @@ export default function Menu() {
                 changeTheme={setEditorTheme}
                 editorTheme={editorTheme}
               />
-              {/* <EditorSpacingMenu /> */}
-              <EditorGeneralMenu />
+
+              {isCustom ? <EditorGeneralMenu /> : null}
             </div>
           </div>
         </div>
       </div>
       <div className='mr-4 flex items-center gap-4'>
         <button
-          className='rounded bg-gray-400 px-4 py-2 text-white hover:bg-gray-600'
+          className='flex w-28 items-center justify-center gap-x-2 rounded bg-blue-600 px-3 py-3 text-white hover:bg-blue-600'
           onClick={printDocument}
         >
-          Preview
-        </button>
-        <button className='flex items-center gap-x-2 rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-600'>
-          {loading ? <div className='loading-box' /> : null}
-          <span className='block'>Save</span>
+          {loading ? <Loading /> : null}
+          <span className='ml-1'>{loading ? 'Wait..' : 'Preview'}</span>
         </button>
       </div>
     </div>
