@@ -61,7 +61,7 @@ export default function AmitPachange() {
   const renderSummary = () => {
     return (
       <div
-        className='pb-6'
+        className='pb-2'
         onClick={() => setEditableSectionId(resume?.about?.id)}
         onBlur={(e) => editBlurEvent(e)}
       >

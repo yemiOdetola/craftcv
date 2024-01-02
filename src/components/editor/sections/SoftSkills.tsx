@@ -41,7 +41,7 @@ export default function SoftSkills({
                   text={skill}
                   editable={editableSection == softSkills.id}
                   elementPath={['soft skills', 'skillset', index]}
-                  className='text-xs'
+                  className='ml-2 text-sm'
                   placeholder='Add skill'
                   id={`skillset-${index}`}
                   dottedActive

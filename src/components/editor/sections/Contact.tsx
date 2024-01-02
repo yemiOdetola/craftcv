@@ -35,7 +35,7 @@ export default function Contact({
                   className='mb-1 flex items-center'
                   key={`resume-contact-${index}`}
                 >
-                  <span className='font-sm w-6 text-gray-700'>
+                  <span className='font-sm text-gray-700'>
                     {getIconByType(key)}
                   </span>
                   <InlineEdit
@@ -43,7 +43,7 @@ export default function Contact({
                     editable={editableSection == 'contact'}
                     elementPath={['contact', index]}
                     id={`contact-${index}`}
-                    className='ml-1 text-xs'
+                    className='ml-2 text-sm'
                     dottedActive
                     onSave={(val) => saveWithPath(['contact', key], val)}
                   />

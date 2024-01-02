@@ -29,62 +29,60 @@ export default function Projects({
   return (
     <div className='py-3'>
       <Heading id='projects'>Projects</Heading>
-      <div className='space-y-2'>
-        {projects &&
-          Object.keys(projects).map((key: any, index: number) => {
-            const project = projects[key];
-            return (
-              <div
-                className='relative space-y-0.5 text-sm'
-                key={`resume-project-${index}`}
-                onClick={() => setEditableSectionId(key)}
-                onBlur={editBlurEvent}
-                onMouseEnter={() => setIsHovered(key)}
-                onMouseLeave={() => setIsHovered(null)}
-              >
-                {isHovered == key ? (
-                  <button
-                    className='absolute right-4 inline-block p-1 opacity-0 transition-all duration-200'
-                    style={{ opacity: isHovered ? 1 : 0 }}
-                    onClick={() => removeSection(key)}
-                  >
-                    <PiTrashSimpleDuotone size={20} />
-                  </button>
-                ) : null}
-                <InlineEdit
-                  text={project.title}
-                  editable={editableSection == key}
-                  placeholder='Project name'
-                  className='font-semibold'
-                  onSave={(val) =>
-                    saveWithPath(['projects', key], { ...project, title: val })
-                  }
-                />
-                <InlineEdit
-                  text={project?.tech}
-                  editable={editableSection == key}
-                  placeholder='Tools/Technologies used'
-                  style={{ color: `#${color1}` }}
-                  className='font-semibold text-green-700'
-                  onSave={(val) =>
-                    saveWithPath(['projects', key], { ...project, tech: val })
-                  }
-                />
-                <InlineEdit
-                  text={project.description}
-                  placeholder='Description of achievements'
-                  editable={editableSection == key}
-                  onSave={(val) =>
-                    saveWithPath(['projects', key], {
-                      ...project,
-                      description: val,
-                    })
-                  }
-                />
-              </div>
-            );
-          })}
-      </div>
+      {projects &&
+        Object.keys(projects).map((key: any, index: number) => {
+          const project = projects[key];
+          return (
+            <div
+              className='relative mb-2 text-sm'
+              key={`resume-project-${index}`}
+              onClick={() => setEditableSectionId(key)}
+              onBlur={editBlurEvent}
+              onMouseEnter={() => setIsHovered(key)}
+              onMouseLeave={() => setIsHovered(null)}
+            >
+              {isHovered == key ? (
+                <button
+                  className='absolute right-4 inline-block p-1 opacity-0 transition-all duration-200'
+                  style={{ opacity: isHovered ? 1 : 0 }}
+                  onClick={() => removeSection(key)}
+                >
+                  <PiTrashSimpleDuotone size={20} />
+                </button>
+              ) : null}
+              <InlineEdit
+                text={project.title}
+                editable={editableSection == key}
+                placeholder='Project name'
+                className='font-semibold'
+                onSave={(val) =>
+                  saveWithPath(['projects', key], { ...project, title: val })
+                }
+              />
+              <InlineEdit
+                text={project?.tech}
+                editable={editableSection == key}
+                placeholder='Tools/Technologies used'
+                style={{ color: `#${color1}` }}
+                className='font-semibold text-green-700'
+                onSave={(val) =>
+                  saveWithPath(['projects', key], { ...project, tech: val })
+                }
+              />
+              <InlineEdit
+                text={project.description}
+                placeholder='Description of achievements'
+                editable={editableSection == key}
+                onSave={(val) =>
+                  saveWithPath(['projects', key], {
+                    ...project,
+                    description: val,
+                  })
+                }
+              />
+            </div>
+          );
+        })}
     </div>
   );
 }

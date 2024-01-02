@@ -29,13 +29,13 @@ export default function Education({
   return (
     <div className='py-3'>
       <Heading id='education'>Education Background</Heading>
-      <div className='space-y-2'>
+      <div className='mb-3'>
         {educationhistory &&
           Object.keys(educationhistory).map((key: any, index: number) => {
             const edu = educationhistory[key];
             return (
               <div
-                className='relative space-y-0.5 text-sm'
+                className='relative mb-2 text-sm'
                 key={`resume-education-${index}`}
                 onClick={() => setEditableSectionId(key)}
                 onBlur={editBlurEvent}

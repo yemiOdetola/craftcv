@@ -30,84 +30,82 @@ export default function Certifications({
   return (
     <div className='py-3'>
       <Heading id='certifications'>Certifications</Heading>
-      <div className='space-y-2'>
-        {certifications &&
-          Object.keys(certifications).map((key: any, index: number) => {
-            const certificate = certifications[key];
-            return (
-              <div
-                className='relative space-y-0.5 text-sm'
-                key={`certification-${index}`}
-                onClick={() => setEditableSectionId(key)}
-                onBlur={editBlurEvent}
-                onMouseEnter={() => setIsHovered(key)}
-                onMouseLeave={() => setIsHovered(null)}
-              >
-                {isHovered == key ? (
-                  <button
-                    className='absolute right-4 inline-block p-2 opacity-0 transition-opacity duration-200'
-                    style={{ opacity: isHovered ? 1 : 0 }}
-                    onClick={() => removeSection(key)}
-                  >
-                    <PiTrashSimpleDuotone size={20} />
-                  </button>
-                ) : null}
+      {certifications &&
+        Object.keys(certifications).map((key: any, index: number) => {
+          const certificate = certifications[key];
+          return (
+            <div
+              className='relative mb-2 text-sm'
+              key={`certification-${index}`}
+              onClick={() => setEditableSectionId(key)}
+              onBlur={editBlurEvent}
+              onMouseEnter={() => setIsHovered(key)}
+              onMouseLeave={() => setIsHovered(null)}
+            >
+              {isHovered == key ? (
+                <button
+                  className='absolute right-4 inline-block p-2 opacity-0 transition-opacity duration-200'
+                  style={{ opacity: isHovered ? 1 : 0 }}
+                  onClick={() => removeSection(key)}
+                >
+                  <PiTrashSimpleDuotone size={20} />
+                </button>
+              ) : null}
+              <InlineEdit
+                text={certificate?.name}
+                editable={editableSection == key}
+                className='font-semibold'
+                placeholder='Certification name'
+                dottedActive
+                onSave={(val) =>
+                  saveWithPath(['certifications', key], {
+                    ...certificate,
+                    name: val,
+                  })
+                }
+              />
+              <div className='flex items-center gap-x-2 text-xs font-bold text-green-700'>
                 <InlineEdit
-                  text={certificate?.name}
+                  text={certificate?.issued}
                   editable={editableSection == key}
-                  className='font-semibold'
-                  placeholder='Certification name'
-                  dottedActive
+                  style={{ color: `#${color1}` }}
+                  placeholder='Date Issued'
                   onSave={(val) =>
                     saveWithPath(['certifications', key], {
                       ...certificate,
-                      name: val,
+                      issued: val,
                     })
                   }
                 />
-                <div className='flex items-center gap-x-2 text-xs font-bold text-green-700'>
-                  <InlineEdit
-                    text={certificate?.issued}
-                    editable={editableSection == key}
-                    style={{ color: `#${color1}` }}
-                    placeholder='Date Issued'
-                    onSave={(val) =>
-                      saveWithPath(['certifications', key], {
-                        ...certificate,
-                        issued: val,
-                      })
-                    }
-                  />
-                  <div>-</div>
-                  <InlineEdit
-                    text={certificate?.expiry}
-                    editable={editableSection == key}
-                    style={{ color: `#${color1}` }}
-                    placeholder='Expiry date'
-                    onSave={(val) =>
-                      saveWithPath(['certifications', key], {
-                        ...certificate,
-                        expiry: val,
-                      })
-                    }
-                  />
-                </div>
+                <div>-</div>
                 <InlineEdit
-                  text={certificate?.description}
+                  text={certificate?.expiry}
                   editable={editableSection == key}
-                  placeholder='Brief description'
-                  className='font-medium'
+                  style={{ color: `#${color1}` }}
+                  placeholder='Expiry date'
                   onSave={(val) =>
                     saveWithPath(['certifications', key], {
                       ...certificate,
-                      description: val,
+                      expiry: val,
                     })
                   }
                 />
               </div>
-            );
-          })}
-      </div>
+              <InlineEdit
+                text={certificate?.description}
+                editable={editableSection == key}
+                placeholder='Brief description'
+                className='font-medium'
+                onSave={(val) =>
+                  saveWithPath(['certifications', key], {
+                    ...certificate,
+                    description: val,
+                  })
+                }
+              />
+            </div>
+          );
+        })}
     </div>
   );
 }

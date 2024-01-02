@@ -30,13 +30,13 @@ export default function Awards({
   return (
     <div className='py-2'>
       <Heading id='awards'>Awards</Heading>
-      <div className='space-y-2' onBlur={editBlurEvent}>
+      <div onBlur={editBlurEvent}>
         {awards &&
           Object.keys(awards).map((key, index) => {
             const award = awards[key];
             return (
               <div
-                className='relative space-y-0.5 text-sm'
+                className='relative mb-2 text-sm'
                 key={`award-${index}`}
                 onClick={() => setEditableSectionId(key)}
                 onBlur={editBlurEvent}
