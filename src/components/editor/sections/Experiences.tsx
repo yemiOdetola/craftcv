@@ -37,7 +37,7 @@ export default function Experiences({
           const exp = experiences[key];
           return (
             <div
-              className='relative mb-2 text-sm'
+              className='relative mb-4 text-sm'
               key={`experience-${index}`}
               onClick={() => setEditableSectionId(key)}
               onBlur={editBlurEvent}
@@ -53,10 +53,9 @@ export default function Experiences({
                   <PiTrashSimpleDuotone size={20} />
                 </button>
               ) : null}
-              <div className='flex items-center justify-normal'>
+              <div className='-my-0.5 flex items-center justify-normal font-semibold'>
                 <InlineEdit
                   text={exp.company}
-                  className='font-medium'
                   editable={editableSection == key}
                   dottedActive
                   placeholder='Company'
@@ -70,7 +69,6 @@ export default function Experiences({
                 <span> | </span>
                 <InlineEdit
                   text={exp.position}
-                  className='font-medium'
                   editable={editableSection == key}
                   dottedActive
                   placeholder='Position/Title'
@@ -82,10 +80,9 @@ export default function Experiences({
                   }
                 />
               </div>
-              <div className='flex items-center justify-normal'>
+              <div className='my-1 flex items-center space-x-4 justify-normal font-mono text-xs text-green-700'>
                 <InlineEdit
                   text={exp.startDate}
-                  className='my-1 font-semibold text-green-700'
                   editable={editableSection == key}
                   style={{ color: `#${color1}` }}
                   dottedActive
@@ -100,7 +97,6 @@ export default function Experiences({
                 <span> - </span>
                 <InlineEdit
                   text={exp.endDate}
-                  className='my-1 font-semibold text-green-700'
                   editable={editableSection == key}
                   style={{ color: `#${color1}` }}
                   dottedActive
@@ -113,8 +109,8 @@ export default function Experiences({
                   }
                 />
               </div>
-              <span className='my-2 font-semibold'>Key Responsibilities</span>
-              <ul className='list-disc space-y-1 pl-4 text-xs'>
+              <span className='my-1 font-semibold'>Key Responsibilities</span>
+              <ul className='mb-1 list-disc pl-4'>
                 {exp?.responsibilities.map(
                   (responsibility: string, index: number) => (
                     <li key={`responsibility-${index}`}>

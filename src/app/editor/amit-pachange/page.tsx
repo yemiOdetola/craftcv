@@ -101,9 +101,9 @@ export default function AmitPachange() {
     <>
       <EditorCover className={`${getFontFamilyStyle(fontFamily)}`}>
         <main className='is-printable'>
-          <div className='bg-top-color flex w-full rounded-t-lg sm:px-2'>
+          <div className='flex w-full items-center sm:px-2'>
             <div
-              className={`left-5 top-10 overflow-hidden p-3 sm:relative sm:rounded-full sm:p-0`}
+              className={`overflow-hidden p-3 sm:relative sm:rounded-full sm:p-0`}
               style={{ border: `3px solid #${color1}` }}
             >
               <Image
@@ -115,7 +115,7 @@ export default function AmitPachange() {
               />
             </div>
             <div
-              className='mt-10 w-2/3 pl-5 text-start sm:text-center'
+              className='w-2/3 text-center'
               onClick={() => setEditableSectionId(resume?.user?.id)}
               onBlur={(e) => editBlurEvent(e)}
             >
@@ -137,21 +137,15 @@ export default function AmitPachange() {
             </div>
           </div>
           <div className='p-5'>
-            <div className='print:max-w-letter print:max-h-letter flex flex-col print:mx-0 print:my-0 sm:mt-10 sm:flex-row '>
+            <div className='flex flex-col sm:flex-row '>
               <div className='flex flex-col sm:w-1/3'>
-                <div className='order-3 py-3 sm:order-none'>
-                  {renderContactInfo()}
-                </div>
-                <div className='order-2 py-3 sm:order-none'>
-                  {renderSkills()}
-                </div>
-                <div className='order-1 py-3 sm:order-none'>
-                  {renderEducation()}
-                </div>
+                <div className='py-3'>{renderContactInfo()}</div>
+                <div className='py-3'>{renderSkills()}</div>
+                <div className='py-3'>{renderEducation()}</div>
               </div>
-              <div className='order-first flex flex-col sm:order-none sm:-mt-10 sm:w-2/3'>
+              <div className='flex flex-col sm:w-2/3'>
                 <div className='py-3'>
-                  <h2 className='text-top-color text-lg font-bold'>About Me</h2>
+                  <h2 className='text-top-color text-xl font-medium'>About Me</h2>
                   {renderSummary()}
                 </div>
                 <div className='py-3'>{renderExperiences()}</div>

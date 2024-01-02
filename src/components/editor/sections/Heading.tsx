@@ -39,11 +39,11 @@ export default function Heading({ children, id, className }: HeadingProps) {
   return (
     <>
       <div
-        className='relative flex cursor-pointer items-center'
+        className='relative mb-2 flex cursor-pointer items-center'
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        <h2 className={`text-lg font-bold ${className}`}>{children}</h2>
+        <h2 className={`text-xl font-medium ${className}`}>{children}</h2>
         {allowNew && isHovered ? (
           <button
             className='ml-2 inline-block opacity-0 transition-opacity duration-200'

@@ -126,7 +126,7 @@ export default function JakeRyan() {
                 >
                   {isHovered == key ? (
                     <button
-                      className='absolute -right-8 z-10 inline-block rounded bg-red-400 p-1 opacity-0 transition-opacity duration-200'
+                      className='absolute -right-4 z-10 inline-block rounded p-1 opacity-0 transition-opacity duration-200'
                       style={{ opacity: isHovered ? 1 : 0 }}
                       onClick={() => removeEduSection(key)}
                     >
@@ -208,7 +208,7 @@ export default function JakeRyan() {
                 >
                   {isHovered == key ? (
                     <button
-                      className='absolute -right-4 z-10 inline-block rounded bg-red-400 p-1 opacity-0 transition-opacity duration-200'
+                      className='absolute -right-4 bottom-1 z-10 inline-block rounded p-2 opacity-0 transition-opacity duration-200'
                       style={{ opacity: isHovered ? 1 : 0 }}
                       onClick={() => removeExpSection(key)}
                     >
@@ -341,7 +341,7 @@ export default function JakeRyan() {
                 >
                   {isHovered == key ? (
                     <button
-                      className='absolute -right-4 z-10 inline-block rounded bg-red-400 p-1 opacity-0 transition-opacity duration-200'
+                      className='absolute -right-4 bottom-4 z-10 inline-block rounded p-1 opacity-0 transition-opacity duration-200'
                       style={{ opacity: isHovered ? 1 : 0 }}
                       onClick={() => removeExpSection(key)}
                     >
