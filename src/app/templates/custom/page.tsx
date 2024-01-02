@@ -135,14 +135,16 @@ export default function CustomTemplate() {
   };
 
   const removeItemPosition = (idx: number, position: string) => {
-    if (position === 'right') {
-      const rightWidgetsCopy = [...rightWidgets];
-      rightWidgetsCopy.splice(idx, 1);
-      setRightWidgets(rightWidgetsCopy);
-    } else {
-      const leftWidgetsCopy = [...leftWidgets];
-      leftWidgetsCopy.splice(idx, 1);
-      setLeftWidgets(leftWidgetsCopy);
+    if (window.confirm('Remove this item?')) {
+      if (position === 'right') {
+        const rightWidgetsCopy = [...rightWidgets];
+        rightWidgetsCopy.splice(idx, 1);
+        setRightWidgets(rightWidgetsCopy);
+      } else {
+        const leftWidgetsCopy = [...leftWidgets];
+        leftWidgetsCopy.splice(idx, 1);
+        setLeftWidgets(leftWidgetsCopy);
+      }
     }
   };
 
