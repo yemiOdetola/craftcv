@@ -91,7 +91,7 @@ export default function CustomTemplate() {
     e.dataTransfer.setData('widgetType', widgetType);
   };
 
-  const handleOnDrop = (e: React.DragEvent, position: string) => {
+  const handleOnDrop = (e: any, position: string) => {
     const widgetType = e.dataTransfer.getData('widgetType') as string;
     const rlWidgets = [...leftWidgets, ...rightWidgets];
     // TODO: hmm, should I accept duplicate widget on seperate columns?? - nah, don't
@@ -110,7 +110,8 @@ export default function CustomTemplate() {
     e.preventDefault();
   };
 
-  const handleReorder = (position: string) => {
+  const handleReorder = (e: any, position: string) => {
+    dragStartWidget.current = 0;
     const lwc = [...leftWidgets];
     const rwc = [...rightWidgets];
     if (position == 'left') {
@@ -124,6 +125,13 @@ export default function CustomTemplate() {
       rwc[dragToWidget.current] = temp;
       setRightWidgets(rwc);
     }
+  };
+
+  const onDragEnter = (e: any, position: string, index: number) => {
+    if (e?.target?.parentElement?.id !== position) {
+      return;
+    }
+    dragToWidget.current = index;
   };
 
   const removeItemPosition = (idx: number, position: string) => {
@@ -174,6 +182,7 @@ export default function CustomTemplate() {
         className={`tpheight h-[480px] overflow-x-hidden p-2 ${
           twoColumns && 'w-1/2'
         }`}
+        id={`${position}`}
         onDrop={(e) => handleOnDrop(e, position)}
         onDragOver={handleDragOver}
       >
@@ -185,13 +194,13 @@ export default function CustomTemplate() {
             key={index}
             draggable
             onDragStart={() => (dragStartWidget.current = index)}
-            onDragEnter={() => (dragToWidget.current = index)}
-            onDragEnd={() => handleReorder(position)}
+            onDragEnter={(e) => onDragEnter(e, position, index)}
+            onDragEnd={(e) => handleReorder(e, position)}
             onDragOver={handleDragOver}
           >
             <div
               onClick={() => removeItemPosition(index, position)}
-              className='absolute right-1 top-1 cursor-pointer p-2 text-red-400 opacity-30 transition-all duration-300 hover:opacity-100'
+              className='absolute right-1 top-1 cursor-pointer p-2 text-red-400 opacity-30 transition-all duration-300 hover:scale-150 hover:opacity-100'
             >
               <PiTrashDuotone size={16} />
             </div>
