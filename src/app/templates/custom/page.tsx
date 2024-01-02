@@ -214,6 +214,13 @@ export default function CustomTemplate() {
     );
   };
 
+  const toggleTwoColumns = () => {
+    if (twoColumns == true) {
+      setRightWidgets([]);
+    }
+    setTwoColumns(!twoColumns);
+  };
+
   return (
     <main className='bg-white'>
       <Container className='min-h-screen bg-white'>
@@ -229,7 +236,7 @@ export default function CustomTemplate() {
               <h5>Two column format</h5>
               <Toggle
                 active={twoColumns}
-                setActive={() => setTwoColumns(!twoColumns)}
+                setActive={toggleTwoColumns}
                 labelSr='Use two colum format'
               />
             </div>
