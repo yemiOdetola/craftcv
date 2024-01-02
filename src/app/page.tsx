@@ -40,7 +40,7 @@ export default function Home() {
             </div>
             <div className='w-full p-1 md:w-3/5'>
               <span className='text-base font-light text-gray-700'>
-                Break free from the ordinary.
+                Break free from the ordinary
               </span>
               <h1 className='mt-3 text-5xl font-semibold'>
                 Craft your resume with EASE!
@@ -48,7 +48,7 @@ export default function Home() {
               <p className='my-5 text-lg text-gray-700'>
                 Unlock boundless opportunities with personalized CV templates
                 tailored just for you. Stand out from the crowd with unique,
-                visually stunning CVs, and elevate your career to new heights.
+                visually stunning CVs, and elevate your career to new height 🧐
               </p>
               <Link
                 href='/templates'
