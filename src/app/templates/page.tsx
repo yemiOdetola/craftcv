@@ -4,7 +4,7 @@ import { Tab } from '@headlessui/react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Footer } from '@/components/common/Footer';
-import { Button, Container } from '@/components/common';
+import { Button, Container, Loading } from '@/components/common';
 import { BottomNavigation, Template } from '@/components/templates';
 import {
   amitpachange,
@@ -12,7 +12,7 @@ import {
   jakeryan,
   odetolaazeez,
 } from '@/store/resume';
-import { useMainStore } from '@/store';
+import { useLoading, useMainStore } from '@/store';
 
 const templates: any = [
   {
@@ -83,6 +83,7 @@ export default function Templates() {
   const [tabOrientation, setTabOrientation] = useState('horizontal');
   const [selectedTemplate, selectTemplate] = useState<any>(null);
   const setLayout = (layout: any) => updateCustomLayout(layout);
+  const loading = useLoading();
 
   useEffect(() => {
     let lgMediaQuery = window.matchMedia('(min-width: 1024px)');
@@ -103,6 +104,11 @@ export default function Templates() {
     const customOptions: any = {};
     customOptions.custom = false;
     setLayout(customOptions);
+
+    if (window.confirm('Do you want to clear your saved resume?')) {
+      updateResume({});
+    }
+    
     updateResume(selectedTemplate.base);
     router.push(selectedTemplate.href);
   };
@@ -181,8 +187,14 @@ export default function Templates() {
         <Button href='-1' className='bg-gray-300 px-8 py-3 text-gray-500'>
           Cancel
         </Button>
-        <Button onClick={gotoTemplate} className='px-8 py-3'>
-          Continue
+
+        <Button
+          onClick={gotoTemplate}
+          className='w-36 px-2 py-3 transition-all duration-300'
+          disabled={loading}
+        >
+          {loading ? <Loading className='h-4 w-4' /> : null}
+          <span className='ml-2'>Continue</span>
         </Button>
       </BottomNavigation>
       {/* <Footer /> */}

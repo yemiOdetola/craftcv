@@ -38,7 +38,10 @@ export default function Coutume() {
   };
 
   useEffect(() => {
-    if (isObjectEmpty(customLayout) && isObjectEmpty(resume)) {
+    if (
+      !customLayout?.base ||
+      (isObjectEmpty(customLayout) && isObjectEmpty(resume))
+    ) {
       router.push('/templates/custom');
     } else if (isObjectEmpty(resume) && !isObjectEmpty(customLayout['base'])) {
       updateResume(customLayout['base']);

@@ -1,5 +1,6 @@
 'use client';
 import { EditorCover, InlineEdit } from '@/components/editor';
+import Heading from '@/components/editor/sections/Heading';
 import {
   useFontFamily,
   useEditorTheme,
@@ -21,14 +22,6 @@ export default function JakeRyan() {
   const [resume] = useState(useResume());
   const [color1, color2] = editorTheme;
   const [editableSection, setEditableSectionId] = useState<string | null>(null);
-  const secprops = {
-    color1,
-    color2,
-    editableSection,
-    setEditableSectionId,
-    editBlurEvent: (e: React.FocusEvent<HTMLDivElement, Element>) =>
-      editBlurEvent(e),
-  };
 
   useEffect(() => {
     if (isObjectEmpty(resume)) {
@@ -43,12 +36,21 @@ export default function JakeRyan() {
     }
   };
 
-  const removeEduSection = (key: string) => {
-    removeFromPath(['education', key]);
-  };
-
-  const removeExpSection = (key: string) => {
-    removeFromPath(['experiences', key]);
+  const removeSection = (
+    key: string,
+    type: 'experiences' | 'education' | 'projects'
+  ) => {
+    if (window.confirm('Are you sure?')) {
+      if (type == 'education') {
+        removeFromPath(['education', key]);
+      }
+      if (type == 'experiences') {
+        removeFromPath(['experiences', key]);
+      }
+      if (type == 'projects') {
+        removeFromPath(['projects', key]);
+      }
+    }
   };
 
   return (
@@ -64,7 +66,7 @@ export default function JakeRyan() {
                 text={resume.user.fullname}
                 editable={resume.user.id == editableSection}
                 onSave={(val) => saveWithPath(['user', 'fullname'], val)}
-                className='text-center text-2xl font-bold text-gray-800'
+                className='text-center text-2xl font-bold text-gray-800 sm:text-4xl'
                 dottedActive
               />
               <ul className='mx-auto flex w-full list-inside flex-wrap gap-x-1 lg:w-full'>
@@ -83,7 +85,7 @@ export default function JakeRyan() {
                           <InlineEdit
                             text={value}
                             editable={editableSection == resume?.contact?.id}
-                            className='inline-block text-xs text-gray-700 underline underline-offset-2'
+                            className='inline-block text-xs underline underline-offset-2'
                             dottedActive
                             onSave={(val) =>
                               saveWithPath(['contact', key], val)
@@ -109,15 +111,18 @@ export default function JakeRyan() {
         ) : null}
 
         <section className='mt-2 w-full'>
-          <h2 className='mb-2 border-b border-gray-700 text-lg font-bold tracking-widest text-gray-700 print:font-normal'>
-            EDUCATION
-          </h2>
+          <Heading
+            id='education'
+            className='border-b border-gray-700 font-medium uppercase tracking-widest'
+          >
+            Education
+          </Heading>
           {resume?.education &&
             Object.keys(resume.education).map((key: any, index: number) => {
               const edu = resume.education[key];
               return (
                 <div
-                  className='relative mb-1'
+                  className='relative mb-1.5'
                   key={`resume-education-${index}`}
                   onClick={() => setEditableSectionId(key)}
                   onBlur={editBlurEvent}
@@ -126,9 +131,9 @@ export default function JakeRyan() {
                 >
                   {isHovered == key ? (
                     <button
-                      className='absolute -right-4 z-10 inline-block rounded p-1 opacity-0 transition-opacity duration-200'
+                      className='absolute -right-4 z-10 inline-block rounded bg-red-400 p-1 opacity-0 transition-opacity duration-200'
                       style={{ opacity: isHovered ? 1 : 0 }}
-                      onClick={() => removeEduSection(key)}
+                      onClick={() => removeSection(key, 'education')}
                     >
                       <PiTrashSimpleDuotone size={20} color='white' />
                     </button>
@@ -138,7 +143,7 @@ export default function JakeRyan() {
                       text={edu?.school}
                       editable={editableSection == key}
                       placeholder='Institution/University Attended'
-                      className='font-semibold leading-snug text-gray-800'
+                      className='font-semibold text-gray-800'
                       onSave={(val) =>
                         saveWithPath(['education', key], {
                           ...edu,
@@ -150,7 +155,7 @@ export default function JakeRyan() {
                       text={edu?.location || 'Location, Exact.'}
                       editable={editableSection == key}
                       placeholder='Institution location'
-                      className='leading-snug text-gray-800'
+                      className='text-gray-800'
                       onSave={(val) =>
                         saveWithPath(['education', key], {
                           ...edu,
@@ -159,11 +164,10 @@ export default function JakeRyan() {
                       }
                     />
                   </div>
-                  <div className='flex w-full flex-wrap items-center justify-between'>
+                  <div className='flex w-full flex-wrap items-center justify-between text-xs'>
                     <InlineEdit
                       text={edu?.award}
                       editable={editableSection == key}
-                      className='text-xs italic leading-normal text-gray-600'
                       placeholder='Academic Degree (Program)'
                       onSave={(val) =>
                         saveWithPath(['education', key], {
@@ -175,7 +179,6 @@ export default function JakeRyan() {
                     <InlineEdit
                       text={edu?.gradyear}
                       editable={editableSection == key}
-                      className='text-xs italic text-gray-600'
                       placeholder='Year of Completion'
                       dottedActive
                       onSave={(val) =>
@@ -191,15 +194,18 @@ export default function JakeRyan() {
             })}
         </section>
         <section className='w-full pb-2 first:mt-0'>
-          <h2 className='mb-2 border-b border-gray-700 text-lg font-bold tracking-widest text-gray-700 print:font-normal'>
-            EXPERIENCE
-          </h2>
+          <Heading
+            id='experiences'
+            className='border-b border-gray-700 text-lg font-medium uppercase tracking-widest'
+          >
+            Experiences
+          </Heading>
           {resume?.experiences &&
             Object.keys(resume.experiences).map((key: any, index: number) => {
               const exp = resume?.experiences[key];
               return (
                 <div
-                  className='relative mb-2 flex flex-col pb-4'
+                  className='relative mb-2 flex flex-col'
                   key={`experience-${index}`}
                   onClick={() => setEditableSectionId(key)}
                   onBlur={editBlurEvent}
@@ -208,17 +214,17 @@ export default function JakeRyan() {
                 >
                   {isHovered == key ? (
                     <button
-                      className='absolute -right-4 bottom-1 z-10 inline-block rounded p-2 opacity-0 transition-opacity duration-200'
+                      className='absolute -right-6 bottom-4 z-10 inline-block rounded bg-red-400 p-1 opacity-0 transition-opacity duration-200'
                       style={{ opacity: isHovered ? 1 : 0 }}
-                      onClick={() => removeExpSection(key)}
+                      onClick={() => removeSection(key, 'experiences')}
                     >
                       <PiTrashSimpleDuotone size={20} color='white' />
                     </button>
                   ) : null}
-                  <div className='flex flex-wrap items-center justify-between'>
+                  <div className='flex flex-wrap items-center justify-between text-gray-800'>
                     <InlineEdit
                       text={exp.position}
-                      className='text-md p-0 font-bold text-gray-800'
+                      className='text-md p-0 font-semibold'
                       editable={editableSection == key}
                       dottedActive
                       placeholder='Position/Title'
@@ -232,7 +238,7 @@ export default function JakeRyan() {
                     <div className='flex items-center justify-normal gap-x-2'>
                       <InlineEdit
                         text={exp.startDate}
-                        className='p-0 text-sm italic leading-normal text-gray-800'
+                        className='p-0 text-sm'
                         editable={editableSection == key}
                         dottedActive
                         placeholder='Start date'
@@ -246,7 +252,7 @@ export default function JakeRyan() {
                       <span> - </span>
                       <InlineEdit
                         text={exp.endDate}
-                        className='p-0 text-sm leading-normal text-gray-500'
+                        className='p-0 text-sm'
                         editable={editableSection == key}
                         dottedActive
                         placeholder='End date'
@@ -259,10 +265,10 @@ export default function JakeRyan() {
                       />
                     </div>
                   </div>
-                  <div className='flex flex-wrap items-center justify-between'>
+                  <div className='flex flex-wrap items-center justify-between text-xs'>
                     <InlineEdit
                       text={exp.company}
-                      className='p-0 text-xs italic leading-snug text-gray-700'
+                      className='p-0'
                       editable={editableSection == key}
                       dottedActive
                       placeholder='Company'
@@ -275,7 +281,7 @@ export default function JakeRyan() {
                     />
                     <InlineEdit
                       text={exp.location}
-                      className='p-0 text-xs italic leading-snug text-gray-700'
+                      className='p-0'
                       editable={editableSection == key}
                       dottedActive
                       placeholder='Company'
@@ -287,7 +293,7 @@ export default function JakeRyan() {
                       }
                     />
                   </div>
-                  <ul className='list-disc space-y-1 pl-4 text-sm'>
+                  <ul className='list-disc space-y-0.5 pl-4 text-sm'>
                     {exp?.responsibilities &&
                       exp.responsibilities.map(
                         (responsibility: string, index: number) => (
@@ -324,9 +330,12 @@ export default function JakeRyan() {
             })}
         </section>
         <section className='w-full pb-2 first:mt-0'>
-          <h2 className='mb-2 border-b border-gray-700 text-lg font-bold tracking-widest text-gray-700 print:font-normal'>
+          <Heading
+            id='projects'
+            className='border-b border-gray-700 font-medium uppercase tracking-widest'
+          >
             Projects
-          </h2>
+          </Heading>
           {resume?.projects &&
             Object.keys(resume.projects).map((key: any, index: number) => {
               const project = resume?.projects[key];
@@ -341,9 +350,9 @@ export default function JakeRyan() {
                 >
                   {isHovered == key ? (
                     <button
-                      className='absolute -right-4 bottom-4 z-10 inline-block rounded p-1 opacity-0 transition-opacity duration-200'
+                      className='absolute -right-5 bottom-4 z-10 inline-block rounded bg-red-400 p-1 opacity-0 transition-opacity duration-200'
                       style={{ opacity: isHovered ? 1 : 0 }}
-                      onClick={() => removeExpSection(key)}
+                      onClick={() => removeSection(key, 'projects')}
                     >
                       <PiTrashSimpleDuotone size={20} color='white' />
                     </button>
@@ -352,7 +361,7 @@ export default function JakeRyan() {
                     <div className='flex items-center gap-x-3'>
                       <InlineEdit
                         text={project.title}
-                        className='text-md p-0 font-bold text-gray-800'
+                        className='text-md p-0 font-bold'
                         editable={editableSection == key}
                         dottedActive
                         placeholder='Project title'
@@ -367,7 +376,7 @@ export default function JakeRyan() {
                         text={project?.tech}
                         editable={editableSection == key}
                         placeholder='Tools/Technologies used'
-                        className='font-mono text-xs italic'
+                        className='font-mono text-xs'
                         onSave={(val) =>
                           saveWithPath(['projects', key], {
                             ...project,
@@ -384,7 +393,7 @@ export default function JakeRyan() {
                       >
                         <InlineEdit
                           text={project.url}
-                          className='text-xs italic leading-normal text-gray-800'
+                          className='text-xs'
                           editable={editableSection == key}
                           dottedActive
                           placeholder='Start date'
@@ -402,7 +411,7 @@ export default function JakeRyan() {
                     text={project.description}
                     placeholder='Description of achievements'
                     editable={editableSection == key}
-                    className='mb-1 pl-2 text-sm font-normal text-gray-700'
+                    className='mt-1 text-sm'
                     onSave={(val) =>
                       saveWithPath(['projects', key], {
                         ...project,
@@ -415,9 +424,12 @@ export default function JakeRyan() {
             })}
         </section>
         <section className='mb-4 mt-0 pb-6 first:mt-0'>
-          <h2 className='mb-2 border-b border-gray-700 text-lg font-bold tracking-widest text-gray-700 print:font-normal'>
-            SKILLS
-          </h2>
+          <Heading
+            id='technical skills'
+            className='border-b border-gray-700 font-medium uppercase tracking-widest'
+          >
+            Skills
+          </Heading>
           <section className='mb-0'>
             <section
               className='mt-1 last:pb-1'
@@ -426,13 +438,13 @@ export default function JakeRyan() {
               }
               onBlur={editBlurEvent}
             >
-              <ul className='text-md -mb-1 -mr-1.5 flex flex-wrap font-bold leading-relaxed'>
+              <ul className='flex flex-wrap items-center text-sm font-bold leading-relaxed'>
                 {resume['technical skills'] &&
                   resume['technical skills']?.skillset.map(
                     (skill: string, index: number) => {
                       return (
                         <li
-                          className='print:border-inset mb-1 mr-1.5 bg-gray-800 p-1.5 leading-relaxed text-white print:bg-white'
+                          className=' mb-2 mr-2 h-8 border border-gray-800 p-1.5'
                           key={`resume-skills-${index}`}
                         >
                           <InlineEdit
