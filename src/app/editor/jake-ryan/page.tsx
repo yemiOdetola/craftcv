@@ -64,7 +64,7 @@ export default function JakeRyan() {
             >
               <InlineEdit
                 text={resume.user.fullname}
-                editable={resume.user.id == editableSection}
+                editable={editableSection == resume?.user?.id}
                 onSave={(val) => saveWithPath(['user', 'fullname'], val)}
                 className='text-center text-2xl font-bold text-gray-800 sm:text-4xl'
                 dottedActive
@@ -84,7 +84,7 @@ export default function JakeRyan() {
                         >
                           <InlineEdit
                             text={value}
-                            editable={editableSection == resume?.contact?.id}
+                            editable={editableSection == resume?.user?.id}
                             className='inline-block text-xs underline underline-offset-2'
                             dottedActive
                             onSave={(val) =>
