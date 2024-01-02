@@ -77,16 +77,21 @@ export const useEditorActions = () => {
   };
 
   const removeInputField = (pathArray: string[]) => {
+    console.log('pathArraypathArraypathArraypathArray', pathArray);
     const idx: any = pathArray.pop();
-    const pathArr = [...pathArray];
-    const lastSection = pathArr[pathArr.length - 1];
-    const updatedResume = { ...resume };
-    let parentSections = updatedResume;
-    for (let i = 0; i < pathArr.length - 1; i++) {
-      parentSections = parentSections[pathArr[i]];
+    if (idx > 0) {
+      const pathArr = [...pathArray];
+      const lastSection = pathArr[pathArr.length - 1];
+      const updatedResume = { ...resume };
+      let parentSections = updatedResume;
+      for (let i = 0; i < pathArr.length - 1; i++) {
+        parentSections = parentSections[pathArr[i]];
+      }
+      parentSections[lastSection].splice(idx, 1);
+      updateResume(updatedResume);
+    } else {
+      alert('Don\'t be weird!');
     }
-    parentSections[lastSection].splice(idx, 1);
-    updateResume(updatedResume);
     //TODO: set the next input field to be active, if available.
   };
 

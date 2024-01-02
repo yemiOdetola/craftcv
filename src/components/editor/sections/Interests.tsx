@@ -29,14 +29,10 @@ export default function Interests({
         {interests &&
           interests.map((interest, index) => {
             return (
-              <div
-                className='flex items-center space-y-1.5'
-                key={`interest-${index}`}
-              >
+              <div className='text-sm' key={`interest-${index}`}>
                 <InlineEdit
                   text={interest}
                   editable={editableSection == 'interests'}
-                  className='ml-2 text-xs'
                   dottedActive
                   placeholder='Add interest'
                   elementPath={['interests', index]}

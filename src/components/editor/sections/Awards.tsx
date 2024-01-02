@@ -43,7 +43,7 @@ export default function Awards({
                 onMouseEnter={() => setIsHovered(key)}
                 onMouseLeave={() => setIsHovered(null)}
               >
-                {isHovered == 'key' ? (
+                {isHovered == key ? (
                   <button
                     className='absolute right-4 inline-block p-2 opacity-0 transition-opacity duration-200'
                     style={{ opacity: isHovered ? 1 : 0 }}
