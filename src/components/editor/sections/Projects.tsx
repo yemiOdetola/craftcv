@@ -64,7 +64,7 @@ export default function Projects({
                 editable={editableSection == key}
                 placeholder='Tools/Technologies used'
                 style={{ color: `#${color1}` }}
-                className='font-semibold text-green-700'
+                className='text-xs leading-5 font-semibold text-green-700'
                 onSave={(val) =>
                   saveWithPath(['projects', key], { ...project, tech: val })
                 }

@@ -139,17 +139,19 @@ export default function AmitPachange() {
           <div className='p-5'>
             <div className='flex flex-col sm:flex-row '>
               <div className='flex flex-col sm:w-1/3'>
-                <div className='py-3'>{renderContactInfo()}</div>
-                <div className='py-3'>{renderSkills()}</div>
-                <div className='py-3'>{renderEducation()}</div>
+                <div>{renderContactInfo()}</div>
+                <div>{renderSkills()}</div>
+                <div>{renderEducation()}</div>
               </div>
               <div className='flex flex-col sm:w-2/3'>
-                <div className='py-3'>
-                  <h2 className='text-top-color text-xl font-medium'>About Me</h2>
+                <div className='pt-3'>
+                  <h2 className='text-top-color text-xl mb-2'>
+                    About Me
+                  </h2>
                   {renderSummary()}
                 </div>
-                <div className='py-3'>{renderExperiences()}</div>
-                <div className='py-3'>{renderProjects()}</div>
+                <div>{renderExperiences()}</div>
+                <div>{renderProjects()}</div>
               </div>
             </div>
           </div>

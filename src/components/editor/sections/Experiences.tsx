@@ -53,7 +53,7 @@ export default function Experiences({
                   <PiTrashSimpleDuotone size={20} />
                 </button>
               ) : null}
-              <div className='-my-0.5 flex items-center justify-normal font-semibold'>
+              <div className='-my-0.5 flex items-center space-x-2 justify-normal font-semibold'>
                 <InlineEdit
                   text={exp.company}
                   editable={editableSection == key}
@@ -71,6 +71,7 @@ export default function Experiences({
                   text={exp.position}
                   editable={editableSection == key}
                   dottedActive
+                  className='text-xs'
                   placeholder='Position/Title'
                   onSave={(val) =>
                     saveWithPath(['experiences', key], {
