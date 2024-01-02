@@ -12,6 +12,7 @@ import { useEditorActions } from '@/utils/useEditorActions';
 import React, { useEffect, useState } from 'react';
 import { getIconByType } from '../Icons';
 import { PiTrashSimpleDuotone } from 'react-icons/pi';
+import Heading from '@/components/editor/sections/Heading';
 
 export default function OdetolaAzeez() {
   const fontFamily = useFontFamily();
@@ -36,12 +37,21 @@ export default function OdetolaAzeez() {
     }
   };
 
-  const removeEduSection = (key: string) => {
-    removeFromPath(['education', key]);
-  };
-
-  const removeExpSection = (key: string) => {
-    removeFromPath(['experiences', key]);
+  const removeSection = (
+    key: string,
+    type: 'experiences' | 'education' | 'projects'
+  ) => {
+    if (window.confirm('Are you sure?')) {
+      if (type == 'education') {
+        removeFromPath(['education', key]);
+      }
+      if (type == 'experiences') {
+        removeFromPath(['experiences', key]);
+      }
+      if (type == 'projects') {
+        removeFromPath(['projects', key]);
+      }
+    }
   };
 
   return (
@@ -54,11 +64,11 @@ export default function OdetolaAzeez() {
               onBlur={(e: any) => editBlurEvent(e)}
             >
               <InlineEdit
-                // text={resume.user.fullname}
-                text='Odetola Azeez Opeyemi'
+                text={resume.user.fullname}
+                placeholder='Professional name...'
                 editable={resume.user.id == editableSection}
                 onSave={(val) => saveWithPath(['user', 'fullname'], val)}
-                className='text-center text-2xl font-bold text-gray-800'
+                className='sm: text-center text-2xl font-bold text-gray-800 sm:text-4xl'
                 dottedActive
               />
               <ul className='mx-auto flex w-full list-inside flex-wrap justify-center gap-x-2 sm:w-[70%]'>
@@ -74,12 +84,12 @@ export default function OdetolaAzeez() {
                           className='mt-1 flex items-center text-gray-600'
                           key={`resume-contact-${index}`}
                         >
-                          <span className='font-sm w-6 text-gray-700'>
+                          <span className='font-sm w-6'>
                             {getIconByType(key)}
                           </span>
                           <InlineEdit
                             text={value}
-                            editable={editableSection == 'contact'}
+                            editable={editableSection == resume.user.id}
                             className='inline-block text-sm text-gray-600'
                             dottedActive
                             onSave={(val) =>
@@ -106,62 +116,12 @@ export default function OdetolaAzeez() {
         ) : null}
         <section className='flex flex-col pt-5 sm:flex-row'>
           <section className='w-full pr-4 sm:w-2/5'>
-            {/* <section
-              className='mb-4 border-b-4 border-gray-300 pb-4'
-              onClick={() => setEditableSectionId(resume?.contact?.id)}
-              onBlur={editBlurEvent}
-            >
-              <h2 className='mb-2 text-xl font-bold uppercase tracking-widest text-gray-700'>
-                Contact
-              </h2>
-
-              <ul className='list-inside pr-7'>
-                {resume?.contact &&
-                  Object.keys(resume.contact).map((key, index) => {
-                    if (resume?.contact[key] !== 'contact') {
-                      const value = resume.contact[key];
-                      const link = /^http(s)?:\/\//.test(value)
-                        ? value
-                        : `https://${value}`;
-                      return (
-                        <li
-                          className='mt-1 flex items-center text-gray-600'
-                          key={`resume-contact-${index}`}
-                        >
-                          <span className='font-sm w-6 text-gray-700'>
-                            {getIconByType(key)}
-                          </span>
-                          <InlineEdit
-                            text={value}
-                            editable={editableSection == 'contact'}
-                            className='inline-block text-sm text-gray-600'
-                            dottedActive
-                            onSave={(val) =>
-                              saveWithPath(['contact', key], val)
-                            }
-                          />
-                          <a
-                            className='group ml-1'
-                            target='_blank'
-                            href={link}
-                            rel='noopener noreferrer'
-                          >
-                            <span className='inline-block text-gray-500'>
-                              ↗
-                            </span>
-                          </a>
-                        </li>
-                      );
-                    }
-                  })}
-              </ul>
-            </section> */}
             <section
               className=' border-b-4 border-gray-300 pb-4 first:mt-0'
               onClick={() => setEditableSectionId(resume?.about?.id)}
               onBlur={(e: any) => editBlurEvent(e)}
             >
-              <h2 className='mb-2 text-xl font-bold uppercase tracking-widest text-gray-700 print:font-normal'>
+              <h2 className='mb-2 text-xl font-bold uppercase tracking-widest'>
                 Summary
               </h2>
               <InlineEdit
@@ -172,16 +132,18 @@ export default function OdetolaAzeez() {
               />
             </section>
             <section className='mt-2  border-b-4 border-gray-300 first:mt-0'>
-              <h2 className='mb-2 text-lg font-bold tracking-widest text-gray-700 print:font-normal'>
-                EDUCATION
-              </h2>
-
+              <Heading
+                id='education'
+                className='font-lg uppercase tracking-widest'
+              >
+                Education
+              </Heading>
               {resume?.education &&
                 Object.keys(resume.education).map((key: any, index: number) => {
                   const edu = resume.education[key];
                   return (
                     <div
-                      className='relative mb-2 flex flex-col'
+                      className='relative mb-2 flex flex-col text-sm'
                       key={`resume-education-${index}`}
                       onClick={() => setEditableSectionId(key)}
                       onBlur={editBlurEvent}
@@ -192,7 +154,7 @@ export default function OdetolaAzeez() {
                         <button
                           className='absolute right-4 inline-block p-2 opacity-0 transition-opacity duration-200'
                           style={{ opacity: isHovered ? 1 : 0 }}
-                          onClick={() => removeEduSection(key)}
+                          onClick={() => removeSection(key, 'education')}
                         >
                           <PiTrashSimpleDuotone size={20} />
                         </button>
@@ -201,7 +163,7 @@ export default function OdetolaAzeez() {
                         text={edu?.school}
                         editable={editableSection == key}
                         placeholder='Institution/University Attended'
-                        className='-mb-0.5 text-sm font-semibold leading-snug text-gray-700'
+                        className='font-semibold leading-snug'
                         onSave={(val) =>
                           saveWithPath(['education', key], {
                             ...edu,
@@ -212,7 +174,7 @@ export default function OdetolaAzeez() {
                       <InlineEdit
                         text={edu?.award}
                         editable={editableSection == key}
-                        className='-mb-0.5 text-xs leading-normal text-gray-500'
+                        className='p-0 text-xs leading-normal text-gray-500'
                         placeholder='Academic Degree (Program)'
                         onSave={(val) =>
                           saveWithPath(['education', key], {
@@ -224,7 +186,7 @@ export default function OdetolaAzeez() {
                       <InlineEdit
                         text={edu?.gradyear}
                         editable={editableSection == key}
-                        className='text-sm font-semibold'
+                        className='font-semibold'
                         placeholder='Year of Completion'
                         dottedActive
                         onSave={(val) =>
@@ -238,11 +200,108 @@ export default function OdetolaAzeez() {
                   );
                 })}
             </section>
-            <section className='mb-4 mt-0  border-b-4 border-gray-300 pb-6 first:mt-0'>
-              <h2 className='mb-2 pt-2 text-lg font-bold tracking-widest text-gray-700 print:font-normal'>
-                SKILLS
-              </h2>
-              <section className='mb-0 '>
+            <section className='mt-2 border-b-4 border-gray-300 pb-2'>
+              <Heading
+                id='projects'
+                className='font-medium uppercase tracking-widest'
+              >
+                Projects
+              </Heading>
+              {resume?.projects &&
+                Object.keys(resume.projects).map((key: any, index: number) => {
+                  const project = resume?.projects[key];
+                  return (
+                    <div
+                      className='relative mb-2 flex flex-col pb-4'
+                      key={`project-${index}`}
+                      onClick={() => setEditableSectionId(key)}
+                      onBlur={editBlurEvent}
+                      onMouseEnter={() => setIsHovered(key)}
+                      onMouseLeave={() => setIsHovered('')}
+                    >
+                      {isHovered == key ? (
+                        <button
+                          className='absolute -right-5 bottom-4 z-10 inline-block rounded bg-red-400 p-1 opacity-0 transition-opacity duration-200'
+                          style={{ opacity: isHovered ? 1 : 0 }}
+                          onClick={() => removeSection(key, 'projects')}
+                        >
+                          <PiTrashSimpleDuotone size={20} color='white' />
+                        </button>
+                      ) : null}
+                      <div className='flex flex-wrap items-center justify-between'>
+                        <div className='flex items-center gap-x-3'>
+                          <InlineEdit
+                            text={project.title}
+                            className='text-md p-0 font-bold'
+                            editable={editableSection == key}
+                            dottedActive
+                            placeholder='Project title'
+                            onSave={(val) =>
+                              saveWithPath(['projects', key], {
+                                ...project,
+                                title: val,
+                              })
+                            }
+                          />
+                          <InlineEdit
+                            text={project?.tech}
+                            editable={editableSection == key}
+                            placeholder='Tools/Technologies used'
+                            className='font-mono text-xs'
+                            onSave={(val) =>
+                              saveWithPath(['projects', key], {
+                                ...project,
+                                tech: val,
+                              })
+                            }
+                          />
+                        </div>
+                        <div className='flex items-center justify-normal gap-x-2'>
+                          <a
+                            href={project.url}
+                            target='_blank'
+                            rel='noopener noreferrer'
+                          >
+                            <InlineEdit
+                              text={project.url}
+                              className='text-xs'
+                              editable={editableSection == key}
+                              dottedActive
+                              placeholder='Start date'
+                              onSave={(val) =>
+                                saveWithPath(['experiences', key], {
+                                  ...project,
+                                  url: val,
+                                })
+                              }
+                            />
+                          </a>
+                        </div>
+                      </div>
+                      <InlineEdit
+                        text={project.description}
+                        placeholder='Description of achievements'
+                        editable={editableSection == key}
+                        className='mt-1 text-sm'
+                        onSave={(val) =>
+                          saveWithPath(['projects', key], {
+                            ...project,
+                            description: val,
+                          })
+                        }
+                      />
+                    </div>
+                  );
+                })}
+            </section>
+            <section className='mt-2 border-b-4 border-gray-300 pb-2'>
+              <Heading
+                id='technical skills'
+                className='font-medium uppercase tracking-widest'
+              >
+                Skills
+              </Heading>
+              <section className='mb-0'>
                 <section
                   className='mt-1 last:pb-1'
                   onClick={() =>
@@ -250,13 +309,13 @@ export default function OdetolaAzeez() {
                   }
                   onBlur={editBlurEvent}
                 >
-                  <ul className='text-md -mb-1 -mr-1.5 flex flex-wrap font-bold leading-relaxed'>
+                  <ul className='flex flex-wrap items-center text-sm font-bold leading-relaxed'>
                     {resume['technical skills'] &&
                       resume['technical skills']?.skillset.map(
                         (skill: string, index: number) => {
                           return (
                             <li
-                              className='print:border-inset mb-1 mr-1.5 bg-gray-800 p-1.5 leading-relaxed text-white print:bg-white'
+                              className=' mb-2 mr-2 h-8 border border-gray-800 p-1.5'
                               key={`resume-skills-${index}`}
                             >
                               <InlineEdit
@@ -266,6 +325,7 @@ export default function OdetolaAzeez() {
                                   resume['technical skills']?.id
                                 }
                                 className='text-sm'
+                                placeholder='Add skill'
                                 elementPath={[
                                   'technical skills',
                                   'skillset',
@@ -290,16 +350,19 @@ export default function OdetolaAzeez() {
             </section>
           </section>
 
-          <section className='w-full border-b-4 border-gray-300 pb-2 pl-4 first:mt-0 sm:w-3/5'>
-            <h2 className='mb-2 text-xl font-black tracking-widest text-gray-800 print:font-normal'>
-              EXPERIENCE
-            </h2>
+          <section className='w-full border-b-4 border-gray-300 pb-2 pl-4 sm:w-3/5'>
+            <Heading
+              id='experiences'
+              className='text-lg font-medium uppercase tracking-widest'
+            >
+              Experiences
+            </Heading>
             {resume?.experiences &&
               Object.keys(resume.experiences).map((key: any, index: number) => {
                 const exp = resume?.experiences[key];
                 return (
                   <div
-                    className='relative mb-6 flex  flex-col pb-4'
+                    className='relative mb-2 flex flex-col'
                     key={`experience-${index}`}
                     onClick={() => setEditableSectionId(key)}
                     onBlur={editBlurEvent}
@@ -308,104 +371,117 @@ export default function OdetolaAzeez() {
                   >
                     {isHovered == key ? (
                       <button
-                        className='absolute right-4 inline-block p-2 opacity-0 transition-opacity duration-200'
+                        className='absolute -right-6 bottom-4 z-10 inline-block rounded bg-red-400 p-1 opacity-0 transition-opacity duration-200'
                         style={{ opacity: isHovered ? 1 : 0 }}
-                        onClick={() => removeExpSection(key)}
+                        onClick={() => removeSection(key, 'experiences')}
                       >
-                        <PiTrashSimpleDuotone size={20} />
+                        <PiTrashSimpleDuotone size={20} color='white' />
                       </button>
                     ) : null}
-                    <InlineEdit
-                      text={exp.company}
-                      className='text-md font-semibold leading-snug text-gray-800'
-                      editable={editableSection == key}
-                      dottedActive
-                      placeholder='Company'
-                      onSave={(val) =>
-                        saveWithPath(['experiences', key], {
-                          ...exp,
-                          company: val,
-                        })
-                      }
-                    />
-                    <div className='flex items-center justify-normal'>
-                      <div className='flex items-center'>
-                        <div className='flex items-center justify-normal'>
-                          <InlineEdit
-                            text={exp.startDate}
-                            className='text-xs leading-normal text-gray-500'
-                            editable={editableSection == key}
-                            dottedActive
-                            placeholder='Start date'
-                            onSave={(val) =>
-                              saveWithPath(['experiences', key], {
-                                ...exp,
-                                startDate: val,
-                              })
-                            }
-                          />
-                          <span> - </span>
-                          <InlineEdit
-                            text={exp.endDate}
-                            className='text-xs leading-normal text-gray-500'
-                            editable={editableSection == key}
-                            dottedActive
-                            placeholder='End date'
-                            onSave={(val) =>
-                              saveWithPath(['experiences', key], {
-                                ...exp,
-                                endDate: val,
-                              })
-                            }
-                          />
-                        </div>
-                        <span> | </span>
+                    <div className='flex items-baseline justify-between text-lg font-semibold'>
+                      <InlineEdit
+                        text={exp.company}
+                        className='p-0'
+                        editable={editableSection == key}
+                        dottedActive
+                        placeholder='Company'
+                        onSave={(val) =>
+                          saveWithPath(['experiences', key], {
+                            ...exp,
+                            company: val,
+                          })
+                        }
+                      />
+                      <InlineEdit
+                        text={exp.location}
+                        className='p-0 text-xs text-gray-500'
+                        editable={editableSection == key}
+                        dottedActive
+                        placeholder='Company'
+                        onSave={(val) =>
+                          saveWithPath(['experiences', key], {
+                            ...exp,
+                            location: val,
+                          })
+                        }
+                      />
+                    </div>
+                    <div className='flex items-center space-x-3'>
+                      <InlineEdit
+                        text={exp.position}
+                        className='p-0 text-sm font-medium'
+                        editable={editableSection == key}
+                        dottedActive
+                        placeholder='Position/Title'
+                        onSave={(val) =>
+                          saveWithPath(['experiences', key], {
+                            ...exp,
+                            position: val,
+                          })
+                        }
+                      />
+                      <span> | </span>
+                      <div className='flex items-center justify-normal gap-x-1 text-xs'>
                         <InlineEdit
-                          text={exp.position}
-                          className='text-xs font-bold text-gray-700'
+                          text={exp.startDate}
+                          className='p-0'
                           editable={editableSection == key}
                           dottedActive
-                          placeholder='Position/Title'
+                          placeholder='Start date'
                           onSave={(val) =>
                             saveWithPath(['experiences', key], {
                               ...exp,
-                              position: val,
+                              startDate: val,
+                            })
+                          }
+                        />
+                        <span> - </span>
+                        <InlineEdit
+                          text={exp.endDate}
+                          className='p-0'
+                          editable={editableSection == key}
+                          dottedActive
+                          placeholder='End date'
+                          onSave={(val) =>
+                            saveWithPath(['experiences', key], {
+                              ...exp,
+                              endDate: val,
                             })
                           }
                         />
                       </div>
                     </div>
-
-                    <ul className='list-disc space-y-1 pl-4 text-sm'>
-                      {exp?.responsibilities.map(
-                        (responsibility: string, index: number) => (
-                          <li key={`responsibility-${index}`}>
-                            <InlineEdit
-                              text={responsibility}
-                              editable={editableSection == key}
-                              id={`responsibilities-${index}`}
-                              placeholder='Task/Responsibility'
-                              elementPath={[
-                                'experiences',
-                                key,
-                                'responsibilities',
-                                index,
-                              ]}
-                              onSave={(val) =>
-                                saveWithPath(
-                                  [
-                                    'experiences',
-                                    key,
-                                    'responsibilities',
-                                    index,
-                                  ],
-                                  val
-                                )
-                              }
-                            />
-                          </li>
-                        )
-                      )}
+                    <ul className='list-disc space-y-0.5 pl-4 text-sm'>
+                      {exp?.responsibilities &&
+                        exp.responsibilities.map(
+                          (responsibility: string, index: number) => (
+                            <li key={`responsibility-${index}`}>
+                              <InlineEdit
+                                text={responsibility}
+                                editable={editableSection == key}
+                                id={`responsibilities-${index}`}
+                                placeholder='Task/Responsibility'
+                                elementPath={[
+                                  'experiences',
+                                  key,
+                                  'responsibilities',
+                                  index,
+                                ]}
+                                onSave={(val) =>
+                                  saveWithPath(
+                                    [
+                                      'experiences',
+                                      key,
+                                      'responsibilities',
+                                      index,
+                                    ],
+                                    val
+                                  )
+                                }
+                              />
+                            </li>
+                          )
+                        )}
                     </ul>
                   </div>
                 );

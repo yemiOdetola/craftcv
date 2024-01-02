@@ -6,7 +6,6 @@ export type ValidSections =
   | 'experiences'
   | 'projects'
   | 'certifications'
-  // | 'achievements'
   | 'awards'
   | 'soft skills'
   | 'technical skills'

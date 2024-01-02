@@ -110,7 +110,8 @@ body {
   color: inherit;
   display: block;
   /* font-style: italic; */
-  font-size: 13px;
+  /* font-size: 13px; */
+  font-size: inherit;
   line-height: 16px;
   font-weight: 300;
   pointer-events: none;

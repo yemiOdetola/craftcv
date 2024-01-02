@@ -111,7 +111,7 @@ export default function EditorCover({ className, children }: EditorCoverProps) {
     <div className={`w-full bg-white py-32`}>
       <Menu />
       <div
-        className={`is-printable editor-container print:w-5xl mx-auto my-auto min-h-screen w-full max-w-4xl rounded-lg text-gray-700 shadow shadow-gray-300 print:shadow-none sm:max-w-5xl sm:p-9
+        className={`is-printable editor-container print:w-5xl mx-auto my-auto min-h-screen w-full max-w-4xl rounded-lg text-gray-700 shadow shadow-gray-300 print:shadow-none sm:max-w-5xl sm:p-6
           ${className} ${ubuntu.variable} ${cabin.variable} ${cfspaceship.variable} ${sparkystones.variable} ${glitchgoblin.variable} 
           ${motleyforces.variable} ${ronysiswadi.variable} ${sunnyspells.variable}`}
       >

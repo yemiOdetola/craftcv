@@ -453,6 +453,7 @@ export default function JakeRyan() {
                               editableSection == resume['technical skills']?.id
                             }
                             className='text-sm'
+                            placeholder='Add skill'
                             elementPath={[
                               'technical skills',
                               'skillset',
