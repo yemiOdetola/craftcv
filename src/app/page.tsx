@@ -65,8 +65,8 @@ export default function Home() {
               </p>
               <Link
                 href='/templates'
-                className='text-md mt-2 inline-block rounded-3xl border border-gray-800 px-7 py-2.5 text-gray-700 transition-all duration-300 
-                hover:border-white hover:bg-gray-700 hover:text-white'
+                className='text-md mt-2 inline-block rounded-md border px-7 py-2.5 bg-gray-800 text-white transition-all duration-300 
+                hover:border-white hover:bg-gray-600 hover:text-gray-100'
               >
                 Get started
               </Link>
