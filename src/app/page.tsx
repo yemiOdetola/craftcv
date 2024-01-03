@@ -29,11 +29,11 @@ export default function Home() {
     },
   ];
   return (
-    <main className='flex min-h-screen flex-col justify-between bg-white'>
+    <main className='relative min-h-screen overflow-y-auto bg-white'>
       <Header />
       <div className='relative bg-white py-10'>
         <Container>
-          <div className='relative flex min-h-[380px] items-center justify-between gap-x-8 rounded-2xl overflow-hidden bg-[#e0faf8] p-6 md:p-12 lg:p-16'>
+          <div className='relative flex min-h-[380px] items-center justify-between gap-x-8 overflow-hidden rounded-2xl bg-[#e0faf8] p-6 md:p-12 lg:p-16'>
             <div className='bubble'>
               <div className='bubble one'></div>
               <div className='bubble two'></div>
