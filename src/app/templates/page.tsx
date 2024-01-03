@@ -12,7 +12,8 @@ import {
   jakeryan,
   odetolaazeez,
 } from '@/store/resume';
-import { useLoading, useMainStore } from '@/store';
+import { useLoading, useMainStore, useResume } from '@/store';
+import { isObjectEmpty } from '@/utils/helper';
 
 const templates: any = [
   {
@@ -80,6 +81,7 @@ const templates: any = [
 export default function Templates() {
   const { updateResume, updateCustomLayout } = useMainStore();
   const router = useRouter();
+  const resume = useResume();
   const [tabOrientation, setTabOrientation] = useState('horizontal');
   const [selectedTemplate, selectTemplate] = useState<any>(null);
   const setLayout = (layout: any) => updateCustomLayout(layout);
@@ -105,10 +107,12 @@ export default function Templates() {
     customOptions.custom = false;
     setLayout(customOptions);
 
-    if (window.confirm('Do you want to clear your saved resume?')) {
-      updateResume({});
+    if (!isObjectEmpty(resume)) {
+      if (window.confirm('Do you want to clear your saved resume?')) {
+        updateResume({});
+      }
     }
-    
+
     updateResume(selectedTemplate.base);
     router.push(selectedTemplate.href);
   };
