@@ -386,25 +386,25 @@ export default function JakeRyan() {
                       />
                     </div>
                     <div className='flex items-center justify-normal gap-x-2'>
-                      <a
+                      {/* <a
                         href={project.url}
                         target='_blank'
                         rel='noopener noreferrer'
-                      >
-                        <InlineEdit
-                          text={project.url}
-                          className='text-xs'
-                          editable={editableSection == key}
-                          dottedActive
-                          placeholder='Start date'
-                          onSave={(val) =>
-                            saveWithPath(['experiences', key], {
-                              ...project,
-                              url: val,
-                            })
-                          }
-                        />
-                      </a>
+                      > */}
+                      <InlineEdit
+                        text={project.url}
+                        className='text-xs'
+                        editable={editableSection == key}
+                        dottedActive
+                        placeholder='Project URL'
+                        onSave={(val) =>
+                          saveWithPath(['projects', key], {
+                            ...project,
+                            url: val,
+                          })
+                        }
+                      />
+                      {/* </a> */}
                     </div>
                   </div>
                   <InlineEdit

@@ -121,7 +121,7 @@ export default function OdetolaAzeez() {
               onClick={() => setEditableSectionId(resume?.about?.id)}
               onBlur={(e: any) => editBlurEvent(e)}
             >
-              <h2 className='mb-2 text-xl font-bold uppercase tracking-widest'>
+              <h2 className='mb-2 text-lg uppercase tracking-widest'>
                 Summary
               </h2>
               <InlineEdit
@@ -134,7 +134,7 @@ export default function OdetolaAzeez() {
             <section className='mt-2  border-b-4 border-gray-300 first:mt-0'>
               <Heading
                 id='education'
-                className='font-lg uppercase tracking-widest'
+                className='text-lg uppercase tracking-widest'
               >
                 Education
               </Heading>
@@ -203,7 +203,7 @@ export default function OdetolaAzeez() {
             <section className='mt-2 border-b-4 border-gray-300 pb-2'>
               <Heading
                 id='projects'
-                className='font-medium uppercase tracking-widest'
+                className='text-lg uppercase tracking-widest'
               >
                 Projects
               </Heading>
@@ -257,25 +257,25 @@ export default function OdetolaAzeez() {
                           />
                         </div>
                         <div className='flex items-center justify-normal gap-x-2'>
-                          <a
+                          {/* <a
                             href={project.url}
                             target='_blank'
                             rel='noopener noreferrer'
-                          >
-                            <InlineEdit
-                              text={project.url}
-                              className='text-xs'
-                              editable={editableSection == key}
-                              dottedActive
-                              placeholder='Start date'
-                              onSave={(val) =>
-                                saveWithPath(['experiences', key], {
-                                  ...project,
-                                  url: val,
-                                })
-                              }
-                            />
-                          </a>
+                          > */}
+                          <InlineEdit
+                            text={project.url}
+                            className='text-xs'
+                            editable={editableSection == key}
+                            dottedActive
+                            placeholder='URL'
+                            onSave={(val) =>
+                              saveWithPath(['projects', key], {
+                                ...project,
+                                url: val,
+                              })
+                            }
+                          />
+                          {/* </a> */}
                         </div>
                       </div>
                       <InlineEdit
@@ -297,7 +297,7 @@ export default function OdetolaAzeez() {
             <section className='mt-2 border-b-4 border-gray-300 pb-2'>
               <Heading
                 id='technical skills'
-                className='font-medium uppercase tracking-widest'
+                className='text-lg uppercase tracking-widest'
               >
                 Skills
               </Heading>
@@ -349,11 +349,10 @@ export default function OdetolaAzeez() {
               </section>
             </section>
           </section>
-
           <section className='w-full border-b-4 border-gray-300 pb-2 pl-4 sm:w-3/5'>
             <Heading
               id='experiences'
-              className='text-lg font-medium uppercase tracking-widest'
+              className='text-lg uppercase tracking-widest'
             >
               Experiences
             </Heading>
