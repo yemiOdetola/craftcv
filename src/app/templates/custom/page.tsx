@@ -20,7 +20,7 @@ import {
 import { Button, Container, Loading, Toggle } from '@/components/common';
 import { BottomNavigation } from '@/components/templates';
 import { basetemplate } from '@/store/basetemplate';
-import { useCustomLayout, useLoading, useMainStore } from '@/store';
+import { useCustomLayout, useLoading, useMainStore, useResume } from '@/store';
 import { isObjectEmpty } from '@/utils/helper';
 
 const sections: any = {
@@ -48,6 +48,7 @@ interface DropColumnProps {
 const vh = 648;
 export default function CustomTemplate() {
   const router = useRouter();
+  const resume = useResume();
   const customLayout = useCustomLayout();
   const {
     updateCustomLayout,
@@ -172,8 +173,11 @@ export default function CustomTemplate() {
     if (!editInProgress) {
       updateLayoutDimension(['w-6/12', 'w-6/12']);
     }
-    if (window.confirm('Do you want to clear your saved resume?')) {
-      updateResume({});
+
+    if (!isObjectEmpty(resume)) {
+      if (window.confirm('Do you want to clear your saved resume?')) {
+        updateResume({});
+      }
     }
     router.push('/editor/coutume');
   };
