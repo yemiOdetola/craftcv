@@ -85,7 +85,7 @@ export default function ThomasHighbaugh() {
                 dottedActive
               />
             </section>
-            <section className='bg-gray-800 px-3 py-2 text-lg font-bold text-white'>
+            <section className='bg-gray-800 px-3 py-2 text-lg font-black text-white'>
               {resume.user?.fullname &&
                 getInitials(resume.user?.fullname)
                   .split('')
@@ -387,7 +387,6 @@ export default function ThomasHighbaugh() {
               </section>
             </section>
           </section>
-
           <section className='border-b-4 border-gray-300 pb-2 pl-4 first:mt-0 last:border-b-0 sm:w-3/5'>
             <Heading
               id='experiences'
@@ -409,28 +408,43 @@ export default function ThomasHighbaugh() {
                   >
                     {isHovered == key ? (
                       <button
-                        className='absolute right-4 inline-block p-2 opacity-0 transition-opacity duration-200'
+                        className='absolute -right-6 bottom-4 z-10 inline-block rounded bg-red-400 p-1 opacity-0 transition-opacity duration-200'
                         style={{ opacity: isHovered ? 1 : 0 }}
                         onClick={() => removeSection(key, 'experiences')}
                       >
-                        <PiTrashSimpleDuotone size={20} />
+                        <PiTrashSimpleDuotone size={20} color='white' />
                       </button>
                     ) : null}
-                    <InlineEdit
-                      text={exp.company}
-                      className='text-md font-semibold leading-snug text-gray-800'
-                      editable={editableSection == key}
-                      dottedActive
-                      placeholder='Company'
-                      onSave={(val) =>
-                        saveWithPath(['experiences', key], {
-                          ...exp,
-                          company: val,
-                        })
-                      }
-                    />
+                    <div className='flex items-center justify-between'>
+                      <InlineEdit
+                        text={exp.company}
+                        className='text-md font-semibold leading-snug text-gray-800'
+                        editable={editableSection == key}
+                        dottedActive
+                        placeholder='Company'
+                        onSave={(val) =>
+                          saveWithPath(['experiences', key], {
+                            ...exp,
+                            company: val,
+                          })
+                        }
+                      />
+                      <InlineEdit
+                        text={exp.location}
+                        className='p-0 text-xs text-gray-500'
+                        editable={editableSection == key}
+                        dottedActive
+                        placeholder='Company'
+                        onSave={(val) =>
+                          saveWithPath(['experiences', key], {
+                            ...exp,
+                            location: val,
+                          })
+                        }
+                      />
+                    </div>
                     <div className='flex items-center justify-normal'>
-                      <div className='flex items-center'>
+                      <div className='flex items-center space-x-1'>
                         <div className='flex items-center justify-normal'>
                           <InlineEdit
                             text={exp.startDate}
