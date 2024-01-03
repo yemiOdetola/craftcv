@@ -12,6 +12,7 @@ import { useEditorActions } from '@/utils/useEditorActions';
 import React, { useEffect, useState } from 'react';
 import { getIconByType } from '../Icons';
 import { PiTrashSimpleDuotone } from 'react-icons/pi';
+import Heading from '@/components/editor/sections/Heading';
 
 export default function ThomasHighbaugh() {
   const fontFamily = useFontFamily();
@@ -36,12 +37,21 @@ export default function ThomasHighbaugh() {
     }
   };
 
-  const removeEduSection = (key: string) => {
-    removeFromPath(['education', key]);
-  };
-
-  const removeExpSection = (key: string) => {
-    removeFromPath(['experiences', key]);
+  const removeSection = (
+    key: string,
+    type: 'experiences' | 'education' | 'projects'
+  ) => {
+    if (window.confirm('Are you sure?')) {
+      if (type == 'education') {
+        removeFromPath(['education', key]);
+      }
+      if (type == 'experiences') {
+        removeFromPath(['experiences', key]);
+      }
+      if (type == 'projects') {
+        removeFromPath(['projects', key]);
+      }
+    }
   };
 
   return (
@@ -64,7 +74,7 @@ export default function ThomasHighbaugh() {
                 text={resume.user.title}
                 editable={resume.user.id == editableSection}
                 onSave={(val) => saveWithPath(['user', 'title'], val)}
-                className='ml-1 text-2xl font-semibold leading-snug text-gray-700'
+                className='ml-1 text-2xl font-semibold leading-snug'
                 dottedActive
               />
               <InlineEdit
@@ -75,7 +85,7 @@ export default function ThomasHighbaugh() {
                 dottedActive
               />
             </section>
-            <section className='bg-gray-800 px-3 py-2 text-3xl font-black text-white'>
+            <section className='bg-gray-800 px-3 py-2 text-lg font-bold text-white'>
               {resume.user?.fullname &&
                 getInitials(resume.user?.fullname)
                   .split('')
@@ -97,9 +107,7 @@ export default function ThomasHighbaugh() {
               onClick={() => setEditableSectionId(resume?.contact?.id)}
               onBlur={editBlurEvent}
             >
-              <h2 className='mb-2 text-xl font-bold uppercase text-gray-700'>
-                Contact
-              </h2>
+              <h2 className='mb-2 text-lg uppercase'>Contact</h2>
 
               <ul className='list-inside pr-7'>
                 {resume?.contact &&
@@ -114,7 +122,7 @@ export default function ThomasHighbaugh() {
                           className='mt-1 flex items-center text-gray-600'
                           key={`resume-contact-${index}`}
                         >
-                          <span className='font-sm w-6 text-gray-700'>
+                          <span className='font-sm w-6'>
                             {getIconByType(key)}
                           </span>
                           <InlineEdit
@@ -147,7 +155,7 @@ export default function ThomasHighbaugh() {
               onClick={() => setEditableSectionId(resume?.about?.id)}
               onBlur={(e: any) => editBlurEvent(e)}
             >
-              <h2 className='mb-2 text-xl font-bold uppercase text-gray-700'>
+              <h2 className='mb-2 text-lg uppercase tracking-widest'>
                 Summary
               </h2>
               <InlineEdit
@@ -158,10 +166,12 @@ export default function ThomasHighbaugh() {
               />
             </section>
             <section className='mt-2  border-b-4 border-gray-300 first:mt-0'>
-              <h2 className='mb-2 text-lg font-bold text-gray-700'>
-                EDUCATION
-              </h2>
-
+              <Heading
+                id='education'
+                className='text-lg uppercase tracking-widest'
+              >
+                Education
+              </Heading>
               {resume?.education &&
                 Object.keys(resume.education).map((key: any, index: number) => {
                   const edu = resume.education[key];
@@ -178,7 +188,7 @@ export default function ThomasHighbaugh() {
                         <button
                           className='absolute right-4 inline-block p-2 opacity-0 transition-opacity duration-200'
                           style={{ opacity: isHovered ? 1 : 0 }}
-                          onClick={() => removeEduSection(key)}
+                          onClick={() => removeSection(key, 'education')}
                         >
                           <PiTrashSimpleDuotone size={20} />
                         </button>
@@ -187,7 +197,7 @@ export default function ThomasHighbaugh() {
                         text={edu?.school}
                         editable={editableSection == key}
                         placeholder='Institution/University Attended'
-                        className='-mb-0.5 text-sm font-semibold leading-snug text-gray-700'
+                        className='font-semibold leading-snug'
                         onSave={(val) =>
                           saveWithPath(['education', key], {
                             ...edu,
@@ -198,7 +208,7 @@ export default function ThomasHighbaugh() {
                       <InlineEdit
                         text={edu?.award}
                         editable={editableSection == key}
-                        className='-mb-0.5 text-xs leading-normal text-gray-500'
+                        className='text-xs leading-normal text-gray-500'
                         placeholder='Academic Degree (Program)'
                         onSave={(val) =>
                           saveWithPath(['education', key], {
@@ -210,7 +220,7 @@ export default function ThomasHighbaugh() {
                       <InlineEdit
                         text={edu?.gradyear}
                         editable={editableSection == key}
-                        className='text-sm font-semibold'
+                        className='font-semibold'
                         placeholder='Year of Completion'
                         dottedActive
                         onSave={(val) =>
@@ -224,10 +234,112 @@ export default function ThomasHighbaugh() {
                   );
                 })}
             </section>
+            <section className='mt-2 border-b-4 border-gray-300 pb-2'>
+              <Heading
+                id='projects'
+                className='text-lg uppercase tracking-widest'
+              >
+                Projects
+              </Heading>
+              {resume?.projects &&
+                Object.keys(resume.projects).map((key: any, index: number) => {
+                  const project = resume?.projects[key];
+                  return (
+                    <div
+                      className='relative mb-2 flex flex-col pb-4'
+                      key={`project-${index}`}
+                      onClick={() => setEditableSectionId(key)}
+                      onBlur={editBlurEvent}
+                      onMouseEnter={() => setIsHovered(key)}
+                      onMouseLeave={() => setIsHovered('')}
+                    >
+                      {isHovered == key ? (
+                        <button
+                          className='absolute -right-5 bottom-4 z-10 inline-block rounded bg-red-400 p-1 opacity-0 transition-opacity duration-200'
+                          style={{ opacity: isHovered ? 1 : 0 }}
+                          onClick={() => removeSection(key, 'projects')}
+                        >
+                          <PiTrashSimpleDuotone size={20} color='white' />
+                        </button>
+                      ) : null}
+                      <div className='flex flex-wrap items-center justify-between'>
+                        <div className='flex items-center gap-x-3'>
+                          <InlineEdit
+                            text={project.title}
+                            className='text-md p-0 font-bold'
+                            editable={editableSection == key}
+                            dottedActive
+                            placeholder='Project title'
+                            onSave={(val) =>
+                              saveWithPath(['projects', key], {
+                                ...project,
+                                title: val,
+                              })
+                            }
+                          />
+                          <InlineEdit
+                            text={project?.tech}
+                            editable={editableSection == key}
+                            placeholder='Tools/Technologies used'
+                            className='font-mono text-xs'
+                            onSave={(val) =>
+                              saveWithPath(['projects', key], {
+                                ...project,
+                                tech: val,
+                              })
+                            }
+                          />
+                        </div>
+                      </div>
+                      <div className='flex items-center justify-normal'>
+                        <InlineEdit
+                          text={project.url}
+                          className='text-xs'
+                          editable={editableSection == key}
+                          dottedActive
+                          placeholder='Project Url'
+                          onSave={(val) =>
+                            saveWithPath(['projects', key], {
+                              ...project,
+                              url: val,
+                            })
+                          }
+                        />
+                        {project.url ? (
+                          <a
+                            href={project.url}
+                            target='_blank'
+                            rel='noopener noreferrer'
+                          >
+                            <span className='inline-block p-0.5 text-xs text-gray-500'>
+                              ↗
+                            </span>
+                          </a>
+                        ) : null}
+                      </div>
+                      <InlineEdit
+                        text={project.description}
+                        placeholder='Description of achievements'
+                        editable={editableSection == key}
+                        className='mt-1 text-sm'
+                        onSave={(val) =>
+                          saveWithPath(['projects', key], {
+                            ...project,
+                            description: val,
+                          })
+                        }
+                      />
+                    </div>
+                  );
+                })}
+            </section>
             <section className='mb-4 mt-0  border-b-4 border-gray-300 pb-6 first:mt-0'>
-              <h2 className='mb-2 pt-2 text-lg font-bold text-gray-700'>
-                SKILLS
-              </h2>
+              <Heading
+                id='technical skills'
+                className='text-lg uppercase tracking-widest'
+              >
+                Skills
+              </Heading>
               <section className='mb-0 '>
                 <section
                   className='mt-1 last:pb-1'
@@ -276,10 +388,13 @@ export default function ThomasHighbaugh() {
             </section>
           </section>
 
-          <section className='border-b-4 border-gray-300 pb-2 pl-4 first:mt-0 sm:w-3/5'>
-            <h2 className='mb-2 text-xl font-black text-gray-800'>
-              EXPERIENCE
-            </h2>
+          <section className='border-b-4 border-gray-300 pb-2 pl-4 first:mt-0 last:border-b-0 sm:w-3/5'>
+            <Heading
+              id='experiences'
+              className='text-lg uppercase tracking-widest'
+            >
+              Experiences
+            </Heading>
             {resume?.experiences &&
               Object.keys(resume.experiences).map((key: any, index: number) => {
                 const exp = resume?.experiences[key];
@@ -296,7 +411,7 @@ export default function ThomasHighbaugh() {
                       <button
                         className='absolute right-4 inline-block p-2 opacity-0 transition-opacity duration-200'
                         style={{ opacity: isHovered ? 1 : 0 }}
-                        onClick={() => removeExpSection(key)}
+                        onClick={() => removeSection(key, 'experiences')}
                       >
                         <PiTrashSimpleDuotone size={20} />
                       </button>
@@ -348,7 +463,7 @@ export default function ThomasHighbaugh() {
                         <span> | </span>
                         <InlineEdit
                           text={exp.position}
-                          className='text-xs font-bold text-gray-700'
+                          className='text-xs font-bold'
                           editable={editableSection == key}
                           dottedActive
                           placeholder='Position/Title'
