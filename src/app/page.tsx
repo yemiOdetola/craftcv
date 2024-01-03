@@ -1,5 +1,10 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import {
+  PiArrowCounterClockwiseBold,
+  PiBracketsAngleDuotone,
+  PiCirclesThreeDuotone,
+} from 'react-icons/pi';
 import { Container } from '@/components/common/Container';
 import { Footer } from '@/components/common/Footer';
 import { Header } from '@/components/common/Header';
@@ -28,7 +33,15 @@ export default function Home() {
       <Header />
       <div className='relative bg-white py-10'>
         <Container>
-          <div className='relative flex min-h-[380px] items-center justify-between gap-x-8 rounded-2xl bg-[#e0faf8] p-6 md:p-12 lg:p-16'>
+          <div className='relative flex min-h-[380px] items-center justify-between gap-x-8 rounded-2xl overflow-hidden bg-[#e0faf8] p-6 md:p-12 lg:p-16'>
+            <div className='bubble'>
+              <div className='bubble one'></div>
+              <div className='bubble two'></div>
+              <div className='bubble three'></div>
+              <div className='bubble four'></div>
+              <div className='bubble five'></div>
+              <div className='bubble six'></div>
+            </div>
             <div className='hidden md:block md:w-2/5'>
               <Image
                 src='/images/undraw_design_sprint_re_tke3.svg'
