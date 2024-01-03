@@ -256,27 +256,32 @@ export default function OdetolaAzeez() {
                             }
                           />
                         </div>
-                        <div className='flex items-center justify-normal gap-x-2'>
-                          {/* <a
+                      </div>
+                      <div className='flex items-center justify-normal'>
+                        <InlineEdit
+                          text={project.url}
+                          className='text-xs'
+                          editable={editableSection == key}
+                          dottedActive
+                          placeholder='Project Url'
+                          onSave={(val) =>
+                            saveWithPath(['projects', key], {
+                              ...project,
+                              url: val,
+                            })
+                          }
+                        />
+                        {project.url ? (
+                          <a
                             href={project.url}
                             target='_blank'
                             rel='noopener noreferrer'
-                          > */}
-                          <InlineEdit
-                            text={project.url}
-                            className='text-xs'
-                            editable={editableSection == key}
-                            dottedActive
-                            placeholder='URL'
-                            onSave={(val) =>
-                              saveWithPath(['projects', key], {
-                                ...project,
-                                url: val,
-                              })
-                            }
-                          />
-                          {/* </a> */}
-                        </div>
+                          >
+                            <span className='inline-block p-0.5 text-xs text-gray-500'>
+                              ↗
+                            </span>
+                          </a>
+                        ) : null}
                       </div>
                       <InlineEdit
                         text={project.description}

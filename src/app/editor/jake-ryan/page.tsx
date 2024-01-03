@@ -386,11 +386,6 @@ export default function JakeRyan() {
                       />
                     </div>
                     <div className='flex items-center justify-normal gap-x-2'>
-                      {/* <a
-                        href={project.url}
-                        target='_blank'
-                        rel='noopener noreferrer'
-                      > */}
                       <InlineEdit
                         text={project.url}
                         className='text-xs'
@@ -404,7 +399,17 @@ export default function JakeRyan() {
                           })
                         }
                       />
-                      {/* </a> */}
+                      {project.url ? (
+                        <a
+                          href={project.url}
+                          target='_blank'
+                          rel='noopener noreferrer'
+                        >
+                          <span className='inline-block p-0.5 text-xs text-gray-500'>
+                            ↗
+                          </span>
+                        </a>
+                      ) : null}
                     </div>
                   </div>
                   <InlineEdit
