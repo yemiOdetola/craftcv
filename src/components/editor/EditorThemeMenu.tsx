@@ -12,13 +12,6 @@ export function EditorThemeMenu({
   changeTheme,
   editorTheme,
 }: EditorThemeMenuProps) {
-  console.log('editorThemeeditorTheme: ', editorTheme);
-
-  const flipColors = () => {
-    editorTheme = editorTheme.reverse();
-    changeTheme(editorTheme);
-  };
-
   return (
     <Popoverlay title='Change Theme'>
       <div className='relative grid bg-white px-2 py-4'>

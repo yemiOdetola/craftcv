@@ -19,12 +19,9 @@ export default function Education({
   setEditableSectionId,
 }: EducationProps) {
   const [isHovered, setIsHovered] = useState<string | null>(null);
-  const { saveWithPath, removeFromPath } = useEditorActions();
+  const { saveWithPath, removeSection } = useEditorActions();
   const resume = useResume();
   const educationhistory = resume.education;
-  const removeSection = (key: string) => {
-    removeFromPath(['education', key]);
-  };
 
   return (
     <div className='py-3'>
@@ -46,7 +43,7 @@ export default function Education({
                   <button
                     className='absolute right-4 inline-block p-2 opacity-0 transition-opacity duration-200'
                     style={{ opacity: isHovered ? 1 : 0 }}
-                    onClick={() => removeSection(key)}
+                    onClick={() => removeSection(key, 'education')}
                   >
                     <PiTrashSimpleDuotone size={20} />
                   </button>

@@ -19,13 +19,9 @@ export default function Awards({
   color1,
 }: AwardsProps) {
   const [isHovered, setIsHovered] = useState<string | null>(null);
-  const { saveWithPath, removeFromPath } = useEditorActions();
+  const { saveWithPath, removeSection } = useEditorActions();
   const resume = useResume();
   const awards = resume.awards;
-
-  const removeSection = (key: string) => {
-    removeFromPath(['awards', key]);
-  };
 
   return (
     <div className='py-2'>
@@ -47,7 +43,7 @@ export default function Awards({
                   <button
                     className='absolute right-4 inline-block p-2 opacity-0 transition-opacity duration-200'
                     style={{ opacity: isHovered ? 1 : 0 }}
-                    onClick={() => removeSection(key)}
+                    onClick={() => removeSection(key, 'awards')}
                   >
                     <PiTrashSimpleDuotone size={20} />
                   </button>

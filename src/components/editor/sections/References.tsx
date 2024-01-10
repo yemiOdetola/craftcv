@@ -19,13 +19,9 @@ export default function Reference({
   setEditableSectionId,
 }: ReferenceProps) {
   const [isHovered, setIsHovered] = useState<string | null>(null);
-  const { saveWithPath, removeFromPath } = useEditorActions();
+  const { saveWithPath, removeSection } = useEditorActions();
   const resume = useResume();
   const references = resume.references;
-
-  const removeSection = (key: string) => {
-    removeFromPath(['references', key]);
-  };
 
   return (
     <div className='py-3'>
@@ -46,7 +42,7 @@ export default function Reference({
                 <button
                   className='absolute right-4 inline-block p-2 opacity-0 transition-opacity duration-200'
                   style={{ opacity: isHovered ? 1 : 0 }}
-                  onClick={() => removeSection(key)}
+                  onClick={() => removeSection(key, 'references')}
                 >
                   <PiTrashSimpleDuotone size={20} />
                 </button>

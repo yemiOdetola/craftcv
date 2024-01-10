@@ -90,7 +90,7 @@ export const useEditorActions = () => {
       parentSections[lastSection].splice(idx, 1);
       updateResume(updatedResume);
     } else {
-      alert('Don\'t be weird!');
+      alert("Don't be weird!");
     }
     //TODO: set the next input field to be active, if available.
   };
@@ -110,6 +110,42 @@ export const useEditorActions = () => {
     updateResume(cloneResume);
   };
 
+  const removeSection = (
+    key: string,
+    type:
+      | 'education'
+      | 'experiences'
+      | 'projects'
+      | 'awards'
+      | 'certifications'
+      | 'publications'
+      | 'references'
+  ) => {
+    if (window.confirm('Are you sure?')) {
+      if (type == 'education') {
+        removeFromPath(['education', key]);
+      }
+      if (type == 'experiences') {
+        removeFromPath(['experiences', key]);
+      }
+      if (type == 'projects') {
+        removeFromPath(['projects', key]);
+      }
+      if (type == 'awards') {
+        removeFromPath(['awards', key]);
+      }
+      if (type == 'certifications') {
+        removeFromPath(['certifications', key]);
+      }
+      if (type == 'publications') {
+        removeFromPath(['publications', key]);
+      }
+      if (type == 'references') {
+        removeFromPath(['references', key]);
+      }
+    }
+  };
+
   return {
     resume,
     saveWithPath,
@@ -117,5 +153,6 @@ export const useEditorActions = () => {
     removeInputField,
     handleSaveField,
     removeFromPath,
+    removeSection,
   };
 };

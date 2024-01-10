@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import { Tab } from '@headlessui/react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Footer } from '@/components/common/Footer';
 import { Button, Container, Loading } from '@/components/common';
 import { BottomNavigation, Template } from '@/components/templates';
 import {

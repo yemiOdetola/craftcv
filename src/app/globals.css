@@ -44,7 +44,6 @@ body {
 }
 
 .text-green {
-  /* color: #29f3c3; */
   color: #3e8272;
 }
 
@@ -109,10 +108,7 @@ body {
   content: attr(placeholder);
   color: inherit;
   display: block;
-  /* font-style: italic; */
-  /* font-size: 13px; */
   font-size: inherit;
-  line-height: 16px;
   font-weight: 300;
   pointer-events: none;
 }
@@ -120,7 +116,7 @@ body {
 [contentEditable='true']:empty:not(:focus):before {
   content: attr(placeholder);
   color: #555;
-  font-style: italic;
+  /* font-style: italic; */
   font-size: 12px;
   font-weight: 300;
   display: block;
@@ -139,10 +135,10 @@ body {
   border-radius: 50%;
   border: 2px solid;
   border-color: #fff transparent;
-  animation: spin 1s infinite ease-out;
+  animation: spinLoad 0.7s infinite ease-out;
 }
 
-@keyframes spin {
+@keyframes spinLoad {
   0% {
     transform: rotate(0deg);
   }

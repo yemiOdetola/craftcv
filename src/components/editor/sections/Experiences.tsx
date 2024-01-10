@@ -21,13 +21,9 @@ export default function Experiences({
   color1,
 }: ExperiencesProps) {
   const [isHovered, setIsHovered] = useState(null);
-  const { saveWithPath, removeFromPath } = useEditorActions();
+  const { saveWithPath, removeSection } = useEditorActions();
   const resume = useResume();
   const experiences = resume.experiences;
-
-  const removeSection = (key: string) => {
-    removeFromPath(['experiences', key]);
-  };
 
   return (
     <div className='py-3'>
@@ -48,12 +44,12 @@ export default function Experiences({
                 <button
                   className='absolute right-4 inline-block p-2 opacity-0 transition-opacity duration-200'
                   style={{ opacity: isHovered ? 1 : 0 }}
-                  onClick={() => removeSection(key)}
+                  onClick={() => removeSection(key, 'experiences')}
                 >
                   <PiTrashSimpleDuotone size={20} />
                 </button>
               ) : null}
-              <div className='-my-0.5 flex items-center space-x-2 justify-normal font-semibold'>
+              <div className='-my-0.5 flex items-center justify-normal space-x-2 font-semibold'>
                 <InlineEdit
                   text={exp.company}
                   editable={editableSection == key}
@@ -81,7 +77,7 @@ export default function Experiences({
                   }
                 />
               </div>
-              <div className='my-1 flex items-center space-x-4 justify-normal font-semibold font-mono text-xs text-green-700'>
+              <div className='my-1 flex items-center justify-normal space-x-4 font-mono text-xs font-semibold text-green-700'>
                 <InlineEdit
                   text={exp.startDate}
                   editable={editableSection == key}

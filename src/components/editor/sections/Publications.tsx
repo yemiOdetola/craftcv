@@ -19,13 +19,9 @@ export default function Contact({
   color1,
 }: ContactProps) {
   const [isHovered, setIsHovered] = useState<string | null>(null);
-  const { saveWithPath, removeFromPath } = useEditorActions();
+  const { saveWithPath, removeSection } = useEditorActions();
   const resume = useResume();
   const publications = resume.publications;
-
-  const removeSection = (key: string) => {
-    removeFromPath(['publications', key]);
-  };
 
   return (
     <div className='py-3'>
@@ -46,7 +42,7 @@ export default function Contact({
                 <button
                   className='absolute right-4 inline-block p-2 opacity-0 transition-opacity duration-200'
                   style={{ opacity: isHovered ? 1 : 0 }}
-                  onClick={() => removeSection(key)}
+                  onClick={() => removeSection(key, 'publications')}
                 >
                   <PiTrashSimpleDuotone size={20} />
                 </button>

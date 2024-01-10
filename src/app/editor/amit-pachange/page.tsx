@@ -83,13 +83,6 @@ export default function AmitPachange() {
     return <>{renderComponent('projects', secprops)}</>;
   };
 
-  // const renderUnderline = () => (
-  //   <div
-  //     className='w-[92%] rounded border border-purple-200'
-  //     style={{ backgroundColor: `#${color2}` }}
-  //   />
-  // );
-
   const editBlurEvent = (e: React.FocusEvent<HTMLDivElement, Element>) => {
     // TODO: Check if the related target is null or undefined
     if (e.relatedTarget === null) {
@@ -145,9 +138,7 @@ export default function AmitPachange() {
               </div>
               <div className='flex flex-col sm:w-2/3'>
                 <div className='pt-3'>
-                  <h2 className='text-top-color text-xl mb-2'>
-                    About Me
-                  </h2>
+                  <h2 className='text-top-color mb-2 text-xl'>About Me</h2>
                   {renderSummary()}
                 </div>
                 <div>{renderExperiences()}</div>

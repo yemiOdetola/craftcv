@@ -19,12 +19,9 @@ export default function Projects({
   setEditableSectionId,
 }: ProjectsProps) {
   const [isHovered, setIsHovered] = useState<string | null>(null);
-  const { saveWithPath, removeFromPath } = useEditorActions();
+  const { saveWithPath, removeSection } = useEditorActions();
   const resume = useResume();
   const projects = resume.projects;
-  const removeSection = (key: string) => {
-    removeFromPath(['projects', key]);
-  };
 
   return (
     <div className='py-3'>
@@ -45,7 +42,7 @@ export default function Projects({
                 <button
                   className='absolute right-4 inline-block p-1 opacity-0 transition-all duration-200'
                   style={{ opacity: isHovered ? 1 : 0 }}
-                  onClick={() => removeSection(key)}
+                  onClick={() => removeSection(key, 'projects')}
                 >
                   <PiTrashSimpleDuotone size={20} />
                 </button>
@@ -64,7 +61,7 @@ export default function Projects({
                 editable={editableSection == key}
                 placeholder='Tools/Technologies used'
                 style={{ color: `#${color1}` }}
-                className='text-xs leading-5 font-mono font-semibold text-green-700'
+                className='font-mono text-xs font-semibold leading-5 text-green-700'
                 onSave={(val) =>
                   saveWithPath(['projects', key], { ...project, tech: val })
                 }
