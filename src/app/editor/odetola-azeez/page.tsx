@@ -17,7 +17,7 @@ import Heading from '@/components/editor/sections/Heading';
 export default function OdetolaAzeez() {
   const fontFamily = useFontFamily();
   const editorTheme = useEditorTheme();
-  const { saveWithPath, removeFromPath } = useEditorActions();
+  const { saveWithPath, removeSection } = useEditorActions();
   const [isHovered, setIsHovered] = useState('');
   const { updateResume } = useMainStore();
   const [resume] = useState(useResume());
@@ -34,23 +34,6 @@ export default function OdetolaAzeez() {
     // TODO: Check if the related target is null or undefined
     if (e.relatedTarget === null) {
       setEditableSectionId(null);
-    }
-  };
-
-  const removeSection = (
-    key: string,
-    type: 'experiences' | 'education' | 'projects'
-  ) => {
-    if (window.confirm('Are you sure?')) {
-      if (type == 'education') {
-        removeFromPath(['education', key]);
-      }
-      if (type == 'experiences') {
-        removeFromPath(['experiences', key]);
-      }
-      if (type == 'projects') {
-        removeFromPath(['projects', key]);
-      }
     }
   };
 

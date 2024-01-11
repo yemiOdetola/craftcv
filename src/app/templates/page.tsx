@@ -96,8 +96,6 @@ export default function Templates() {
   const setType = (type: string) => updateResumeType(type);
   const loading = useLoading();
 
-  console.log('selectedTemplate:::::', selectedTemplate);
-
   useEffect(() => {
     let lgMediaQuery = window.matchMedia('(min-width: 1024px)');
 
