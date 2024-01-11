@@ -6,7 +6,13 @@ interface EditorConfig {
   fontSize: string;
   theme: string[];
 }
-
+type TemplateTypes =
+  | null
+  | 'amit-pachange'
+  | 'coutume'
+  | 'jake-ryan'
+  | 'thomas-highbaugh'
+  | 'odetola-azeez';
 interface Actions {
   changeFontFamily: (e: any) => void;
   changeEditorTheme: (e: any) => void;
@@ -21,9 +27,11 @@ interface State {
   resume: any;
   loading: any;
   isCustom: any;
+  resumeType: string;
   changeFontFamily: (e: any) => void;
   changeEditorTheme: (e: any) => void;
   updateResume: (e: any) => void;
+  updateResumeType: (e: any) => void;
   setIsCustom: (e: any) => void;
   updateCustomLayout: (e: any) => void;
   setLoading: (e: boolean) => void;
@@ -38,6 +46,7 @@ export const useMainStore = create<State>()(
       fontSize: 'font-sm',
       editorTheme: ['7D4B82', 'B54A71'],
       resume: {},
+      resumeType: '',
       customLayout: {},
       loading: false,
       layoutDimension: ['6/12', '6/12'],
@@ -46,7 +55,8 @@ export const useMainStore = create<State>()(
       isCustom: false,
       changeEditorTheme: (theme: string[]) =>
         set(() => ({ editorTheme: theme })),
-      updateResume: (resume: string) => set(() => ({ resume })),
+      updateResume: (resume: any) => set(() => ({ resume })),
+      updateResumeType: (resumeType: string) => set(() => ({ resumeType })),
       setLoading: (loading: boolean) => set(() => ({ loading })),
       updateCustomLayout: (customLayout: any) => set(() => ({ customLayout })),
       updateLayoutDimension: (layoutDimension: any) =>
@@ -70,6 +80,8 @@ export const useEditorTheme = () =>
   useMainStore((state: State) => state.editorTheme);
 
 export const useResume = () => useMainStore((state: State) => state.resume);
+export const useResumeType = () =>
+  useMainStore((state: State) => state.resumeType);
 export const useLoading = () => useMainStore((state: State) => state.loading);
 export const useCustomLayout = () =>
   useMainStore((state: State) => state.customLayout);

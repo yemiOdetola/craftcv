@@ -11,7 +11,7 @@ import {
   jakeryan,
   odetolaazeez,
 } from '@/store/resume';
-import { useLoading, useMainStore, useResume } from '@/store';
+import { useLoading, useMainStore, useResume, useResumeType } from '@/store';
 import { isObjectEmpty } from '@/utils/helper';
 
 const templates: any = [
@@ -24,24 +24,28 @@ const templates: any = [
         image: '/images/amit.png',
         href: '/editor/amit-pachange',
         base: amitpachange,
+        idx: 'amit-pachange',
       },
       {
         name: 'Jake Ryan',
         image: '/images/jake.png',
         href: '/editor/jake-ryan',
         base: jakeryan,
+        idx: 'jake-ryan',
       },
       {
         name: 'Thomas Highbaugh',
         image: '/images/thomas.png',
         href: '/editor/thomas-highbaugh',
         base: thomashighbaugh,
+        idx: 'thomas-highbaugh',
       },
       {
         name: 'Odetola Azeez',
         image: '/images/azeez.png',
         href: '/editor/odetola-azeez',
         base: odetolaazeez,
+        idx: 'odetola-azeez',
       },
     ],
   },
@@ -54,37 +58,45 @@ const templates: any = [
         image: '/images/thomas.png',
         href: '/editor/thomas-highbaugh',
         base: thomashighbaugh,
+        idx: 'thomas-highbaugh',
       },
       {
         name: 'Amit Pachange',
         image: '/images/amit.png',
         href: '/editor/amit-pachange',
         base: amitpachange,
+        idx: 'amit-pachange',
       },
       {
         name: 'Odetola Azeez',
         image: '/images/azeez.png',
         href: '/editor/odetola-azeez',
         base: odetolaazeez,
+        idx: 'odetola-azeez',
       },
       {
         name: 'Jake Ryan',
         image: '/images/jake.png',
         href: '/editor/jake-ryan',
         base: jakeryan,
+        idx: 'jake-ryan',
       },
     ],
   },
 ];
 
 export default function Templates() {
-  const { updateResume, updateCustomLayout } = useMainStore();
+  const { updateResume, updateCustomLayout, updateResumeType } = useMainStore();
   const router = useRouter();
   const resume = useResume();
+  const resumeType = useResumeType();
   const [tabOrientation, setTabOrientation] = useState('horizontal');
   const [selectedTemplate, selectTemplate] = useState<any>(null);
   const setLayout = (layout: any) => updateCustomLayout(layout);
+  const setType = (type: string) => updateResumeType(type);
   const loading = useLoading();
+
+  console.log('selectedTemplate:::::', selectedTemplate);
 
   useEffect(() => {
     let lgMediaQuery = window.matchMedia('(min-width: 1024px)');
@@ -105,8 +117,9 @@ export default function Templates() {
     const customOptions: any = {};
     customOptions.custom = false;
     setLayout(customOptions);
+    setType(selectedTemplate.idx);
 
-    if (!isObjectEmpty(resume)) {
+    if (resumeType !== selectedTemplate.idx && !isObjectEmpty(resume)) {
       if (window.confirm('Do you want to clear your saved resume?')) {
         updateResume({});
       }

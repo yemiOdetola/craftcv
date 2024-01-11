@@ -175,7 +175,7 @@ export default function CustomTemplate() {
     }
 
     if (!isObjectEmpty(resume)) {
-      if (window.confirm('Do you want to clear your saved resume?')) {
+      if (window.confirm('Do you want to clear your current progress?')) {
         updateResume({});
       }
     }
