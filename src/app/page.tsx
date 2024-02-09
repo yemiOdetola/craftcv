@@ -81,7 +81,7 @@ export default function Home() {
               <span className='text-sm font-light text-gray-700'>
                 Break free from the ordinary
               </span>
-              <h1 className='my-5 text-2xl font-semibold'>
+              <h1 className='my-5 text-5xl font-semibold md:text-2xl'>
                 <span className='relative bg-gradient-to-r from-zinc-400 to-zinc-900 bg-clip-text pr-2 text-transparent'>
                   CREATE
                 </span>
@@ -98,7 +98,7 @@ export default function Home() {
                     const [name, value] = elm.data;
                     return (
                       <div
-                        className='w-1/2 lg:w-1/4'
+                        className='w-2/5 lg:w-1/4'
                         style={{ color: `${elm.color}` }}
                         key={index}
                       >
