@@ -297,14 +297,11 @@ body {
 }
 
 .bubble .bubble.two {
-  width: 1rem;
-  height: 1rem;
-}
-
-.bubble .bubble.two {
   background: #d2ecea;
-  bottom: 0;
-  right: 0;
+  width: 2rem;
+  height: 2rem;
+  bottom: 5%;
+  right: 5%;
   backdrop-filter: blur(6px);
   -webkit-animation: spin1 6s infinite alternate;
   animation: spin1 10s infinite alternate;
@@ -334,8 +331,8 @@ body {
   background: #f24e1e;
   top: 15%;
   right: 35%;
-  -webkit-animation: spin2 2s infinite alternate;
-  animation: spin2 2s infinite alternate;
+  -webkit-animation: spin2 2.5s infinite alternate;
+  animation: spin2 2.5s infinite alternate;
   z-index: 1;
 }
 
