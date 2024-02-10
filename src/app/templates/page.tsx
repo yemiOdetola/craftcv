@@ -122,7 +122,6 @@ export default function Templates() {
         updateResume({});
       }
     }
-
     updateResume(selectedTemplate.base);
     router.push(selectedTemplate.href);
   };
@@ -195,23 +194,21 @@ export default function Templates() {
           </Tab.Panels>
         </Tab.Group>
       </Container>
-      {/* <Link href='/templates/custom'>Drag and drop bitch!</Link> */}
 
       <BottomNavigation>
-        <Button href='-1' className='bg-gray-300 px-8 py-3 text-gray-500'>
+        <Button href='-1' className='bg-transparent px-8 py-3 text-red-600'>
           Cancel
         </Button>
 
         <Button
           onClick={gotoTemplate}
           className='w-36 px-2 py-3 transition-all duration-300'
-          disabled={loading}
+          disabled={loading || !selectedTemplate}
         >
           {loading ? <Loading className='h-4 w-4' /> : null}
           <span className='ml-2'>Continue</span>
         </Button>
       </BottomNavigation>
-      {/* <Footer /> */}
     </main>
   );
 }
