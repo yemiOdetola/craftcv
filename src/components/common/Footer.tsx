@@ -3,15 +3,6 @@ import Image from 'next/image';
 
 export function Footer() {
   return (
-    // <footer className='absolute bottom-0 left-0 right-0 bg-white py-4'>
-    //   <Container className='flex flex-col items-center justify-between md:flex-row'>
-    //     <h2 className='text-md font-semibold'>urgh 🎈</h2>
-    //     <p className='mt-6 text-sm text-gray-600 md:mt-0'>
-    //       Copyright &copy; {new Date().getFullYear()} urgh. All rights reserved.
-    //     </p>
-    //   </Container>
-    // </footer>
-
     <footer className=''>
       <Container className='mx-auto max-w-7xl px-4 py-5 sm:px-6 lg:px-8'>
         <div className='flex flex-col items-start justify-between gap-y-12 pb-6 pt-16 md:flex-row md:py-16 lg:items-center'>
@@ -67,7 +58,7 @@ export function Footer() {
           </div>
         </div>
         <div className='mt-5 text-center'>
-          <p className='text-sm '>All right not reserved</p>
+          <p className='text-sm '>All rights not reserved</p>
         </div>
       </Container>
     </footer>
