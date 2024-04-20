@@ -10,7 +10,7 @@ import { odetolaazeez } from '@/store/resume';
 import { getFontFamilyStyle, isObjectEmpty } from '@/utils/helper';
 import { useEditorActions } from '@/utils/useEditorActions';
 import React, { useEffect, useState } from 'react';
-import { getIconByType } from '../Icons';
+import { getIconByType } from '@/components/Icons';
 import { PiTrashSimpleDuotone } from 'react-icons/pi';
 import Heading from '@/components/editor/sections/Heading';
 

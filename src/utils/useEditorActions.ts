@@ -77,7 +77,6 @@ export const useEditorActions = () => {
   };
 
   const removeInputField = (pathArray: string[]) => {
-    console.log('pathArraypathArraypathArraypathArray', pathArray);
     const idx: any = pathArray.pop();
     if (idx > 0) {
       const pathArr = [...pathArray];

@@ -15,13 +15,6 @@ import { useEditorActions } from '@/utils/useEditorActions';
 import { amitpachange } from '@/store/resume';
 import { useSectionRenderer } from '@/utils/SectionRenderer';
 
-interface Experience {
-  id: string;
-  title: string;
-  achievements: string;
-  duration: string;
-}
-
 export default function AmitPachange() {
   const fontFamily = useFontFamily();
   const editorTheme = useEditorTheme();
@@ -131,7 +124,7 @@ export default function AmitPachange() {
           </div>
           <div className='p-5'>
             <div className='flex flex-col sm:flex-row '>
-              <div className='flex flex-col sm:w-1/3'>
+              <div className='flex flex-col sm:w-1/3 pr-4'>
                 <div>{renderContactInfo()}</div>
                 <div>{renderSkills()}</div>
                 <div>{renderEducation()}</div>

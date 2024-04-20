@@ -61,7 +61,6 @@ export default function Coutume() {
   }, [customLayout, resume, router, updateResume]);
 
   const editBlurEvent = (e: React.FocusEvent<HTMLDivElement, Element>) => {
-    //TODO: Check if the related target is null or undefined
     if (e.relatedTarget === null) {
       setEditableSectionId(null);
     }

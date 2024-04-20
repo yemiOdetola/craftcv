@@ -3,7 +3,7 @@ import { InlineEdit } from '@/components/editor';
 import { useEditorActions } from '@/utils/useEditorActions';
 import { useResume } from '@/store';
 import Heading from './Heading';
-import { getIconByType } from '../../common';
+import { getIconByType } from '@/components/Icons';
 
 interface TechnicalSkillsProps {
   color1: string;

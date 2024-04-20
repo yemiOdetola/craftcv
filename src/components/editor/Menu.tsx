@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { EditorFontMenu } from './EditorFontMenu';
-import { EditorSpacingMenu } from './EditorSpacingMenu';
 import { EditorThemeMenu } from './EditorThemeMenu';
 import { EditorGeneralMenu } from './EditorGeneralMenu';
 import {
@@ -34,7 +33,7 @@ export default function Menu() {
         <div className='flex items-center justify-between'>
           <div className='flex items-center'>
             <Link href='/templates' className='text-xl font-bold'>
-              Editor ✍️
+              {`<-`} Back
             </Link>
             <div className='ml-4 flex items-center gap-x-4'>
               <EditorFontMenu

@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { Tab } from '@headlessui/react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Button, Container, Loading } from '@/components/common';
+import { Container, Loading } from '@/components/common';
 import { BottomNavigation, Template } from '@/components/templates';
 import {
   amitpachange,
@@ -13,6 +13,7 @@ import {
 } from '@/store/resume';
 import { useLoading, useMainStore, useResume, useResumeType } from '@/store';
 import { isObjectEmpty } from '@/utils/helper';
+import { Button } from '@/components/ui/button';
 
 const templates: any = [
   {
@@ -196,7 +197,10 @@ export default function Templates() {
       </Container>
 
       <BottomNavigation>
-        <Button href='-1' className='bg-transparent px-8 py-3 text-red-600'>
+        <Button
+          // href='-1'
+          className='bg-transparent px-8 py-3 text-red-600'
+        >
           Cancel
         </Button>
 

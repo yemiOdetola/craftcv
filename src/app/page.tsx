@@ -1,7 +1,7 @@
 import Image from 'next/image';
-import { Container } from '@/components/common/Container';
-import { Footer } from '@/components/common/Footer';
-import { Header } from '@/components/common/Header';
+import { Container } from '@/components/Container';
+import { Footer } from '@/components/layout/Footer';
+import { Header } from '@/components/layout/Header';
 
 export default function Home() {
   const bullets: any = [

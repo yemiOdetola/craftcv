@@ -4,7 +4,6 @@ import { useRouter } from 'next/navigation';
 import {
   PiBookOpenText,
   PiPenDuotone,
-  // PiCircleHalfBold,
   PiBooksDuotone,
   PiShapesFill,
   PiArrowsInDuotone,
@@ -13,11 +12,11 @@ import {
   PiParachuteDuotone,
   PiCurrencyCnyDuotone,
   PiDatabaseDuotone,
-  PiFlaskDuotone,
   PiMedalDuotone,
   PiTrashDuotone,
 } from 'react-icons/pi';
-import { Button, Container, Loading, Toggle } from '@/components/common';
+import { Container, Loading, Toggle } from '@/components/common';
+import { Button } from '@/components/ui/button';
 import { BottomNavigation } from '@/components/templates';
 import { basetemplate } from '@/store/basetemplate';
 import { useCustomLayout, useLoading, useMainStore, useResume } from '@/store';
@@ -42,8 +41,6 @@ const sections: any = {
 interface DropColumnProps {
   widgets: string[];
   position: 'left' | 'right';
-  // onDrop: (e: any) => void;
-  // handleReorder: (e: any) => void;
 }
 const vh = 648;
 export default function CustomTemplate() {
@@ -185,7 +182,7 @@ export default function CustomTemplate() {
   const DropColumn = ({ widgets, position }: DropColumnProps) => {
     return (
       <div
-        className={`tpheight h-[480px] overflow-x-hidden p-2 ${
+        className={`h-[480px] overflow-x-hidden p-2 sm:h-[662px] ${
           twoColumns && 'w-1/2'
         }`}
         id={`${position}`}
@@ -194,7 +191,7 @@ export default function CustomTemplate() {
       >
         {widgets.map((widget, index) => (
           <div
-            className={`widget relative flex w-full items-center border-2 border-dotted border-indigo-500 
+            className={`relative mb-[2px] flex w-full items-center border-2 border-dotted border-indigo-500 
             p-2 transition-all duration-300 hover:cursor-move hover:bg-indigo-50`}
             style={{ height: position == 'left' ? `${lwh}px` : `${rwh}px` }}
             key={index}
@@ -229,10 +226,13 @@ export default function CustomTemplate() {
     <main className='bg-white'>
       <Container className='min-h-screen bg-white'>
         <div className='mx-auto max-w-2xl pt-12 lg:mx-0 lg:mb-6'>
-          <h2 className='font-display mb-8 text-4xl font-medium tracking-tighter text-blue-600 sm:text-4xl'>
+          <h2 className='font-display text-4xl font-medium tracking-tighter text-blue-600 sm:text-4xl'>
             Create a custom template 🧱
           </h2>
-          {/* <p>This is the order your resume template is going to display</p> */}
+          <p className='mb-4 mt-2 text-sm text-gray-500'>
+            Drag and drop items from the provided sections (on the left) to the
+            template canvas (on the right).
+          </p>
         </div>
         <div className='gap-x-7 align-top lg:flex'>
           <div className='w-full lg:w-2/6'>
@@ -244,18 +244,18 @@ export default function CustomTemplate() {
                 labelSr='Use two colum format'
               />
             </div>
-            <div className='my-4 flex w-full justify-between gap-x-3 pr-2'>
+            {/* <div className='my-4 flex w-full justify-between gap-x-3 pr-2'>
               <h5>Populate sections</h5>
               <Toggle
                 active={populate}
                 setActive={() => setPopulate(!populate)}
                 labelSr='Use two colum format'
               />
-            </div>
+            </div> */}
             <div className='flex h-96 flex-wrap items-center gap-x-2'>
               {Object.keys(sections).map((key, index) => (
                 <div
-                  className='cs-width mt-2 break-all border border-dotted border-gray-400 px-2 py-3'
+                  className='mt-2 w-[48%] break-all border border-dotted border-gray-400 px-2 py-3'
                   key={`widget-${index}`}
                   draggable
                   onDragStart={(e) => handle0nDrag(e, key)}
@@ -267,7 +267,7 @@ export default function CustomTemplate() {
           </div>
           <div className={`mt-2 w-full lg:w-4/6`}>
             <div
-              className={`tpheight h-[480px] w-full overflow-y-auto overflow-x-hidden border-2 border-gray-400 ${
+              className={`h-[480px] w-full overflow-y-auto overflow-x-hidden border-2 border-gray-400 sm:h-[662px] ${
                 twoColumns && 'flex items-center'
               }`}
             >
@@ -280,9 +280,7 @@ export default function CustomTemplate() {
         </div>
       </Container>
       <BottomNavigation>
-        <Button href='/' className='bg-gray-300 px-8 py-3 text-gray-500'>
-          Cancel
-        </Button>
+        <Button className='bg-gray-300 px-8 py-3 text-gray-500'>Cancel</Button>
         <Button
           onClick={prepareTemplate}
           className='w-36 px-2 py-3 transition-all duration-300'

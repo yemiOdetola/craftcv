@@ -1,4 +1,4 @@
-import { Container } from '@/components/common/Container';
+import { Container } from '@/components/Container';
 import Image from 'next/image';
 
 export function Footer() {
@@ -40,7 +40,7 @@ export function Footer() {
                 <path
                   d='M1 17V9a8 8 0 0 1 8-8h8M95 17V9a8 8 0 0 0-8-8h-8M1 79v8a8 8 0 0 0 8 8h8M95 79v8a8 8 0 0 1-8 8h-8'
                   stroke-width='2'
-                  stroke-linecap='round'
+                  strokeLinecap='round'
                 ></path>
               </svg>
             </div>

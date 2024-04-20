@@ -1,4 +1,4 @@
-import { Container } from '@/components/common/Container';
+import { Container } from '@/components/Container';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -38,12 +38,12 @@ export function Header() {
                 >
                   Templates
                 </a>
-                <a
+                <Link
                   className='inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700'
-                  href='/?price=free'
+                  href='/parser'
                 >
-                  Profile
-                </a>
+                  Parser
+                </Link>
               </div>
             </div>
             <div className='flex flex-1 items-center justify-end px-2 sm:justify-center lg:ml-6 lg:justify-end'>
@@ -77,7 +77,7 @@ export function Header() {
                   data-toggle-target='toggleable'
                 >
                   <path
-                    stroke-linecap='round'
+                    strokeLinecap='round'
                     stroke-linejoin='round'
                     stroke-width='2'
                     d='M4 6h16M4 12h16M4 18h16'
@@ -93,7 +93,7 @@ export function Header() {
                   data-toggle-target='toggleable'
                 >
                   <path
-                    stroke-linecap='round'
+                    strokeLinecap='round'
                     stroke-linejoin='round'
                     stroke-width='2'
                     d='M6 18L18 6M6 6l12 12'
