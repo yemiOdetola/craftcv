@@ -1,33 +1,29 @@
 'use client';
-import { EditorCover, InlineEdit } from '@/components/editor';
-import Heading from '@/components/editor/sections/Heading';
-import {
-  useFontFamily,
-  useEditorTheme,
-  useMainStore,
-  useResume,
-} from '@/store';
-import { jakeryan } from '@/store/resume';
-import { getFontFamilyStyle, isObjectEmpty } from '@/utils/helper';
-import { useEditorActions } from '@/utils/useEditorActions';
 import React, { useEffect, useState } from 'react';
 import { PiTrashSimpleDuotone } from 'react-icons/pi';
 
+import Heading from '@/components/editor/sections/Heading';
+import { EditorCover, InlineEdit } from '@/components/editor';
+import { useFontFamily, useMainStore, useResume } from '@/store';
+import { jakeryan } from '@/store/resume';
+import { getFontFamilyStyle, isObjectEmpty } from '@/utils/helper';
+import { useEditorActions } from '@/utils/useEditorActions';
+import { updateResumeme, useSettings } from '@/lib/redux/slice/editor';
+import { useAppDispatch, useAppSelector } from '@/lib/redux/hooks';
+
 export default function JakeRyan() {
-  const fontFamily = useFontFamily();
-  const editorTheme = useEditorTheme();
+  const dispatch = useAppDispatch();
+  const { fontFamily } = useAppSelector(useSettings);
   const { saveWithPath, removeSection } = useEditorActions();
   const [isHovered, setIsHovered] = useState('');
-  const { updateResume } = useMainStore();
-  const [resume] = useState(useResume());
-  const [color1, color2] = editorTheme;
+  const resume = useAppSelector(useResume);
   const [editableSection, setEditableSectionId] = useState<string | null>(null);
 
   useEffect(() => {
     if (isObjectEmpty(resume)) {
-      updateResume(jakeryan);
+      dispatch(updateResumeme(jakeryan as any));
     }
-  }, [resume, updateResume]);
+  }, [dispatch, resume]);
 
   const editBlurEvent = (e: React.FocusEvent<HTMLDivElement, Element>) => {
     // TODO: Check if the related target is null or undefined

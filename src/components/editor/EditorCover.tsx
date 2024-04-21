@@ -1,13 +1,9 @@
 import React, { ReactNode, useEffect, useState } from 'react';
 import { Menu } from '@/components/editor';
 import localFont from 'next/font/local';
-import {
-  useCustomLayout,
-  useIsCustom,
-  useLayoutDimension,
-  useMainStore,
-} from '@/store';
 import { usePathname } from 'next/navigation';
+import { useAppDispatch, useAppSelector } from '@/lib/redux/hooks';
+import { changeEditorSettings, useSettings } from '@/lib/redux/slice/editor';
 
 interface EditorCoverProps {
   children: ReactNode;
@@ -71,26 +67,25 @@ const splitSizes: any = {
 };
 
 export default function EditorCover({ className, children }: EditorCoverProps) {
-  const customLayout = useCustomLayout();
-  const layoutDimension = useLayoutDimension();
-  const { updateLayoutDimension, setIsCustom, setLoading } = useMainStore();
-  const [slidePosition, setSlidePosition] = useState<number | string>(2);
-
   const pathname = usePathname();
-  const isCustom = useIsCustom();
+  const dispatch = useAppDispatch();
+  const [slidePosition, setSlidePosition] = useState<number | string>(2);
+  const { isCustom, customLayout, layoutDimension } =
+    useAppSelector(useSettings);
 
   useEffect(() => {
-    setLoading(false);
-  }, [setLoading]);
+    dispatch(changeEditorSettings({ field: 'loading', value: false }));
+  }, [dispatch]);
 
   useEffect(() => {
-    const setCustom = (isCustom: boolean) => setIsCustom(isCustom);
+    const setCustom = (isCustom: boolean) =>
+      dispatch(changeEditorSettings({ field: 'isCustom', value: isCustom }));
     if (pathname.includes('coutume')) {
       setCustom(true);
     } else {
       setCustom(false);
     }
-  }, [pathname, setIsCustom]);
+  }, [dispatch, pathname]);
 
   useEffect(() => {
     Object.keys(splitSizes).map((key: any) => {
@@ -104,7 +99,9 @@ export default function EditorCover({ className, children }: EditorCoverProps) {
   const handleSlider = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
     setSlidePosition(val);
-    updateLayoutDimension(splitSizes[val]);
+    dispatch(
+      changeEditorSettings({ field: 'layoutDimension', value: splitSizes[val] })
+    );
   };
 
   return (

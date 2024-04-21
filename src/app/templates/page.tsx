@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { Tab } from '@headlessui/react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useAppSelector, useAppDispatch } from '@/lib/redux/hooks';
 import { Container, Loading } from '@/components/common';
 import { BottomNavigation, Template } from '@/components/templates';
 import {
@@ -10,8 +11,13 @@ import {
   thomashighbaugh,
   jakeryan,
   odetolaazeez,
-} from '@/store/resume';
-import { useLoading, useMainStore, useResume, useResumeType } from '@/store';
+} from '@/lib/store/resume';
+import {
+  useResume,
+  updateResumeme,
+  changeEditorSettings,
+  useEditorSettings,
+} from '@/lib/redux/slice/editor';
 import { isObjectEmpty } from '@/utils/helper';
 import { Button } from '@/components/ui/button';
 
@@ -87,15 +93,16 @@ const templates: any = [
 ];
 
 export default function Templates() {
-  const { updateResume, updateCustomLayout, updateResumeType } = useMainStore();
   const router = useRouter();
-  const resume = useResume();
-  const resumeType = useResumeType();
+  const dispatch = useAppDispatch();
+  const resume = useAppSelector(useResume);
+  const { isLoading, resumeType } = useAppSelector(useEditorSettings);
   const [tabOrientation, setTabOrientation] = useState('horizontal');
   const [selectedTemplate, selectTemplate] = useState<any>(null);
-  const setLayout = (layout: any) => updateCustomLayout(layout);
-  const setType = (type: string) => updateResumeType(type);
-  const loading = useLoading();
+  const setLayout = (layout: any) =>
+    dispatch(changeEditorSettings({ field: 'customLayout', value: layout }));
+  const setType = (type: any) =>
+    dispatch(changeEditorSettings({ field: 'resumeType', value: type }));
 
   useEffect(() => {
     let lgMediaQuery = window.matchMedia('(min-width: 1024px)');
@@ -120,10 +127,10 @@ export default function Templates() {
 
     if (resumeType !== selectedTemplate.idx && !isObjectEmpty(resume)) {
       if (window.confirm('Do you want to clear your saved resume?')) {
-        updateResume({});
+        dispatch(updateResumeme({} as any));
       }
     }
-    updateResume(selectedTemplate.base);
+    dispatch(updateResumeme(selectedTemplate.base as any));
     router.push(selectedTemplate.href);
   };
 
@@ -207,9 +214,9 @@ export default function Templates() {
         <Button
           onClick={gotoTemplate}
           className='w-36 px-2 py-3 transition-all duration-300'
-          disabled={loading || !selectedTemplate}
+          disabled={isLoading || !selectedTemplate}
         >
-          {loading ? <Loading className='h-4 w-4' /> : null}
+          {isLoading ? <Loading className='h-4 w-4' /> : null}
           <span className='ml-2'>Continue</span>
         </Button>
       </BottomNavigation>

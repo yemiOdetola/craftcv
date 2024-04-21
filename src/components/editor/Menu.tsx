@@ -1,25 +1,22 @@
 import React from 'react';
 import { EditorFontMenu } from './EditorFontMenu';
-import { EditorThemeMenu } from './EditorThemeMenu';
 import { EditorGeneralMenu } from './EditorGeneralMenu';
-import {
-  useFontFamily,
-  useEditorTheme,
-  useMainStore,
-  useLoading,
-  useIsCustom,
-} from '@/store';
 import { Loading } from '../common';
 import Link from 'next/link';
+import { useAppDispatch, useAppSelector } from '@/lib/redux/hooks';
+import {
+  changeEditorSettings,
+  useEditorSettings,
+} from '@/lib/redux/slice/editor';
 
 export default function Menu() {
-  const { changeEditorTheme, changeFontFamily } = useMainStore();
-  const fontFamily = useFontFamily();
-  const loading = useLoading();
-  const editorTheme = useEditorTheme();
-  const isCustom = useIsCustom();
-  const setFontFamily = (fontFamily: string) => changeFontFamily(fontFamily);
-  const setEditorTheme = (theme: string[]) => changeEditorTheme(theme);
+  const dispatch = useAppDispatch();
+  const { fontFamily, loading, editorTheme, isCustom } =
+    useAppSelector(useEditorSettings);
+  const setFontFamily = (fontFamily: string) =>
+    dispatch(changeEditorSettings({ field: 'loading', value: fontFamily }));
+  const setEditorTheme = (theme: string) =>
+    dispatch(changeEditorSettings({ field: 'editorTheme', value: theme }));
 
   const printDocument = () => {
     if (!loading) {
@@ -40,9 +37,10 @@ export default function Menu() {
                 changeFont={setFontFamily}
                 fontFamily={fontFamily}
               />
-              <EditorThemeMenu
-                changeTheme={setEditorTheme}
-                editorTheme={editorTheme}
+              <input
+                type='color'
+                value={editorTheme}
+                onChange={(e: any) => setEditorTheme(e.target.value)}
               />
 
               {isCustom ? <EditorGeneralMenu /> : null}

@@ -19,15 +19,7 @@ export function EditorThemeMenu({
           <h4 className='mb-2 text-lg font-semibold'>
             Select your color combo
           </h4>
-          {/* <button
-            className='flex border-none bg-none p-2 text-sm text-gray-600'
-            onClick={flipColors}
-          >
-            Switch
-            <span className='rotate-180'>
-              <PiArrowsDownUpDuotone size={20} />
-            </span>
-          </button> */}
+          <input type='color' />
         </div>
         <div className='flex flex-wrap'>
           {themes.map((theme, index) => {

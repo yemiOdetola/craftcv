@@ -10,7 +10,7 @@ export interface Editor {
     layoutDimension: string[];
     resume: any;
     loading: any;
-    isCustom: any;
+    isCustom: boolean;
     resumeType: string;
   };
   resume: any;
@@ -44,22 +44,26 @@ export const settingsSlice = createSlice({
   initialState: initialSettings,
   reducers: {
     changeEditorSettings: (
-      draft: any,
-      action: PayloadAction<{ field: EditorSettings; value: string }>
+      state: any,
+      action: PayloadAction<{
+        field: EditorSettings;
+        value: string | boolean | number;
+      }>
     ) => {
       const { field, value } = action.payload;
-      draft[field] = value;
+      state[field] = value;
     },
-    updateResume: (draft: any, action: PayloadAction<{ field: Resume }>) => {
-      console.log('ACTION PAYLOAD-updateResume', action.payload);
+    updateResumeme: (state: any, action: PayloadAction<{ field: Resume }>) => {
+      state['resume'] = action.payload;
     },
-    setSettings: (draft, action: PayloadAction<Editor>) => {
+    setSettings: (state, action: PayloadAction<Editor>) => {
       return action.payload;
     },
   },
 });
 
-export const { changeEditorSettings, setSettings } = settingsSlice.actions;
+export const { changeEditorSettings, setSettings, updateResumeme } =
+  settingsSlice.actions;
 
 export const useSettings = (state: RootState) => state.editor.editorSettings;
 export const useResume = (state: RootState) => state.editor.resume;

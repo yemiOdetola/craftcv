@@ -1,8 +1,10 @@
-import { useMainStore, useResume } from '@/store';
+import { useAppDispatch, useAppSelector } from '@/lib/redux/hooks';
+import { updateResumeme, useResume } from '@/lib/redux/slice/editor';
 
 export const useEditorActions = () => {
-  const resume = useResume();
-  const { updateResume } = useMainStore();
+  const dispatch = useAppDispatch();
+  const resume = useAppSelector(useResume);
+  const updateRes = (resume: any) => dispatch(updateResumeme(resume as any));
   const sectionKeys = Object.keys(resume);
 
   const saveWithPath = (pathArray: any[], newValue: any) => {
@@ -21,7 +23,7 @@ export const useEditorActions = () => {
       updateRecursively(obj[path[0]], path.slice(1), value);
     };
     updateRecursively(cres, pathArray, newValue);
-    updateResume(cres);
+    updateRes(cres);
   };
 
   const removeFromPath = (pathArray: any[]) => {
@@ -40,7 +42,7 @@ export const useEditorActions = () => {
       findRecursively(obj[path[0]], path.slice(1));
     };
     findRecursively(cres, pathArray);
-    updateResume(cres);
+    updateRes(cres);
   };
 
   const addNewInputField = (pathArray: string[]) => {
@@ -87,7 +89,7 @@ export const useEditorActions = () => {
         parentSections = parentSections[pathArr[i]];
       }
       parentSections[lastSection].splice(idx, 1);
-      updateResume(updatedResume);
+      updateRes(updatedResume);
     } else {
       alert("Don't be weird!");
     }
@@ -106,7 +108,7 @@ export const useEditorActions = () => {
     } else if (typeof value === 'object' && !Array.isArray(currentField)) {
       cloneResume[section][fieldId] = value;
     }
-    updateResume(cloneResume);
+    updateRes(cloneResume);
   };
 
   const removeSection = (
