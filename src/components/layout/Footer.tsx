@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 export function Footer() {
   return (
-    <footer className=''>
+    <footer className='py-20 bg-[#fafafa]'>
       <Container className='mx-auto max-w-7xl px-4 py-5 sm:px-6 lg:px-8'>
         <div className='flex flex-col items-start justify-between gap-y-12 pb-6 pt-16 md:flex-row md:py-16 lg:items-center'>
           <div className='w-full md:w-1/2'>
@@ -39,7 +39,7 @@ export function Footer() {
               >
                 <path
                   d='M1 17V9a8 8 0 0 1 8-8h8M95 17V9a8 8 0 0 0-8-8h-8M1 79v8a8 8 0 0 0 8 8h8M95 79v8a8 8 0 0 1-8 8h-8'
-                  stroke-width='2'
+                  strokeWidth='2'
                   strokeLinecap='round'
                 ></path>
               </svg>

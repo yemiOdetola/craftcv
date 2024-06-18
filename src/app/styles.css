@@ -10,6 +10,9 @@ body {
     rgb(var(--background-start-rgb));
 }
 
+.container {
+  max-width: 1320px !important;
+}
 .editor-container {
   min-height: 1080px;
   height: auto;
@@ -173,6 +176,13 @@ body {
     min-height: auto;
     height: auto;
   }
+}
+
+.banner-gradient {
+  background-image: linear-gradient(0deg, #2c46a7, #3757c4);
+  background: linear-gradient(135deg, #0000 18.75%, #3350bc 0 31.25%, #0000 0),
+    repeating-linear-gradient(45deg, #3350bc -6.25% 6.25%, #3554bf 0 18.75%);
+  background-size: 400px 400px;
 }
 
 @media (max-width: 600px) {
